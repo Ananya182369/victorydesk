@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>VictoryDesk | Login</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<div class="top-banner">
+🔐 VictoryDesk Login
+</div>
+
+<header>
+
+<h1>Welcome Back</h1>
+
+<p class="hero-text">
+Login to save your study progress.
+</p>
+
+</header>
+
+<section class="container">
+
+<div class="card">
+
+<input
+type="text"
+id="username"
+class="contact-input"
+placeholder="Enter your name">
+
+<br><br>
+
+<button class="btn" onclick="login()">
+🚀 Continue
+</button>
+
+<br><br>
+
+<p style="text-align:center;">
+Already logged in?
+</p>
+
+<a href="index.html" class="btn">
+🏠 Go to Home
+</a>
+
+</div>
+
+</section>
+
+<script>
+
+function login(){
+
+const name =
+document.getElementById("username").value.trim();
+
+if(name===""){
+
+alert("Please enter your name.");
+
+return;
+
+}
+
+localStorage.setItem("victoryUser",name);
+
+window.location.href="index.html";
+
+}
+
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>VictoryDesk | Exam Dashboard</title>
+
+<link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+
+<div class="top-banner">
+🎓 VictoryDesk - Exam Dashboard
+</div>
+
+<header>
+
+<h1 id="examTitle">Choose Your Subject</h1>
+
+<p class="hero-text">
+Select a subject to start your preparation.
+</p>
+
+<a href="../index.html" class="btn">⬅ Back to Home</a>
+
+</header>
+
+<section class="container">
+
+<h2 class="section-title">
+Choose your Subject
+</h2>
+
+<div class="exam-grid" id="subjectGrid">
+
+</div>
+
+
+
+
+
+</section>
+
+<script>
+
+const params = new URLSearchParams(window.location.search);
+
+const exam = params.get("exam");
+
+const title = document.getElementById("examTitle");
+
+const grid = document.querySelector(".exam-grid");
+
+if(exam){
+    
+
+title.innerHTML = "🎓 " + exam + " Dashboard";
+
+let subjects = [];
+
+if(exam === "NEET"){
+subjects = ["🧬 Biology","⚗️ Chemistry","⚡ Physics"];
+}
+
+else if(exam === "JEE"){
+subjects = ["🧮 Maths","⚗️ Chemistry","⚡ Physics"];
+}
+
+else if(exam === "CUET"){
+subjects = ["📚 Language","🔬 Domain Subject","📝 General Test"];
+}
+
+else if(exam === "SCHOOL"){
+subjects = [
+"📚 English",
+"🧮 Maths",
+"🔬 Science",
+"🌍 Social Science"
+];
+}
+
+else if(exam === "UPSC"){
+subjects = ["🏛️ History","📜 Polity","🌍 Geography"];
+}
+
+else if(exam === "SSC"){
+subjects = ["📖 English","🧮 Maths","🧠 Reasoning"];
+}
+
+grid.innerHTML = "";
+
+subjects.forEach(subject=>{
+
+grid.innerHTML += `
+<div class="exam-card" onclick="openSubject('${subject}')">
+${subject}
+</div>
+`;
+
+});
+
+}
+
+
+
+function openSubject(subject){
+
+const params = new URLSearchParams(window.location.search);
+
+const exam = params.get("exam");
+
+window.location.href =
+"subject.html?exam=" +
+encodeURIComponent(exam) +
+"&subject=" +
+encodeURIComponent(subject);
+
+}
+
+</script>
+
+
+</body>
+</html>

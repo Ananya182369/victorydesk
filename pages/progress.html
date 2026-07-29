@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>VictoryDesk | Progress Tracker</title>
+
+<link rel="stylesheet" href="../style.css">
+
+</head>
+
+<body>
+
+<div class="top-banner">
+📊 VictoryDesk Progress Tracker
+</div>
+
+<header>
+
+<h1>Your Study Progress</h1>
+
+<p class="hero-text">
+Track your preparation and stay motivated every day.
+</p>
+
+<a href="../index.html" class="btn">⬅ Back to Home</a>
+
+</header>
+
+<section class="container">
+
+<div class="grid">
+
+<div class="card">
+<h2>📖 Notes Completed</h2>
+<h1 id="notesCount">0</h1>
+</div>
+
+<div class="card">
+<h2>❓ MCQs Solved</h2>
+<h1 id="mcqCount">0</h1>
+</div>
+
+<div class="card">
+<h2>🎯 PYQs Solved</h2>
+<h1 id="pyqCount">0</h1>
+</div>
+
+<div class="card">
+<h2>🧪 Mock Tests</h2>
+<h1 id="mockCount">0</h1>
+</div>
+
+</div>
+
+</section>
+<script>
+
+let notes = 0;
+let mcqs = 0;
+let pyqs = 0;
+let mocks = 0;
+
+const interval = setInterval(() => {
+
+if(notes < 25){
+notes++;
+document.getElementById("notesCount").innerHTML = notes;
+}
+
+if(mcqs < 120){
+mcqs += 2;
+document.getElementById("mcqCount").innerHTML = mcqs;
+}
+
+if(pyqs < 40){
+pyqs++;
+document.getElementById("pyqCount").innerHTML = pyqs;
+}
+
+if(mocks < 10){
+mocks++;
+document.getElementById("mockCount").innerHTML = mocks;
+}
+
+if(notes >= 25 && mcqs >= 120 && pyqs >= 40 && mocks >= 10){
+clearInterval(interval);
+}
+
+}, 80);
+
+</script>
+
+</body>
+</html>

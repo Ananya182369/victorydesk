@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>VictoryDesk | Mock Test</title>
+
+<link rel="stylesheet" href="../style.css">
+
+<script src="../data/neet.js"></script>
+
+</head>
+
+<body>
+
+<div class="top-banner">
+🧪 VictoryDesk Mock Test
+</div>
+
+<header>
+
+<h1 id="pageTitle">
+Loading...
+</h1>
+
+<p class="hero-text">
+Test your preparation with a real exam experience.
+</p>
+
+<a href="javascript:history.back()" class="btn">⬅ Back</a>
+
+</header>
+
+<section class="container">
+
+<div class="card">
+
+<h2>⏱ Test Time Remaining</h2>
+
+<h1 id="timer">
+30:00
+</h1>
+
+</div>
+
+<div class="card">
+
+<h2 id="question">
+Loading...
+</h2>
+
+<div id="options">
+
+</div>
+
+<br>
+
+<button class="btn" onclick="checkAnswer()">
+Submit
+</button>
+
+<button class="btn" onclick="nextQuestion()">
+Next
+</button>
+
+<p id="result"></p>
+
+<p id="score"></p>
+
+</div>
+
+</section>
+<script>
+
+const params = new URLSearchParams(window.location.search);
+
+const exam = params.get("exam");
+const subject = params.get("subject");
+
+document.getElementById("pageTitle").innerHTML =
+exam + " • " + subject + " Mock Test";
+
+let currentIndex = 0;
+let score = 0;
+
+let questions = [];
+
+if (exam === "NEET" && subject.includes("Biology")) {
+    questions = neetData.Biology.mcqs;
+}
+else if (exam === "NEET" && subject.includes("Chemistry")) {
+    questions = neetData.Chemistry.mcqs;
+}
+else if (exam === "NEET" && subject.includes("Physics")) {
+    questions = neetData.Physics.mcqs;
+}
+
+let timeLeft = 1800;
+
+const timer = setInterval(function(){
+
+let minutes = Math.floor(timeLeft / 60);
+let seconds = timeLeft % 60;
+
+document.getElementById("timer").innerHTML =
+minutes + ":" + String(seconds).padStart(2,"0");
+
+timeLeft--;
+
+if(timeLeft < 0){
+
+clearInterval(timer);
+
+finishTest();
+
+}
+
+},1000);
+
+if(questions.length === 0){
+
+document.querySelector(".container").innerHTML = `
+<div class="card">
+<h2>🚧 Coming Soon</h2>
+<p>Mock Test for this subject is not available yet.</p>
+</div>
+`;
+
+throw new Error("No Mock Test Found");
+
+}
+
+loadQuestion();
+
+function loadQuestion(){
+
+document.getElementById("result").innerHTML="";
+
+document.querySelector('button[onclick="checkAnswer()"]').disabled = false;
+
+document.getElementById("question").innerHTML =
+questions[currentIndex].question;
+
+let html="";
+
+questions[currentIndex].options.forEach((option,index)=>{
+
+html += `
+<label>
+
+<input type="radio" name="q1" value="${index}">
+
+${option}
+
+</label>
+
+<br><br>
+`;
+
+});
+
+document.getElementById("options").innerHTML=html;
+
+document.getElementById("score").innerHTML =
+"Score : " + score + " / " + questions.length;
+
+}
+
+function checkAnswer(){
+
+const answer =
+document.querySelector('input[name="q1"]:checked');
+
+if(!answer){
+
+alert("Please select an answer.");
+
+return;
+
+}
+
+if(Number(answer.value) === questions[currentIndex].answer){
+
+score++;
+document.querySelector('button[onclick="checkAnswer()"]').disabled = true;
+
+document.getElementById("result").innerHTML =
+"✅ Correct!";
+
+}
+
+else{
+
+document.getElementById("result").innerHTML =
+"❌ Wrong! Correct Answer: " +
+questions[currentIndex].options[questions[currentIndex].answer];
+
+}
+
+document.getElementById("score").innerHTML =
+"Score : " + score + " / " + questions.length;
+
+}
+
+function nextQuestion(){
+
+if(currentIndex < questions.length - 1){
+
+currentIndex++;
+
+loadQuestion();
+
+}
+
+else{
+
+finishTest();
+
+}
+
+}
+
+function finishTest(){
+
+clearInterval(timer);
+
+document.querySelector(".container").innerHTML = `
+
+<div class="card">
+
+<h1>🎉 Mock Test Completed!</h1>
+
+<h2>Your Score: ${score} / ${questions.length}</h2>
+
+<p>Keep practicing to improve your performance.</p>
+
+<a href="../index.html" class="btn">
+🏠 Back to Home
+</a>
+
+</div>
+
+`;
+
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>VictoryDesk | Study Videos</title>
+
+<link rel="stylesheet" href="../style.css">
+
+</head>
+
+<body>
+
+<div class="top-banner">
+🎥 VictoryDesk Study Videos
+</div>
+
+<header>
+
+<h1 id="pageTitle">
+Study Videos
+</h1>
+
+<p class="hero-text">
+Watch free lectures to understand concepts easily.
+</p>
+
+<a href="../index.html" class="btn">⬅ Back to Home</a>
+
+</header>
+
+<section class="container">
+
+<h2 class="section-title">
+🎥 Recommended Videos
+</h2>
+
+<div class="grid" id="videoGrid">
+
+</div>
+
+</section>
+<script>
+
+const videos = [
+
+{
+title:"🧬 Cell - Full Lecture",
+link:"https://www.youtube.com/results?search_query=neet+biology+cell"
+},
+
+{
+title:"⚗️ Organic Chemistry",
+link:"https://www.youtube.com/results?search_query=neet+organic+chemistry"
+},
+
+{
+title:"⚡ Current Electricity",
+link:"https://www.youtube.com/results?search_query=neet+current+electricity"
+},
+
+{
+title:"🫀 Human Physiology",
+link:"https://www.youtube.com/results?search_query=neet+human+physiology"
+},
+
+{
+title:"🌿 Plant Physiology",
+link:"https://www.youtube.com/results?search_query=neet+plant+physiology"
+},
+
+{
+title:"🧪 Biotechnology",
+link:"https://www.youtube.com/results?search_query=neet+biotechnology"
+}
+
+];
+
+let html = "";
+
+videos.forEach(video => {
+
+html += `
+
+<div class="card">
+
+<h3>${video.title}</h3>
+
+<p>Watch free lecture on YouTube.</p>
+
+<a href="${video.link}" target="_blank" rel="noopener noreferrer" class="btn">
+▶ Watch
+</a>
+
+</div>
+
+`;
+
+});
+
+document.getElementById("videoGrid").innerHTML = html;
+
+</script>
+
+</body>
+</html>

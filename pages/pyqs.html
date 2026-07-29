@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>VictoryDesk | Notes</title>
+
+<link rel="stylesheet" href="../style.css">
+
+<script src="../data/neet.js">
+
+</script>
+
+</head>
+
+<body>
+
+<div class="top-banner">
+    🎯 VictoryDesk PYQs
+</div>
+
+<header>
+
+<h1 id="pageTitle">
+Loading...
+</h1>
+
+<p class="hero-text">
+Practice previous year questions and understand exam patterns better.
+</p>
+
+<a href="javascript:history.back()" class="btn">⬅ Back</a>
+
+</header>
+
+<section class="container">
+
+<h2 class="section-title">
+🎯 Previous Year Questions
+</h2>
+
+<div class="card">
+
+<h2 id="chapterName">
+🎯 Previous Year Questions
+</h2>
+
+<div id="pyqsList">
+
+</div>
+
+</div>
+
+</section>
+
+<script>
+
+const params = new URLSearchParams(window.location.search);
+
+const exam = params.get("exam");
+
+const subject = params.get("subject");
+
+const chapter = params.get("chapter");
+
+document.getElementById("pageTitle").innerHTML =
+exam + " • " + subject;
+
+document.getElementById("chapterName").innerHTML =
+chapter;
+
+let pyqs = [];
+
+if(subject.includes("Biology")){
+
+pyqs = neetData.Biology.pyqs;
+
+}
+
+else if(subject.includes("Chemistry")){
+
+pyqs = neetData.Chemistry.pyqs;
+
+}
+
+else if(subject.includes("Physics")){
+
+pyqs = neetData.Physics.pyqs;
+
+}
+
+if(pyqs.length === 0){
+
+document.getElementById("pyqsList").innerHTML = `
+<div class="card">
+<h2>🚧 Coming Soon</h2>
+<p>Previous Year Questions for this subject will be added soon.</p>
+</div>
+`;
+
+throw new Error("No PYQs Found");
+
+}
+
+let html = "";
+
+pyqs.forEach(pyq => {
+
+html += `
+<div class="card" style="margin-top:20px;">
+
+<h3>📅 ${pyq.year}</h3>
+
+<p><strong>Q.</strong> ${pyq.question}</p>
+
+<p style="color:#10b981;">
+✅ <strong>Answer:</strong> ${pyq.answer}
+</p>
+
+</div>
+`;
+
+});
+
+document.getElementById("pyqsList").innerHTML = html;
+
+</script>
+
+</body>
+
+</html>

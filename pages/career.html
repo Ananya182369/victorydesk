@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Career Guidance | VictoryDesk</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<div class="top-banner">
+🚀 Explore Your Future Career With VictoryDesk
+</div>
+
+
+<header>
+<nav class="navbar">
+
+<a href="index.html">Home</a>
+<a href="studenthub.html">Student Hub</a>
+<a href="career.html">Career</a>
+<a href="websites.html">Useful Websites</a>
+<a href="contact.html">Contact</a>
+
+</nav>
+</header>
+
+
+<section class="hero">
+
+<h1>Find Your Perfect Career Path 🎯</h1>
+
+<p>
+Confused about your future? VictoryDesk helps students explore courses,
+skills and career opportunities according to their interests.
+</p>
+
+</section>
+
+
+
+<section class="career-container">
+
+<h2>Choose Your Stream 🔍</h2>
+
+
+<div class="career-card">
+
+<h3>🧬 Science Students</h3>
+
+<p>
+Explore careers in Medical, Research, Biotechnology,
+Engineering, Pharmacy and more.
+</p>
+
+<button>Explore Science Careers</button>
+
+</div>
+
+
+
+<div class="career-card">
+
+<h3>💻 Technology & AI</h3>
+
+<p>
+Learn about careers in Artificial Intelligence,
+Coding, Data Science and Digital Skills.
+</p>
+
+<button>Explore Tech Careers</button>
+
+</div>
+
+
+
+<div class="career-card">
+
+<h3>📚 Competitive Exams</h3>
+
+<p>
+Get guidance about NEET, JEE, CUET, Government Exams
+and preparation paths.
+</p>
+
+<button>Explore Exams</button>
+
+</div>
+
+
+
+<div class="career-card">
+
+<h3>🎨 Creative Careers</h3>
+
+<p>
+Discover opportunities in Design, Content Creation,
+Animation and Media.
+</p>
+
+<button>Explore Creative Fields</button>
+
+</div>
+
+
+</section>
+
+<section class="roadmap-section">
+
+<h2>🛣️ Career Roadmaps</h2>
+
+<div class="career-card">
+
+<h3>🩺 Medical Field</h3>
+
+<p>
+NEET → Medical College → Internship → Doctor / Healthcare Career
+</p>
+
+</div>
+
+
+<div class="career-card">
+
+<h3>⚙️ Engineering & Technology</h3>
+
+<p>
+JEE → Engineering Degree → Skills → Tech Career
+</p>
+
+</div>
+
+
+<div class="career-card">
+
+<h3>📖 College & Competitive Exams</h3>
+
+<p>
+CUET / Government Exams → Higher Studies → Career Growth
+</p>
+
+</div>
+
+</section>
+
+<section class="career-tips">
+
+<h2>Career Growth Tips 🌱</h2>
+
+<ul>
+
+<li>Understand your interests before choosing a career.</li>
+
+<li>Build skills along with your studies.</li>
+
+<li>Follow official updates about courses and exams.</li>
+
+<li>Keep learning new technologies.</li>
+
+</ul>
+
+</section>
+
+<section class="quiz-section">
+
+<h2>🎯 Find Your Career Direction</h2>
+
+<p>
+Answer a few questions and understand which field matches your interest.
+</p>
+
+<div class="career-card">
+
+<h3>Which area interests you the most?</h3>
+
+<p id="careerResult"></p>
+
+<button onclick="showCareer('Medical & Healthcare')">🧬 Biology & Healthcare</button>
+
+<button onclick="showCareer('Technology & AI')">💻 Technology & AI</button>
+
+<button onclick="showCareer('Teaching & Research')">📚 Teaching & Research</button>
+
+<button onclick="showCareer('Creativity & Design')">🎨 Creativity & Design</button>
+
+</div>
+
+</section>
+
+<section class="course-section">
+
+<h2>📚 Course Finder</h2>
+
+<p>
+Choose your interest and explore possible courses.
+</p>
+
+<div class="career-card">
+
+<h3>Select Your Interest</h3>
+
+<button onclick="findCourse('Biology')">🧬 Biology</button>
+
+<button onclick="findCourse('Technology')">💻 Technology</button>
+
+<button onclick="findCourse('Research')">🔬 Research</button>
+
+<button onclick="findCourse('Creative')">🎨 Creative</button>
+
+<p id="courseResult"></p>
+
+</div>
+
+</section>
+
+<section class="comparison-section">
+
+<h2>📊 Career Comparison</h2>
+
+<div class="career-card">
+
+<h3>🩺 Medical Career</h3>
+
+<p><b>Courses:</b> MBBS, BSc Nursing, Biotechnology</p>
+
+<p><b>Duration:</b> 3-5+ Years</p>
+
+<p><b>Career Options:</b> Doctor, Nurse, Researcher</p>
+
+</div>
+
+
+<div class="career-card">
+
+<h3>💻 Technology Career</h3>
+
+<p><b>Courses:</b> Computer Science, AI, Data Science</p>
+
+<p><b>Duration:</b> 3-4 Years</p>
+
+<p><b>Career Options:</b> Developer, AI Engineer, Analyst</p>
+
+</div>
+
+
+<div class="career-card">
+
+<h3>🔬 Research Career</h3>
+
+<p><b>Courses:</b> Life Science, MSc, Research Programs</p>
+
+<p><b>Duration:</b> 3-6 Years</p>
+
+<p><b>Career Options:</b> Scientist, Researcher, Professor</p>
+
+</div>
+
+
+</section>
+
+<section class="resources-section">
+
+<h2>📚 Career Resources</h2>
+
+<div class="career-card">
+
+<h3>📝 Exam Information</h3>
+
+<p>
+Get updates about NEET, JEE, CUET and other competitive exams.
+</p>
+
+<button>Explore Exams</button>
+
+</div>
+
+
+<div class="career-card">
+
+<h3>🎓 College Guidance</h3>
+
+<p>
+Explore courses, eligibility, admission process and career options.
+</p>
+
+<button>Explore Colleges</button>
+
+</div>
+
+
+<div class="career-card">
+
+<h3>💡 Skill Development</h3>
+
+<p>
+Learn new skills like coding, communication and digital tools.
+</p>
+
+<button>Build Skills</button>
+
+</div>
+
+
+</section>
+
+<footer>
+
+<p>© 2026 VictoryDesk | Learn • Grow • Achieve 🚀</p>
+
+</footer>
+
+<script>
+
+function showCareer(field){
+
+document.getElementById("careerResult").innerHTML =
+"🚀 Your interest matches with <b>" + field + "</b> career path!";
+
+}
+
+function findCourse(area){
+
+let result = "";
+
+if(area == "Biology"){
+result = "🧬 Courses: MBBS, Nursing, Biotechnology, Microbiology";
+}
+
+else if(area == "Technology"){
+result = "💻 Courses: Computer Science, AI, Data Science";
+}
+
+else if(area == "Research"){
+result = "🔬 Courses: Life Science, Research Programs, MSc";
+}
+
+else{
+result = "🎨 Courses: Design, Animation, Media & Creative Fields";
+}
+
+document.getElementById("courseResult").innerHTML = result;
+
+}
+
+</script>
+
+</body>
+
+</html>

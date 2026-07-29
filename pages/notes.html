@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>VictoryDesk | Notes</title>
+
+<link rel="stylesheet" href="../style.css">
+
+<script src="../data/neet.js"></script>
+
+</head>
+
+<body>
+
+<div class="top-banner">
+📖 VictoryDesk Notes
+</div>
+
+<header>
+
+<h1 id="pageTitle">
+Loading...
+</h1>
+
+<p class="hero-text">
+Study chapter-wise notes and revise faster.
+</p>
+
+<a href="subject.html" class="btn">⬅ Back</a>
+
+</header>
+
+<section class="container">
+
+<h2 class="section-title">
+📚 Chapter Notes
+</h2>
+
+<input
+type="text"
+class="contact-input"
+placeholder="🔍 Search inside notes (Coming Soon)"
+readonly>
+
+<div class="card">
+
+<h2 id="chapterName">
+📖 Notes
+</h2>
+
+<h3>📌 Chapter Overview</h3>
+
+<p>
+This section will explain the complete chapter in simple language.
+</p>
+
+<br>
+
+<h3>⭐ Important Points</h3>
+
+<ul id="notesList">
+
+</ul>
+
+<br>
+
+<h3>📝 Quick Revision</h3>
+
+<div class="card">
+
+<p>
+✅ Revise important formulas and concepts in 5 minutes.
+</p>
+
+<p>
+🎯 Focus on NCERT keywords and important exam points.
+</p>
+
+<p>
+🔥 Read this section before every mock test.
+</p>
+
+</div>
+
+<br>
+
+<h3>🎥 Recommended Videos</h3>
+
+<div class="card">
+
+<p>▶️ Watch chapter-wise lectures from trusted educators.</p>
+
+<a href="#" class="btn">🎥 Watch Lectures</a>
+
+</div>
+
+</div>
+
+</section>
+
+<script>
+
+const params = new URLSearchParams(window.location.search);
+
+const exam = params.get("exam");
+
+const subject = params.get("subject");
+
+const chapter = params.get("chapter");
+
+document.getElementById("pageTitle").innerHTML =
+exam + " • " + subject;
+
+document.getElementById("chapterName").innerHTML =
+chapter;
+
+let notes = [];
+
+if(subject.includes("Biology")){
+
+notes = neetData.Biology.notes;
+
+}
+
+else if(subject.includes("Chemistry")){
+
+notes = neetData.Chemistry.notes;
+
+}
+
+else if(subject.includes("Physics")){
+
+notes = neetData.Physics.notes;
+
+}
+
+let html = "";
+
+notes.forEach(note => {
+
+html += `<li>${note}</li>`;
+
+});
+
+document.getElementById("notesList").innerHTML = html;
+
+</script>
+
+</body>
+
+</html>
