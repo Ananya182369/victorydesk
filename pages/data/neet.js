@@ -92,7 +92,27 @@ notes:[
 
 mcqs:[],
 
-pyqs:[]
+pyqs:[
+
+{
+year:"2025",
+question:"The pH of a neutral solution at 25°C is?",
+answer:"7"
+},
+
+{
+year:"2024",
+question:"Which gas is released when an acid reacts with a metal?",
+answer:"Hydrogen"
+},
+
+{
+year:"2023",
+question:"Atomic number represents the number of?",
+answer:"Protons"
+}
+
+]
 
 },
 
@@ -114,7 +134,27 @@ notes:[
 
 mcqs:[],
 
-pyqs:[]
+pyqs:[
+
+{
+year:"2025",
+question:"The SI unit of force is?",
+answer:"Newton"
+},
+
+{
+year:"2024",
+question:"Speed is defined as?",
+answer:"Distance divided by time"
+},
+
+{
+year:"2023",
+question:"Which law explains action and reaction?",
+answer:"Newton's Third Law"
+}
+
+]
 
 }
 

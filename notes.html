@@ -40,39 +40,17 @@ Study chapter-wise notes and revise faster.
 📚 Chapter Notes
 </h2>
 
-<div class="notes-search">
-
 <input
 type="text"
 class="contact-input"
-id="notesSearch"
-placeholder="🔍 Search notes">
-
-</div>
+placeholder="🔍 Search inside notes (Coming Soon)"
+readonly>
 
 <div class="card">
 
 <h2 id="chapterName">
 📖 Notes
 </h2>
-
-<div class="chapter-info">
-
-<h3>📚 Chapter Details</h3>
-
-<p>
-📖 Subject: <span id="subjectName"></span>
-</p>
-
-<p>
-🎯 Exam: <span id="examName"></span>
-</p>
-
-<p>
-📝 Complete chapter notes with important concepts.
-</p>
-
-</div>
 
 <h3>📌 Chapter Overview</h3>
 
@@ -82,15 +60,7 @@ This section will explain the complete chapter in simple language.
 
 <br>
 
-<h3 id="important-points">⭐ Important Points</h3>
-
-<div class="notes-status">
-
-<p>
-✅ Chapter notes loaded successfully.
-</p>
-
-</div>
+<h3>⭐ Important Points</h3>
 
 <ul id="notesList">
 
@@ -132,28 +102,6 @@ This section will explain the complete chapter in simple language.
 
 </section>
 
-const searchBox = document.getElementById("notesSearch");
-
-searchBox.addEventListener("input", function(){
-
-let value = this.value.toLowerCase();
-
-let filtered = notes.filter(note =>
-note.toLowerCase().includes(value)
-);
-
-let html = "";
-
-filtered.forEach(note => {
-
-html += `<li>${note}</li>`;
-
-});
-
-document.getElementById("notesList").innerHTML = html;
-
-});
-
 <script>
 
 const params = new URLSearchParams(window.location.search);
@@ -166,10 +114,6 @@ const chapter = params.get("chapter");
 
 document.getElementById("pageTitle").innerHTML =
 exam + " • " + subject;
-
-document.getElementById("subjectName").innerHTML = subject;
-
-document.getElementById("examName").innerHTML = exam;
 
 document.getElementById("chapterName").innerHTML =
 chapter;
@@ -195,6 +139,21 @@ notes = neetData.Physics.notes;
 }
 
 let html = "";
+
+if(notes.length===0){
+
+html = `
+<div class="card">
+<h2>🚧 Content Coming Soon</h2>
+<p>
+Notes for <b>${chapter || subject}</b> will be available soon.
+</p>
+</div>
+`;
+
+}
+
+else
 
 notes.forEach(note => {
 

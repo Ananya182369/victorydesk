@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>VictoryDesk | Subject</title>
+
+<link rel="stylesheet" href="../style.css">
+
+</head>
+
+<body>
+
+<div class="top-banner">
+📚 VictoryDesk Student Dashboard
+</div>
+
+<header>
+
+<h1 id="subjectHeading">
+Subject
+</h1>
+
+<p class="hero-text">
+Choose how you want to study.
+</p>
+
+<a href="exam.html" class="btn">⬅ Back</a>
+
+</header>
+
+<section class="container">
+
+<h2 class="section-title">
+Study Options
+</h2>
+
+<p style="text-align:center;font-size:18px;margin-bottom:30px;">
+Welcome! Choose what you want to do for this subject.
+</p>
+
+<div class="grid">
+
+<div class="card" onclick="openSubjectNotes()">
+<h3>📖 Notes</h3>
+<p>Open complete notes for this subject.</p>
+</div>
+
+<div class="card" onclick="window.location.href='mcqs.html'">
+<h3>❓ MCQs</h3>
+</div>
+
+<div class="card" onclick="window.location.href='pyqs.html'">
+<h3>🎯 PYQs</h3>
+</div>
+
+<div class="card" onclick="alert('🧪 Mock Tests Coming Soon')">
+<h3 onclick="window.location.href='mocktest.html'">🧪 Mock Tests</h3>
+</div>
+
+
+
+<div class="card" onclick="openAI()">
+<h3>🤖 Victory AI</h3>
+<p>Your personal AI study assistant</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="container">
+
+<h2 class="section-title">
+🔥 Recommended Chapters
+</h2>
+
+<p style="text-align:center;margin-bottom:30px;">
+Start from Chapter 1 or choose any chapter you want to study.
+</p>
+
+<div class="grid">
+
+<div class="card">
+<h3>Chapter 1</h3>
+</div>
+
+<div class="card">
+<h3>Chapter 2</h3>
+</div>
+
+<div class="card">
+<h3>Chapter 3</h3>
+</div>
+
+<div class="card">
+<h3>Chapter 4</h3>
+</div>
+
+<div class="card">
+<h3>Chapter 5</h3>
+</div>
+
+<div class="card">
+<h3>Chapter 6</h3>
+</div>
+
+</div>
+
+</section>
+
+<script>
+
+const params = new URLSearchParams(window.location.search);
+
+const exam = params.get("exam");
+const subject = params.get("subject");
+
+document.getElementById("subjectHeading").innerHTML =
+exam + " • " + subject;
+
+const chapterSection = document.querySelector(".grid:last-of-type");
+
+let chapters = [];
+
+if(exam==="NEET" && subject.includes("Biology")){
+chapters=[
+"🧬 Cell",
+"🫀 Human Physiology",
+"🧠 Genetics",
+"🌱 Plant Physiology",
+"🦠 Biotechnology",
+"🧪 Ecology"
+];
+}
+
+else if(exam==="NEET" && subject.includes("Chemistry")){
+chapters=[
+"⚗️ Organic Chemistry",
+"🧪 Inorganic Chemistry",
+"⚛ Physical Chemistry",
+"🧫 Solutions",
+"⚡ Electrochemistry",
+"🔥 Thermodynamics"
+];
+}
+
+else if(exam==="NEET" && subject.includes("Physics")){
+chapters=[
+"⚡ Mechanics",
+"💡 Current Electricity",
+"🌍 Gravitation",
+"🌊 Waves",
+"🔋 Magnetism",
+"☀ Modern Physics"
+];
+}
+
+chapterSection.innerHTML="";
+
+chapters.forEach(chapter=>{
+
+chapterSection.innerHTML+=`
+
+<div class="card" onclick="openNotes('${chapter}')">
+<h3>${chapter}</h3>
+<p>📖 Notes • ❓ MCQs • 🎯 PYQs</p>
+</div>
+
+`;
+
+});
+
+function openNotes(chapter){
+
+window.location.href=
+"notes.html?exam="+
+encodeURIComponent(exam)+
+"&subject="+
+encodeURIComponent(subject)+
+"&chapter="+
+encodeURIComponent(chapter);
+
+}
+
+function openSubjectNotes(){
+
+const params = new URLSearchParams(window.location.search);
+
+const exam = params.get("exam");
+const subject = params.get("subject");
+
+window.location.href =
+"notes.html?exam=" +
+encodeURIComponent(exam) +
+"&subject=" +
+encodeURIComponent(subject);
+
+}
+
+function openAI(){
+
+alert("🚀 Victory AI is under development.\n\nSoon you'll be able to:\n\n✅ Ask doubts\n✅ Explain chapters\n✅ Generate MCQs\n✅ Create study plans");
+
+}
+
+</script>
+
+</body>
+
+</html>
