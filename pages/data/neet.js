@@ -1,6 +1,6 @@
 const neetData = {
 
-Biology: {
+    Biology: {
 
 notes: [
 
@@ -15,6 +15,7 @@ notes: [
 "🌿 Chloroplast is present in plant cells."
 
 ],
+
 
 mcqs: [
 

@@ -132,27 +132,7 @@ This section will explain the complete chapter in simple language.
 
 </section>
 
-const searchBox = document.getElementById("notesSearch");
 
-searchBox.addEventListener("input", function(){
-
-let value = this.value.toLowerCase();
-
-let filtered = notes.filter(note =>
-note.toLowerCase().includes(value)
-);
-
-let html = "";
-
-filtered.forEach(note => {
-
-html += `<li>${note}</li>`;
-
-});
-
-document.getElementById("notesList").innerHTML = html;
-
-});
 
 <script>
 
@@ -175,6 +155,8 @@ document.getElementById("chapterName").innerHTML =
 chapter;
 
 let notes = [];
+
+let chapterData = [];
 
 if(subject.includes("Biology")){
 
@@ -203,6 +185,26 @@ html += `<li>${note}</li>`;
 });
 
 document.getElementById("notesList").innerHTML = html;
+
+const searchBox = document.getElementById("notesSearch");
+
+searchBox.addEventListener("input", function () {
+
+    let value = this.value.toLowerCase();
+
+    let filtered = notes.filter(note =>
+        note.toLowerCase().includes(value)
+    );
+
+    let searchHtml = "";
+
+    filtered.forEach(note => {
+        searchHtml += `<li>${note}</li>`;
+    });
+
+    document.getElementById("notesList").innerHTML = searchHtml;
+
+});
 
 </script>
 
