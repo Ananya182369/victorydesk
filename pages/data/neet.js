@@ -159,29 +159,39 @@ notes:[
     }
 ],
 
-mcqs:[],
-
-pyqs:[
+mcqs:[
 
 {
-year:"2025",
-question:"The pH of a neutral solution at 25°C is?",
-answer:"7"
+question:"The atomic number of an element represents?",
+options:["Number of neutrons","Number of protons","Number of electrons + protons","Atomic mass"],
+answer:1
 },
 
 {
-year:"2024",
-question:"Which gas is released when an acid reacts with a metal?",
-answer:"Hydrogen"
+question:"A mole contains how many particles?",
+options:["6.022 × 10²³","3.14 × 10²³","9.8 × 10²³","1.6 × 10⁻¹⁹"],
+answer:0
 },
 
 {
-year:"2023",
-question:"Atomic number represents the number of?",
-answer:"Protons"
+question:"The chemical formula of water is?",
+options:["CO₂","H₂O","O₂","NaCl"],
+answer:1
+},
+
+{
+question:"Which of the following is a noble gas?",
+options:["Oxygen","Nitrogen","Helium","Hydrogen"],
+answer:2
+},
+
+{
+question:"pH value of a neutral solution is?",
+options:["0","5","7","14"],
+answer:2
 }
 
-]
+],
 
 },
 
@@ -217,29 +227,59 @@ notes:[
     }
 ],
 
-mcqs:[],
-
-pyqs:[
+mcqs:[
 
 {
-year:"2025",
 question:"The SI unit of force is?",
-answer:"Newton"
+options:["Joule","Newton","Watt","Pascal"],
+answer:1
 },
 
 {
-year:"2024",
-question:"Speed is defined as?",
-answer:"Distance divided by time"
+question:"Speed is equal to?",
+options:[
+"Distance × Time",
+"Distance / Time",
+"Time / Distance",
+"Mass × Acceleration"
+],
+answer:1
 },
 
 {
-year:"2023",
-question:"Which law explains action and reaction?",
-answer:"Newton's Third Law"
+question:"Which law explains inertia?",
+options:[
+"Newton's First Law",
+"Newton's Second Law",
+"Newton's Third Law",
+"Law of Gravitation"
+],
+answer:0
+},
+
+{
+question:"The unit of energy is?",
+options:[
+"Newton",
+"Joule",
+"Watt",
+"Meter"
+],
+answer:1
+},
+
+{
+question:"Acceleration is the rate of change of?",
+options:[
+"Distance",
+"Velocity",
+"Mass",
+"Force"
+],
+answer:1
 }
 
-]
+],
 
 }
 
