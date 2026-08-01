@@ -48,9 +48,17 @@ Test your preparation with a real exam experience.
 
 <div class="card">
 
+    <p id="questionNumber"
+style="font-size:18px;font-weight:bold;">
+</p>
+
 <h2 id="question">
 Loading...
 </h2>
+
+<p id="progress"
+style="font-size:16px;">
+</p>
 
 <div id="options">
 
@@ -110,6 +118,12 @@ minutes + ":" + String(seconds).padStart(2,"0");
 
 timeLeft--;
 
+if(timeLeft === 60){
+
+alert("⏰ Only 1 minute remaining!");
+
+}
+
 if(timeLeft < 0){
 
 clearInterval(timer);
@@ -136,6 +150,12 @@ throw new Error("No Mock Test Found");
 loadQuestion();
 
 function loadQuestion(){
+
+    document.getElementById("progress").innerHTML =
+"🎯 Progress: " + (currentIndex + 1) + " of " + questions.length;
+
+document.getElementById("questionNumber").innerHTML =
+"Question " + (currentIndex + 1) + " / " + questions.length;
 
 document.getElementById("result").innerHTML="";
 
@@ -187,6 +207,10 @@ if(Number(answer.value) === questions[currentIndex].answer){
 score++;
 document.querySelector('button[onclick="checkAnswer()"]').disabled = true;
 
+document.querySelectorAll('input[name="q1"]').forEach(option=>{
+    option.disabled = true;
+});
+
 document.getElementById("result").innerHTML =
 "✅ Correct!";
 
@@ -234,6 +258,22 @@ document.querySelector(".container").innerHTML = `
 <h1>🎉 Mock Test Completed!</h1>
 
 <h2>Your Score: ${score} / ${questions.length}</h2>
+
+<h3>
+Percentage: ${Math.round((score / questions.length) * 100)}%
+</h3>
+
+<p>
+${
+(score / questions.length) >= 0.8
+? "🔥 Excellent Performance!"
+:
+(score / questions.length) >= 0.5
+? "👍 Good Job! Keep Practicing."
+:
+"📚 Need More Practice. Don't Give Up!"
+}
+</p>
 
 <p>Keep practicing to improve your performance.</p>
 
