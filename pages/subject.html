@@ -39,6 +39,18 @@ Choose how you want to study.
 Study Options
 </h2>
 
+<div class="card">
+
+<h3>🎯 Today's Goal</h3>
+
+<p>📚 Complete 1 Chapter</p>
+
+<p>❓ Solve 20 MCQs</p>
+
+<p>🧪 Attempt 1 Mock Test</p>
+
+</div>
+
 <p style="text-align:center;font-size:18px;margin-bottom:30px;">
 Welcome! Choose what you want to do for this subject.
 </p>
@@ -46,20 +58,37 @@ Welcome! Choose what you want to do for this subject.
 <div class="grid">
 
 <div class="card" onclick="openSubjectNotes()">
+
 <h3>📖 Notes</h3>
-<p>Open complete notes for this subject.</p>
+
+<p>Complete chapter-wise notes</p>
+
+<p>📚 <span id="notesCount">0</span> Chapters Available</p>
+
 </div>
 
-<div class="card" onclick="window.location.href='mcqs.html'">
+<div class="card" onclick="window.location.href='mcqs.html?exam='+encodeURIComponent(exam)+'&subject='+encodeURIComponent(subject)">
+
 <h3>❓ MCQs</h3>
+
+<p>Practice chapter-wise questions</p>
+
 </div>
 
-<div class="card" onclick="window.location.href='pyqs.html'">
+<div class="card" onclick="window.location.href='pyqs.html?exam='+encodeURIComponent(exam)+'&subject='+encodeURIComponent(subject)">
+
 <h3>🎯 PYQs</h3>
+
+<p>Previous year questions</p>
+
 </div>
 
-<div class="card" onclick="alert('🧪 Mock Tests Coming Soon')">
-<h3 onclick="window.location.href='mocktest.html'">🧪 Mock Tests</h3>
+<div class="card" onclick="window.location.href='mocktest.html?exam='+encodeURIComponent(exam)+'&subject='+encodeURIComponent(subject)">
+
+<h3>🧪 Mock Test</h3>
+
+<p>Real exam practice</p>
+
 </div>
 
 
@@ -75,6 +104,21 @@ Welcome! Choose what you want to do for this subject.
 
 <section class="container">
 
+    <div class="card">
+
+<h3>🔥 Quick Actions</h3>
+
+<button class="btn" onclick="openSubjectNotes()">
+📖 Continue Study
+</button>
+
+<button class="btn"
+onclick="window.location.href='mcqs.html?exam='+encodeURIComponent(exam)+'&subject='+encodeURIComponent(subject)">
+❓ Practice MCQs
+</button>
+
+</div>
+
 <h2 class="section-title">
 🔥 Recommended Chapters
 </h2>
@@ -82,6 +126,18 @@ Welcome! Choose what you want to do for this subject.
 <p style="text-align:center;margin-bottom:30px;">
 Start from Chapter 1 or choose any chapter you want to study.
 </p>
+
+<div class="card">
+
+<h3>📊 Subject Progress</h3>
+
+<p>📖 Chapters : <span id="totalChapters">0</span></p>
+
+<p>✅ Completed : <span id="completedChapters">0</span></p>
+
+<p>📈 Progress : <span id="progressPercent">0%</span></p>
+
+</div>
 
 <div class="grid">
 
@@ -145,6 +201,16 @@ chapters = neetData.Physics.notes.map(item => item.chapter);
 
 }
 
+document.getElementById("totalChapters").innerHTML =
+chapters.length;
+
+document.getElementById("completedChapters").innerHTML = 0;
+
+document.getElementById("progressPercent").innerHTML = "0%";
+
+document.getElementById("notesCount").innerHTML =
+chapters.length;
+
 
 chapterSection.innerHTML = "";
 
@@ -176,10 +242,7 @@ encodeURIComponent(chapter);
 
 function openSubjectNotes(){
 
-const params = new URLSearchParams(window.location.search);
 
-const exam = params.get("exam");
-const subject = params.get("subject");
 
 window.location.href =
 "notes.html?exam=" +
