@@ -178,36 +178,19 @@ notes = neetData.Physics.notes;
 
 let html = "";
 
-notes.forEach(note => {
+notes.forEach(item => {
 
-html += `<li>${note}</li>`;
+    if (item.chapter === chapter) {
+
+        item.topics.forEach(topic => {
+
+            html += `<li>${topic}</li>`;
+
+        });
+
+    }
 
 });
 
 document.getElementById("notesList").innerHTML = html;
 
-const searchBox = document.getElementById("notesSearch");
-
-searchBox.addEventListener("input", function () {
-
-    let value = this.value.toLowerCase();
-
-    let filtered = notes.filter(note =>
-        note.toLowerCase().includes(value)
-    );
-
-    let searchHtml = "";
-
-    filtered.forEach(note => {
-        searchHtml += `<li>${note}</li>`;
-    });
-
-    document.getElementById("notesList").innerHTML = searchHtml;
-
-});
-
-</script>
-
-</body>
-
-</html>

@@ -3,19 +3,35 @@ const neetData = {
     Biology: {
 
 notes: [
-
-"🧬 Cell is the basic unit of life.",
-
-"🔬 Cell Theory was given by Schleiden and Schwann.",
-
-"🦠 Prokaryotic cells do not have a true nucleus.",
-
-"🧫 Mitochondria are known as the powerhouse of the cell.",
-
-"🌿 Chloroplast is present in plant cells."
-
+    {
+        chapter: "The Living World",
+        topics: [
+            "Introduction",
+            "Taxonomy",
+            "Nomenclature",
+            "Classification"
+        ]
+    },
+    {
+        chapter: "Biological Classification",
+        topics: [
+            "Kingdom Monera",
+            "Kingdom Protista",
+            "Kingdom Fungi",
+            "Viruses & Viroids"
+        ]
+    },
+    {
+        chapter: "Plant Kingdom",
+        topics: [
+            "Algae",
+            "Bryophytes",
+            "Pteridophytes",
+            "Gymnosperms",
+            "Angiosperms"
+        ]
+    }
 ],
-
 
 mcqs: [
 
