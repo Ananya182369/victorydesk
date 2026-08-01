@@ -9,6 +9,8 @@
 
 <link rel="stylesheet" href="../style.css">
 
+<script src="../data/neet.js"></script>
+
 </head>
 
 <body>
@@ -126,47 +128,33 @@ const chapterSection = document.querySelector(".grid:last-of-type");
 let chapters = [];
 
 if(exam==="NEET" && subject.includes("Biology")){
-chapters=[
-"🧬 Cell",
-"🫀 Human Physiology",
-"🧠 Genetics",
-"🌱 Plant Physiology",
-"🦠 Biotechnology",
-"🧪 Ecology"
-];
+
+chapters = neetData.Biology.notes.map(item => item.chapter);
+
 }
 
 else if(exam==="NEET" && subject.includes("Chemistry")){
-chapters=[
-"⚗️ Organic Chemistry",
-"🧪 Inorganic Chemistry",
-"⚛ Physical Chemistry",
-"🧫 Solutions",
-"⚡ Electrochemistry",
-"🔥 Thermodynamics"
-];
+
+chapters = neetData.Chemistry.notes.map(item => item.chapter);
+
 }
 
 else if(exam==="NEET" && subject.includes("Physics")){
-chapters=[
-"⚡ Mechanics",
-"💡 Current Electricity",
-"🌍 Gravitation",
-"🌊 Waves",
-"🔋 Magnetism",
-"☀ Modern Physics"
-];
+
+chapters = neetData.Physics.notes.map(item => item.chapter);
+
 }
 
-chapterSection.innerHTML="";
+
+chapterSection.innerHTML = "";
 
 chapters.forEach(chapter=>{
 
-chapterSection.innerHTML+=`
+chapterSection.innerHTML += `
 
 <div class="card" onclick="openNotes('${chapter}')">
 
-<h3>${chapter}</h3>
+<h3>📖 ${chapter}</h3>
 
 </div>
 

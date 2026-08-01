@@ -152,7 +152,7 @@ document.getElementById("subjectName").innerHTML = subject;
 document.getElementById("examName").innerHTML = exam;
 
 document.getElementById("chapterName").innerHTML =
-chapter;
+chapter || "Chapter Notes";
 
 let notes = [];
 
@@ -193,4 +193,9 @@ notes.forEach(item => {
 });
 
 document.getElementById("notesList").innerHTML = html;
+
+if(html === ""){
+    document.getElementById("notesList").innerHTML =
+    "<li>Notes coming soon...</li>";
+}
 

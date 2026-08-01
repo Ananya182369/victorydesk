@@ -30,7 +30,43 @@ notes: [
             "Gymnosperms",
             "Angiosperms"
         ]
-    }
+    },
+{
+    chapter: "Animal Kingdom",
+    topics: [
+        "Basis of Classification",
+        "Porifera",
+        "Cnidaria",
+        "Platyhelminthes",
+        "Nematoda",
+        "Annelida",
+        "Arthropoda",
+        "Mollusca",
+        "Echinodermata",
+        "Chordata"
+    ]
+},
+{
+    chapter: "Morphology of Flowering Plants",
+    topics: [
+        "Root",
+        "Stem",
+        "Leaf",
+        "Flower",
+        "Fruit",
+        "Seed"
+    ]
+},
+{
+    chapter: "Anatomy of Flowering Plants",
+    topics: [
+        "Tissues",
+        "Dicot Root",
+        "Monocot Root",
+        "Secondary Growth"
+    ]
+}
+    
 ],
 
 mcqs: [
@@ -94,17 +130,33 @@ answer:"Nucleus"
 Chemistry:{
 
 notes:[
-
-"⚗️ Chemistry is divided into Organic, Inorganic and Physical Chemistry.",
-
-"🧪 Atoms combine to form molecules.",
-
-"⚛️ Every element has a unique atomic number.",
-
-"🔥 Chemical reactions involve breaking and forming bonds.",
-
-"💧 Water is H₂O."
-
+    {
+        chapter:"Some Basic Concepts of Chemistry",
+        topics:[
+            "Matter and its Classification",
+            "Atoms and Molecules",
+            "Mole Concept",
+            "Atomic Mass"
+        ]
+    },
+    {
+        chapter:"Structure of Atom",
+        topics:[
+            "Discovery of Electron",
+            "Atomic Models",
+            "Quantum Numbers",
+            "Electronic Configuration"
+        ]
+    },
+    {
+        chapter:"Chemical Bonding",
+        topics:[
+            "Ionic Bond",
+            "Covalent Bond",
+            "Molecular Structure",
+            "Hybridization"
+        ]
+    }
 ],
 
 mcqs:[],
@@ -136,17 +188,33 @@ answer:"Protons"
 Physics:{
 
 notes:[
-
-"⚡ Force is a push or pull.",
-
-"🚀 Newton's First Law explains inertia.",
-
-"📏 Speed is distance divided by time.",
-
-"🌍 Gravity attracts all objects toward Earth.",
-
-"💡 Energy can neither be created nor destroyed."
-
+    {
+        chapter:"Units and Measurements",
+        topics:[
+            "Physical Quantities",
+            "SI Units",
+            "Measurement Errors",
+            "Significant Figures"
+        ]
+    },
+    {
+        chapter:"Motion",
+        topics:[
+            "Distance and Displacement",
+            "Speed and Velocity",
+            "Acceleration",
+            "Equations of Motion"
+        ]
+    },
+    {
+        chapter:"Laws of Motion",
+        topics:[
+            "Newton's First Law",
+            "Newton's Second Law",
+            "Newton's Third Law",
+            "Momentum"
+        ]
+    }
 ],
 
 mcqs:[],
