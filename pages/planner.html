@@ -31,6 +31,20 @@ Plan your daily study schedule.
 
 <h2>🎯 Today's Plan</h2>
 
+<input 
+type="text"
+id="customTask"
+class="contact-input"
+placeholder="➕ Add your own task">
+
+<br><br>
+
+<button class="btn" onclick="addTask()">
+Add Task
+</button>
+
+<div id="customTasks"></div>
+
 <label>
 <input type="checkbox" id="task1">
 📖 Study 1 Chapter
@@ -100,7 +114,82 @@ document.getElementById("task3").checked);
 
 alert("✅ Study plan saved!");
 
+updateProgress();
+
 }
+
+function addTask(){
+
+let task =
+document.getElementById("customTask").value;
+
+if(task === ""){
+alert("Enter a task");
+return;
+}
+
+let tasks =
+JSON.parse(localStorage.getItem("customTasks")) || [];
+
+tasks.push(task);
+
+localStorage.setItem(
+"customTasks",
+JSON.stringify(tasks)
+);
+
+showTasks();
+
+document.getElementById("customTask").value="";
+
+}
+
+
+function showTasks(){
+
+let tasks =
+JSON.parse(localStorage.getItem("customTasks")) || [];
+
+let html="";
+
+tasks.forEach(task=>{
+
+html += `
+<p>📌 ${task}</p>
+`;
+
+});
+
+document.getElementById("customTasks").innerHTML = html;
+
+}
+
+showTasks();
+
+function updateProgress(){
+
+let completed = 0;
+
+if(document.getElementById("task1").checked)
+completed++;
+
+if(document.getElementById("task2").checked)
+completed++;
+
+if(document.getElementById("task3").checked)
+completed++;
+
+let percent = (completed / 3) * 100;
+
+document.getElementById("plannerProgress").style.width =
+percent + "%";
+
+document.getElementById("plannerText").innerHTML =
+percent + "% Completed";
+
+}
+
+updateProgress();
 
 </script>
 

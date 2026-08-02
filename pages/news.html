@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>VictoryDesk | Exam News</title>
+
+<link rel="stylesheet" href="../style.css">
+
+</head>
+
+<body>
+
+<div class="top-banner">
+📰 VictoryDesk Exam News
+</div>
+
+<header>
+
+<h1>Latest Exam Updates</h1>
+
+<p class="hero-text">
+Stay updated with official announcements.
+</p>
+
+<a href="dashboard.html" class="btn">
+⬅ Dashboard
+</a>
+
+</header>
+
+<section class="container">
+
+<div style="text-align:center;margin-bottom:30px;">
+
+<button class="btn" onclick="showNews('All')">All</button>
+
+<button class="btn" onclick="showNews('NEET')">NEET</button>
+
+<button class="btn" onclick="showNews('JEE')">JEE</button>
+
+<button class="btn" onclick="showNews('CUET')">CUET</button>
+
+</div>
+
+<input
+type="text"
+id="searchNews"
+class="contact-input"
+placeholder="🔍 Search News..."
+onkeyup="showNews('All')">
+
+<br><br>
+
+<div id="newsContainer"></div>
+
+</section>
+
+<script src="data/news.js"></script>
+
+<script>
+
+showNews("All");
+
+function showNews(filter){
+
+let html = "";
+
+const search =
+document.getElementById("searchNews").value.toLowerCase();
+
+newsData.forEach(item=>{
+
+if(filter !== "All" && item.category !== filter){
+
+return;
+
+}
+
+if(
+
+!item.title.toLowerCase().includes(search) &&
+!item.description.toLowerCase().includes(search)
+
+){
+return;
+}
+
+if(item.important){
+
+html += `
+
+<div class="card" style="border:3px solid red;">
+
+<h2>📌 ${item.title}</h2>
+
+<p>📅 ${item.date}</p>
+
+<p>📚 ${item.category}</p>
+
+<p>${item.description}</p>
+
+<span style="color:red;font-weight:bold;">
+🔥 Important Update
+</span>
+
+</div>
+
+`;
+
+}
+
+else{
+
+html += `
+
+<div class="card">
+
+<h2>${item.title}</h2>
+
+<p>📅 ${item.date}</p>
+
+<p>📚 ${item.category}</p>
+
+<p>${item.description}</p>
+
+${item.important ? "<span style='color:red;font-weight:bold;'>🔥 Important Update</span>" : ""}
+
+</div>
+
+`;
+
+}
+
+});
+
+document.getElementById("newsContainer").innerHTML = html;
+
+}
+
+</script>
+
+</body>
+
+</html>
