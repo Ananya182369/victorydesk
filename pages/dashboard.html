@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>VictoryDesk | Dashboard</title>
+
+<link rel="stylesheet" href="../style.css">
+
+</head>
+
+<body>
+
+<div class="top-banner">
+🏆 VictoryDesk Dashboard
+</div>
+
+<header>
+
+<h1>
+Welcome Back 👋
+</h1>
+
+<p class="hero-text">
+Track your preparation and continue your studies.
+</p>
+
+</header>
+
+<section class="container">
+
+<div class="card">
+
+<h2>🎉 Daily Motivation</h2>
+
+<p>
+"Small daily improvements lead to remarkable results."
+</p>
+
+</div>
+
+</section>
+
+<section class="container">
+
+<div class="grid">
+
+<div class="card">
+<h3>📚 Continue Study</h3>
+<p>Resume your last subject.</p>
+</div>
+
+<div class="card">
+<h3>📈 Overall Progress</h3>
+
+<div style="width:100%;background:#ddd;border-radius:10px;height:15px;margin:15px 0;">
+
+<div id="progressBar"
+style="width:0%;height:15px;background:green;border-radius:10px;">
+</div>
+
+</div>
+
+<p id="progressText">0%</p>
+</div>
+
+<div class="card">
+<h3>🔥 Study Streak</h3>
+<p>0 Days</p>
+</div>
+
+<div class="card">
+<h3>🎯 Today's Goal</h3>
+<p>Complete 1 Chapter</p>
+</div>
+
+<div class="card">
+<h3>🧪 Last Mock Test</h3>
+<p>Not Attempted Yet</p>
+</div>
+
+<div class="card">
+<h3>📖 Last Studied</h3>
+<p id="lastStudy">
+No Subject Opened
+</p>
+</div>
+
+<div class="card">
+<h3>🏆 Achievements</h3>
+<p>0 Badges Earned</p>
+</div>
+
+<div class="card">
+<h3>🤖 Victory AI</h3>
+<p>Ask doubts instantly (Coming Soon)</p>
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>⚡ Quick Actions</h2>
+
+<a href="exam.html" class="btn">📚 Study Now</a>
+
+<a href="mocktest.html" class="btn">🧪 Mock Test</a>
+
+<a href="victoryai.html" class="btn">🤖 Victory AI</a>
+
+<button class="btn" onclick="continueStudy()">
+📖 Continue Study
+</button>
+
+</div>
+
+</section>
+
+<script>
+
+    const lastExam = localStorage.getItem("lastExam");
+const lastSubject = localStorage.getItem("lastSubject");
+
+let progress =
+Number(localStorage.getItem("progress")) || 0;
+
+document.getElementById("progressBar").style.width =
+progress + "%";
+
+document.getElementById("progressText").innerHTML =
+progress + "% Completed";
+
+if(lastExam && lastSubject){
+
+document.getElementById("lastStudy").innerHTML =
+lastExam + " • " + lastSubject;
+
+}
+
+function continueStudy(){
+
+if(lastExam && lastSubject){
+
+window.location.href =
+"subject.html?exam=" +
+encodeURIComponent(lastExam) +
+"&subject=" +
+encodeURIComponent(lastSubject);
+
+}
+
+else{
+
+alert("📚 Open a subject first.");
+
+}
+
+}
+
+</script>
+
+</body>
+</html>

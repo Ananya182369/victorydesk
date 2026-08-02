@@ -176,6 +176,11 @@ const params = new URLSearchParams(window.location.search);
 const exam = params.get("exam");
 const subject = params.get("subject");
 
+localStorage.setItem("lastExam", exam);
+localStorage.setItem("lastSubject", subject);
+
+localStorage.setItem("progress", "5");
+
 document.getElementById("subjectHeading").innerHTML =
 exam + " • " + subject;
 

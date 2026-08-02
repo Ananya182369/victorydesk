@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VictoryDesk | Study Planner</title>
+<link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+
+<div class="top-banner">
+📅 VictoryDesk Study Planner
+</div>
+
+<header>
+
+<h1>Study Planner</h1>
+
+<p class="hero-text">
+Plan your daily study schedule.
+</p>
+
+<a href="dashboard.html" class="btn">⬅ Dashboard</a>
+
+</header>
+
+<section class="container">
+
+<div class="card">
+
+<h2>🎯 Today's Plan</h2>
+
+<label>
+<input type="checkbox" id="task1">
+📖 Study 1 Chapter
+</label>
+
+<br><br>
+
+<label>
+<input type="checkbox" id="task2">
+❓ Solve 20 MCQs
+</label>
+
+<br><br>
+
+<label>
+<input type="checkbox" id="task3">
+🧪 Attempt 1 Mock Test
+</label>
+
+<br><br>
+
+<button class="btn" onclick="saveTasks()">
+💾 Save Progress
+</button>
+
+<br><br>
+
+<h3>📊 Today's Progress</h3>
+
+<div style="width:100%;background:#ddd;border-radius:10px;height:15px;">
+
+<div id="plannerProgress"
+style="width:0%;height:15px;border-radius:10px;">
+</div>
+
+</div>
+
+<p id="plannerText">
+0% Completed
+</p>
+
+</div>
+
+</section>
+
+<script>
+
+document.getElementById("task1").checked =
+localStorage.getItem("task1") === "true";
+
+document.getElementById("task2").checked =
+localStorage.getItem("task2") === "true";
+
+document.getElementById("task3").checked =
+localStorage.getItem("task3") === "true";
+
+function saveTasks(){
+
+localStorage.setItem("task1",
+document.getElementById("task1").checked);
+
+localStorage.setItem("task2",
+document.getElementById("task2").checked);
+
+localStorage.setItem("task3",
+document.getElementById("task3").checked);
+
+alert("✅ Study plan saved!");
+
+}
+
+</script>
+
+</body>
+</html>
