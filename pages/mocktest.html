@@ -128,6 +128,32 @@ if(timeLeft < 0){
 
 clearInterval(timer);
 
+const percentage = Math.round((score / questions.length) * 100);
+
+// Total mock tests attempted
+let totalMocks =
+Number(localStorage.getItem("totalMocks")) || 0;
+
+totalMocks++;
+
+localStorage.setItem("totalMocks", totalMocks);
+
+// Best score percentage
+let bestScore =
+Number(localStorage.getItem("bestScore")) || 0;
+
+if (percentage > bestScore) {
+    localStorage.setItem("bestScore", percentage);
+}
+
+// Last score
+localStorage.setItem("lastScore", percentage);
+
+// Last attempt date
+const today = new Date().toLocaleDateString();
+
+localStorage.setItem("lastMockDate", today);
+
 finishTest();
 
 }
@@ -241,6 +267,8 @@ loadQuestion();
 
 else{
 
+    localStorage.setItem("firstMockCompleted","true");
+
 finishTest();
 
 }
@@ -260,7 +288,7 @@ document.querySelector(".container").innerHTML = `
 <h2>Your Score: ${score} / ${questions.length}</h2>
 
 <h3>
-Percentage: ${Math.round((score / questions.length) * 100)}%
+Percentage: ${percentage}%
 </h3>
 
 <p>

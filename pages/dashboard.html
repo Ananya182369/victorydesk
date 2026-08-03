@@ -41,11 +41,66 @@ Track your preparation and continue your studies.
 
 </div>
 
+<div class="card">
+
+<h2>📊 Your Progress</h2>
+
+<div class="progress-box">
+    <div class="progress-header">
+        <span>Overall Progress</span>
+        <span id="progressPercent">0%</span>
+    </div>
+
+    <div class="progress-bar">
+        <div id="progressFill" class="progress-fill"></div>
+    </div>
+</div>
+
+<p id="achievementText">
+Loading...
+</p>
+
+</div>
+
 </section>
+
+<div class="stats-row">
+
+<div class="stat-box">
+<h3 id="totalSubjects">0</h3>
+<p>Subjects</p>
+</div>
+
+<div class="stat-box">
+<h3 id="totalProgress">0%</h3>
+<p>Progress</p>
+</div>
+
+<div class="stat-box">
+<h3 id="totalAchievements">0</h3>
+<p>Achievements</p>
+</div>
+
+</div>
 
 <section class="container">
 
 <div class="grid">
+
+    <div class="card">
+<h3>📝 Mock Tests</h3>
+<p id="mockCount">0 Completed</p>
+</div>
+
+<div class="card">
+<h3>🏆 Achievement %</h3>
+<p id="achievementPercent">0%</p>
+</div>
+
+<div class="card">
+<h3>⭐ Study Score</h3>
+<p id="studyScore">0 Points</p>
+</div>
 
 <div class="card">
 <h3>📚 Continue Study</h3>
@@ -55,20 +110,17 @@ Track your preparation and continue your studies.
 <div class="card">
 <h3>📈 Overall Progress</h3>
 
-<div style="width:100%;background:#ddd;border-radius:10px;height:15px;margin:15px 0;">
 
-<div id="progressBar"
-style="width:0%;height:15px;background:green;border-radius:10px;">
-</div>
-
-</div>
-
-<p id="progressText">0%</p>
 </div>
 
 <div class="card">
 <h3>🔥 Study Streak</h3>
-<p>0 Days</p>
+
+<p id="studyStreak">0 Days</p>
+
+<small id="streakMessage">
+Start your study journey 🚀
+</small>
 </div>
 
 <div class="card">
@@ -78,19 +130,40 @@ style="width:0%;height:15px;background:green;border-radius:10px;">
 
 <div class="card">
 <h3>🧪 Last Mock Test</h3>
-<p>Not Attempted Yet</p>
-</div>
 
-<div class="card">
-<h3>📖 Last Studied</h3>
-<p id="lastStudy">
-No Subject Opened
+<p id="lastMock">
+Not Attempted Yet
+</p>
+
+<p id="bestScore">
+Best Score: --
 </p>
 </div>
 
 <div class="card">
+<h3>📖 Last Studied</h3>
+
+<p id="lastStudy">
+No Subject Opened
+</p>
+
+<hr style="margin:15px 0;">
+
+<h4>🕒 Recent Activity</h4>
+
+<p id="lastStudyDate">
+Last Study: Not Available
+</p>
+
+<p id="recentActivity">
+No Recent Activity
+</p>
+
+</div>
+
+<div class="card">
 <h3>🏆 Achievements</h3>
-<p>0 Badges Earned</p>
+<p id="badgeCount">0 Badges Earned</p>
 </div>
 
 <div class="card">
@@ -106,6 +179,16 @@ No Subject Opened
 
 <a href="planner.html" class="btn">
 📅 Study Planner
+</a>
+
+<a href="achievements.html" class="feature-card">
+
+🏆
+
+<h3>Achievements</h3>
+
+<p>Unlock badges and track your progress.</p>
+
 </a>
 
 <a href="exam.html" class="btn">📚 Study Now</a>
@@ -127,25 +210,40 @@ No Subject Opened
     const lastExam = localStorage.getItem("lastExam");
 const lastSubject = localStorage.getItem("lastSubject");
 
+const lastStudyDate =
+localStorage.getItem("lastStudyDate");
+
+if(lastStudyDate){
+
+document.getElementById("lastStudyDate").textContent =
+"Last Study: " + lastStudyDate;
+
+}
+
 let progress =
 Number(localStorage.getItem("progress")) || 0;
 
 document.getElementById("progressBar").style.width =
 progress + "%";
 
-document.getElementById("progressText").innerHTML =
-progress + "% Completed";
+
 
 if(lastExam && lastSubject){
 
 document.getElementById("lastStudy").innerHTML =
 lastExam + " • " + lastSubject;
 
+document.getElementById("recentActivity").textContent =
+"Opened " + lastSubject + " (" + lastExam + ")";
+
 }
 
 function continueStudy(){
 
 if(lastExam && lastSubject){
+
+    document.getElementById("recentActivity").textContent =
+"Opened " + lastSubject + " (" + lastExam + ")";
 
 window.location.href =
 "subject.html?exam=" +
@@ -160,6 +258,126 @@ else{
 alert("📚 Open a subject first.");
 
 }
+
+}
+
+</script>
+
+<script>
+
+let completed = 0;
+
+let streak = Number(localStorage.getItem("studyStreak")) || 0;
+
+document.getElementById("studyStreak").textContent =
+streak + " Days";
+
+if(streak >= 7){
+
+document.getElementById("streakMessage").textContent =
+"🔥 Amazing! 7 day streak completed";
+
+}
+else if(streak >= 3){
+
+document.getElementById("streakMessage").textContent =
+"⭐ Great consistency! Keep going";
+
+}
+else if(streak > 0){
+
+document.getElementById("streakMessage").textContent =
+"📚 Keep building your streak";
+
+}
+
+if(localStorage.getItem("firstMockCompleted")){
+
+completed++;
+
+}
+
+if(localStorage.getItem("firstMockCompleted") && streak === 0){
+
+streak = 1;
+
+localStorage.setItem("studyStreak", streak);
+
+document.getElementById("studyStreak").textContent =
+streak + " Days";
+
+}
+
+document.getElementById("achievementText").innerHTML =
+completed + " Achievement Completed";
+
+const totalAchievements = 10;
+
+const percent = Math.round((completed / totalAchievements) * 100);
+
+document.getElementById("progressPercent").textContent =
+percent + "%";
+
+setTimeout(()=>{
+
+document.getElementById("progressFill").style.width =
+percent + "%";
+
+},300);
+
+document.getElementById("mockCount").textContent =
+completed + " Completed";
+
+document.getElementById("achievementPercent").textContent =
+percent + "%";
+
+document.getElementById("totalSubjects").textContent = 3;
+document.getElementById("totalProgress").textContent = progress + "%";
+document.getElementById("totalAchievements").textContent = completed;
+
+const score = (completed * 100) + (streak * 20);
+
+document.getElementById("studyScore").textContent =
+score + " Points";
+
+const totalMocks =
+Number(localStorage.getItem("totalMocks")) || 0;
+
+const bestMockScore =
+Number(localStorage.getItem("bestScore")) || 0;
+
+
+if(totalMocks > 0){
+
+document.getElementById("lastMock").textContent =
+`${totalMocks} Test(s) Attempted`;
+
+document.getElementById("bestScore").textContent =
+`Best Score: ${bestMockScore}%`;
+
+}
+else{
+
+document.getElementById("lastMock").textContent =
+"Not Attempted Yet";
+
+document.getElementById("bestScore").textContent =
+"Best Score: --";
+
+let totalSubjects = 0;
+
+if(lastExam && lastSubject){
+    totalSubjects = 1;
+}
+
+document.getElementById("totalSubjects").textContent =
+totalSubjects;
+
+document.getElementById("totalProgress").textContent =
+percent + "%";
+
+document.getElementById("totalAchievements").textContent =
+completed;
 
 }
 

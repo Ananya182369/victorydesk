@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>VictoryDesk | Achievements</title>
+
+<link rel="stylesheet" href="../style.css">
+
+</head>
+
+<body>
+
+<div class="top-banner">
+🏆 VictoryDesk Achievements
+</div>
+
+<header>
+
+<h1>Your Achievements</h1>
+
+<p class="hero-text">
+Unlock badges by completing your study goals.
+</p>
+
+<a href="dashboard.html" class="btn">
+⬅ Dashboard
+</a>
+
+</header>
+
+<section class="container">
+
+<div id="badgeContainer"></div>
+
+</section>
+
+<script src="data/badges.js"></script>
+
+<script>
+
+let html = "";
+
+if(localStorage.getItem("firstMockCompleted")){
+
+badges[0].unlocked = true;
+
+}
+
+badges.forEach(item=>{
+
+html += `
+
+<div class="card">
+
+<h2>${item.icon} ${item.title}</h2>
+
+<p>${item.description}</p>
+
+<p>
+
+${item.unlocked ? "✅ Unlocked" : "🔒 Locked"}
+
+</p>
+
+</div>
+
+`;
+
+});
+
+document.getElementById("badgeContainer").innerHTML = html;
+
+</script>
+
+</body>
+
+</html>
