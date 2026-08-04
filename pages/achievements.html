@@ -47,6 +47,43 @@ let html = "";
 let unlockedCount = 0;
 
 if(localStorage.getItem("firstMockCompleted")){
+    
+    // XP + Streak Based Unlock System
+
+let xp =
+Number(localStorage.getItem("xp")) || 0;
+
+let streak =
+Number(localStorage.getItem("studyStreak")) || 0;
+
+
+// First Mock
+if(localStorage.getItem("firstMockCompleted")){
+    badges[0].unlocked = true;
+}
+
+
+// 7 Day Streak
+if(streak >= 7){
+    badges[1].unlocked = true;
+}
+
+
+// XP Champion
+if(xp >= 500){
+    badges[5].unlocked = true;
+}
+
+
+// Victory Champion
+let unlockedBadges = badges.filter(
+item => item.unlocked
+).length;
+
+
+if(unlockedBadges === badges.length - 1){
+    badges[5].unlocked = true;
+}
 
 badges[0].unlocked = true;
 

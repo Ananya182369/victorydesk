@@ -184,10 +184,18 @@ No Recent Activity
 
 <div class="card">
 
-<h3>⏰ Focus Time</h3>
+<h3>🏆 Leaderboard</h3>
 
-<p id="focusSessions">
-0 Sessions Completed
+<p>
+🥇 You
+</p>
+
+<p id="leaderXP">
+XP: 0
+</p>
+
+<p id="leaderLevel">
+Level: Beginner
 </p>
 
 </div>
@@ -199,6 +207,10 @@ No Recent Activity
 <p id="focusSessions">
 0 Sessions Completed
 </p>
+
+</div>
+
+<div class="card">
 
 </div>
 
@@ -450,47 +462,88 @@ Number(localStorage.getItem("totalMocks")) || 0;
 
 const score = (completed * 100) + (streak * 20);
 
-let level = "Beginner";
-
-if(score >= 1000){
-    level = "Expert";
-}
-else if(score >= 500){
-    level = "Intermediate";
-}
-
-document.getElementById("studyScore").textContent =
-score + " Points • " + level;
-
-document.getElementById("studyScore").textContent =
-score + " Points";
-
-document.getElementById("analyticsScore").textContent =
-score;
-
-const badgeCount = completed;
-
 const focusSessions =
 Number(localStorage.getItem("focusSessions")) || 0;
 
 const focusHours = (focusSessions * 25) / 60;
 
+let xp =
+Number(localStorage.getItem("xp")) || 0;
+
+xp += (completed * 100);
+xp += (focusSessions * 20);
+
+localStorage.setItem("xp", xp);
+
+let level = "Beginner";
+
+if (xp >= 1000) {
+    level = "Expert";
+}
+else if (xp >= 500) {
+    level = "Intermediate";
+}
+
 document.getElementById("studyScore").textContent =
-score + " Points • " +
-focusHours.toFixed(1) + "h Focus";
+`XP: ${xp} • ${level} • ${focusHours.toFixed(1)}h Focus`;
+
+// Leaderboard System
+
+let playerLevel = "Beginner";
+
+if(xp >= 1000){
+    playerLevel = "Expert";
+}
+else if(xp >= 500){
+    playerLevel = "Intermediate";
+}
+else if(xp >= 100){
+    playerLevel = "Starter";
+}
+
+
+document.getElementById("leaderXP").textContent =
+"⭐ XP: " + xp;
+
+
+document.getElementById("leaderLevel").textContent =
+"🏅 Level: " + playerLevel;
+
+document.getElementById("analyticsScore").textContent =
+score;
 
 document.getElementById("focusSessions").textContent =
 focusSessions + " Sessions Completed";
 
-document.getElementById("badgeCount").textContent =
-badgeCount + " Badges Earned";
+let badgeCount = 0;
 
-if(badgeCount >= 5){
+let badges = [];
+
+if(localStorage.getItem("firstMockCompleted")){
+    badges.push("🥉 First Mock Completed");
+}
+
+if(streak >= 7){
+    badges.push("🔥 7 Day Streak");
+}
+
+if(completed >= 5){
+    badges.push("🧠 Quiz Master");
+}
+
+if(xp >= 500){
+    badges.push("⭐ XP Champion");
+}
+
+badgeCount = badges.length;
+
+localStorage.setItem(
+"badges",
+JSON.stringify(badges)
+);
 
 document.getElementById("badgeCount").textContent =
 "🏆 " + badgeCount + " Badges Earned";
-
-}
 
 
 // Progress Analytics
