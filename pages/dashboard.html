@@ -74,7 +74,11 @@ Loading...
 
 <h2>📈 Performance Analytics</h2>
 
+<div class="chart-box">
+
 <canvas id="progressChart"></canvas>
+
+</div>
 
 </div>
 
@@ -195,21 +199,28 @@ No Recent Activity
 <h3 id="analyticsStudy">
 0
 </h3>
-<p>Subjects Started</p>
+<p>📚 Subjects Started</p>
 </div>
 
 <div class="analytics-card">
 <h3 id="analyticsMock">
 0
 </h3>
-<p>Tests Attempted</p>
+<p>🧪 Tests Attempted</p>
 </div>
 
 <div class="analytics-card">
 <h3 id="analyticsStreak">
 0
 </h3>
-<p>Current Streak</p>
+<p>🔥 Current Streak</p>
+</div>
+
+<div class="analytics-card">
+<h3 id="analyticsScore">
+0
+</h3>
+<p>⭐ Study Score</p>
 </div>
 
 </div>
@@ -433,6 +444,9 @@ score + " Points • " + level;
 
 document.getElementById("studyScore").textContent =
 score + " Points";
+
+document.getElementById("analyticsScore").textContent =
+score;
 
 const badgeCount = completed;
 

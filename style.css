@@ -349,38 +349,30 @@ transition:.3s;
 }
 
 .analytics-card{
-
-background:white;
-padding:25px;
-border-radius:18px;
-text-align:center;
-box-shadow:0 10px 25px rgba(0,0,0,.08);
-transition:.3s;
-border:1px solid #e5e7eb;
-
+    background:white;
+    padding:25px;
+    border-radius:18px;
+    text-align:center;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+    transition:.3s;
+    border:2px solid transparent;
 }
 
 .analytics-card:hover{
-
-transform:translateY(-8px);
-
-box-shadow:0 15px 35px rgba(16,185,129,.18);
-
+    transform:translateY(-8px);
+    border-color:#10b981;
+    box-shadow:0 15px 35px rgba(16,185,129,.18);
 }
 
 .analytics-card h3{
-
-font-size:32px;
-color:#10b981;
-margin-bottom:10px;
-
+    font-size:32px;
+    color:#2563eb;
+    margin-bottom:10px;
 }
 
 .analytics-card p{
-
-color:#555;
-font-weight:600;
-
+    font-size:16px;
+    color:#555;
 }
 
 .stat-box:hover{
@@ -437,6 +429,19 @@ header h1{
 }
 
 }
+
+.stats-row{
+    grid-template-columns:1fr;
+}
+
+.chart-box{
+    padding:15px;
+}
+
+.analytics-card{
+    width:100%;
+}
+
 @keyframes gradientMove{
     0%{
         background-position:0% 50%;
@@ -1228,4 +1233,16 @@ height:auto;
 .analytics-card p{
     color:#666;
     font-weight:600;
+}
+
+.chart-box{
+    background:white;
+    padding:25px;
+    border-radius:18px;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+    margin-top:20px;
+}
+
+.chart-box canvas{
+    max-height:350px;
 }
