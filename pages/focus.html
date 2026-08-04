@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>VictoryDesk | Focus Mode</title>
+
+<link rel="stylesheet" href="../style.css">
+
+</head>
+
+<body>
+
+<div class="top-banner">
+⏰ VictoryDesk Focus Mode
+</div>
+
+<header>
+
+<h1>Focus Mode</h1>
+
+<p class="hero-text">
+Stay focused and complete your study session.
+</p>
+
+<a href="dashboard.html" class="btn">
+⬅ Dashboard
+</a>
+
+</header>
+
+
+<section class="container">
+
+<div class="card">
+
+<h2>⏱ Study Timer</h2>
+
+<h1 id="timer">
+25:00
+</h1>
+
+<div class="focus-modes">
+
+<button class="btn" onclick="setFocusMode(25)">
+🍅 Focus
+</button>
+
+<button class="btn" onclick="setFocusMode(5)">
+☕ Short Break
+</button>
+
+<button class="btn" onclick="setFocusMode(15)">
+🌴 Long Break
+</button>
+
+</div>
+
+<button class="btn" onclick="startTimer()">
+▶ Start
+</button>
+
+<button class="btn" onclick="pauseTimer()">
+⏸ Pause
+</button>
+
+<button class="btn" onclick="resetTimer()">
+🔄 Reset
+</button>
+
+</div>
+
+
+<div class="card">
+
+<h3>📊 Focus Sessions</h3>
+
+<p id="sessionCount">
+0 Sessions Completed
+</p>
+
+<p id="focusGoal">
+🎯 Daily Goal: 4 Focus Sessions
+</p>
+
+</div>
+
+</section>
+
+
+<script src="focus.js"></script>
+
+</body>
+
+</html>

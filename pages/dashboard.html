@@ -183,6 +183,26 @@ No Recent Activity
 </div>
 
 <div class="card">
+
+<h3>⏰ Focus Time</h3>
+
+<p id="focusSessions">
+0 Sessions Completed
+</p>
+
+</div>
+
+<div class="card">
+
+<h3>⏰ Focus Time</h3>
+
+<p id="focusSessions">
+0 Sessions Completed
+</p>
+
+</div>
+
+<div class="card">
 <h3>🤖 Victory AI</h3>
 <p>Ask doubts instantly (Coming Soon)</p>
 </div>
@@ -449,6 +469,18 @@ document.getElementById("analyticsScore").textContent =
 score;
 
 const badgeCount = completed;
+
+const focusSessions =
+Number(localStorage.getItem("focusSessions")) || 0;
+
+const focusHours = (focusSessions * 25) / 60;
+
+document.getElementById("studyScore").textContent =
+score + " Points • " +
+focusHours.toFixed(1) + "h Focus";
+
+document.getElementById("focusSessions").textContent =
+focusSessions + " Sessions Completed";
 
 document.getElementById("badgeCount").textContent =
 badgeCount + " Badges Earned";
