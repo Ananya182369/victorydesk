@@ -44,6 +44,8 @@ Unlock badges by completing your study goals.
 
 let html = "";
 
+let unlockedCount = 0;
+
 if(localStorage.getItem("firstMockCompleted")){
 
 badges[0].unlocked = true;
@@ -51,6 +53,10 @@ badges[0].unlocked = true;
 }
 
 badges.forEach(item=>{
+
+    if(item.unlocked){
+    unlockedCount++;
+}
 
 html += `
 
@@ -73,6 +79,20 @@ ${item.unlocked ? "✅ Unlocked" : "🔒 Locked"}
 });
 
 document.getElementById("badgeContainer").innerHTML = html;
+
+html =
+`
+<div class="card">
+
+<h2>🏆 Achievement Summary</h2>
+
+<p>
+Unlocked Badges: ${unlockedCount} / ${badges.length}
+</p>
+
+</div>
+`
++ html;
 
 </script>
 

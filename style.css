@@ -348,6 +348,41 @@ box-shadow:0 10px 25px rgba(37,99,235,.25);
 transition:.3s;
 }
 
+.analytics-card{
+
+background:white;
+padding:25px;
+border-radius:18px;
+text-align:center;
+box-shadow:0 10px 25px rgba(0,0,0,.08);
+transition:.3s;
+border:1px solid #e5e7eb;
+
+}
+
+.analytics-card:hover{
+
+transform:translateY(-8px);
+
+box-shadow:0 15px 35px rgba(16,185,129,.18);
+
+}
+
+.analytics-card h3{
+
+font-size:32px;
+color:#10b981;
+margin-bottom:10px;
+
+}
+
+.analytics-card p{
+
+color:#555;
+font-weight:600;
+
+}
+
 .stat-box:hover{
 transform:translateY(-8px);
 }
@@ -1167,4 +1202,30 @@ height:auto;
     background:linear-gradient(90deg,#10b981,#2563eb);
     border-radius:20px;
     transition:width 1s ease;
+}
+
+/* Progress Analytics */
+
+.analytics-card{
+    background:white;
+    padding:25px;
+    border-radius:18px;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+    text-align:center;
+    transition:.3s;
+}
+
+.analytics-card:hover{
+    transform:translateY(-8px);
+}
+
+.analytics-card h3{
+    font-size:32px;
+    color:#10b981;
+    margin-bottom:10px;
+}
+
+.analytics-card p{
+    color:#666;
+    font-weight:600;
 }

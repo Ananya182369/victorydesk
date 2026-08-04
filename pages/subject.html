@@ -185,7 +185,14 @@ const subject = params.get("subject");
 localStorage.setItem("lastExam", exam);
 localStorage.setItem("lastSubject", subject);
 
-localStorage.setItem("progress", "5");
+let currentProgress =
+Number(localStorage.getItem("progress")) || 0;
+
+if(currentProgress < 100){
+    currentProgress = Math.min(currentProgress + 5, 100);
+}
+
+localStorage.setItem("progress", currentProgress);
 
 // Study Streak Tracker
 
@@ -278,6 +285,21 @@ chapterSection.innerHTML += `
 });
 
 function openNotes(chapter){
+
+let currentProgress =
+Number(localStorage.getItem("progress")) || 0;
+
+if(currentProgress < 100){
+    currentProgress += 10;
+    localStorage.setItem("progress", currentProgress);
+}
+
+let progress =
+Number(localStorage.getItem("progress")) || 0;
+
+progress = Math.min(progress + 10, 100);
+
+localStorage.setItem("progress", progress);
 
 window.location.href=
 "notes.html?exam="+

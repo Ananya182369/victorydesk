@@ -128,31 +128,7 @@ if(timeLeft < 0){
 
 clearInterval(timer);
 
-const percentage = Math.round((score / questions.length) * 100);
 
-// Total mock tests attempted
-let totalMocks =
-Number(localStorage.getItem("totalMocks")) || 0;
-
-totalMocks++;
-
-localStorage.setItem("totalMocks", totalMocks);
-
-// Best score percentage
-let bestScore =
-Number(localStorage.getItem("bestScore")) || 0;
-
-if (percentage > bestScore) {
-    localStorage.setItem("bestScore", percentage);
-}
-
-// Last score
-localStorage.setItem("lastScore", percentage);
-
-// Last attempt date
-const today = new Date().toLocaleDateString();
-
-localStorage.setItem("lastMockDate", today);
 
 finishTest();
 
@@ -278,6 +254,30 @@ finishTest();
 function finishTest(){
 
 clearInterval(timer);
+
+const percentage =
+Math.round((score / questions.length) * 100);
+
+let totalMocks =
+Number(localStorage.getItem("totalMocks")) || 0;
+
+totalMocks++;
+
+localStorage.setItem("totalMocks", totalMocks);
+
+let bestScore =
+Number(localStorage.getItem("bestScore")) || 0;
+
+if(percentage > bestScore){
+    localStorage.setItem("bestScore", percentage);
+}
+
+localStorage.setItem("lastScore", percentage);
+
+localStorage.setItem(
+    "lastMockDate",
+    new Date().toLocaleDateString()
+);
 
 document.querySelector(".container").innerHTML = `
 
