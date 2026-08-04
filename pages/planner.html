@@ -72,6 +72,20 @@ Add Task
 
 <br><br>
 
+<div class="card">
+
+<h3>🎯 Goal Summary</h3>
+
+<p>
+Total Goals: <span id="totalGoals">3</span>
+</p>
+
+<p>
+Completed Goals: <span id="completedGoals">0</span>
+</p>
+
+</div>
+
 <h3>📊 Today's Progress</h3>
 
 <div style="width:100%;background:#ddd;border-radius:10px;height:15px;">
@@ -85,6 +99,37 @@ style="width:0%;height:15px;border-radius:10px;">
 <p id="plannerText">
 0% Completed
 </p>
+
+<br><br>
+
+<div class="card">
+
+<h3>🔁 Revision Tracker</h3>
+
+<label>
+<input type="checkbox" id="revision1">
+📖 Revise Chapter Notes
+</label>
+
+<br><br>
+
+<label>
+<input type="checkbox" id="revision2">
+❓ Revise Important MCQs
+</label>
+
+<br><br>
+
+<label>
+<input type="checkbox" id="revision3">
+📝 Revise Previous Mistakes
+</label>
+
+<p id="revisionProgress">
+0/3 Revision Completed
+</p>
+
+</div>
 
 </div>
 
@@ -101,10 +146,24 @@ localStorage.getItem("task2") === "true";
 document.getElementById("task3").checked =
 localStorage.getItem("task3") === "true";
 
+document.getElementById("revision1").checked =
+localStorage.getItem("revision1") === "true";
+
+document.getElementById("revision2").checked =
+localStorage.getItem("revision2") === "true";
+
+document.getElementById("revision3").checked =
+localStorage.getItem("revision3") === "true";
+
 function saveTasks(){
 
 localStorage.setItem("task1",
 document.getElementById("task1").checked);
+
+localStorage.setItem(
+"lastPlannerUpdate",
+new Date().toDateString()
+);
 
 localStorage.setItem("task2",
 document.getElementById("task2").checked);
@@ -113,6 +172,21 @@ localStorage.setItem("task3",
 document.getElementById("task3").checked);
 
 alert("✅ Study plan saved!");
+
+localStorage.setItem(
+"revision1",
+document.getElementById("revision1").checked
+);
+
+localStorage.setItem(
+"revision2",
+document.getElementById("revision2").checked
+);
+
+localStorage.setItem(
+"revision3",
+document.getElementById("revision3").checked
+);
 
 updateProgress();
 
@@ -170,6 +244,20 @@ function updateProgress(){
 
 let completed = 0;
 
+let revisionCompleted = 0;
+
+if(document.getElementById("revision1").checked)
+revisionCompleted++;
+
+if(document.getElementById("revision2").checked)
+revisionCompleted++;
+
+if(document.getElementById("revision3").checked)
+revisionCompleted++;
+
+document.getElementById("revisionProgress").innerHTML =
+revisionCompleted + "/3 Revision Completed";
+
 if(document.getElementById("task1").checked)
 completed++;
 
@@ -180,6 +268,11 @@ if(document.getElementById("task3").checked)
 completed++;
 
 let percent = (completed / 3) * 100;
+
+document.getElementById("totalGoals").innerHTML = 3;
+
+document.getElementById("completedGoals").innerHTML =
+completed;
 
 document.getElementById("plannerProgress").style.width =
 percent + "%";
