@@ -225,6 +225,67 @@ Level: Beginner
 
 <h2>📊 Progress Analytics</h2>
 
+<div class="card">
+
+<h2>📈 Study Insights</h2>
+
+<div class="progress-box">
+
+<div class="progress-header">
+<span>XP Progress</span>
+<span id="xpPercent">0%</span>
+</div>
+
+<div class="progress-bar">
+<div id="xpFill" class="progress-fill"></div>
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>🕒 Study Timeline</h2>
+
+<div id="studyTimeline">
+
+No activity yet.
+
+</div>
+
+</div>
+
+<div class="grid">
+
+<div class="analytics-card">
+<h3 id="weeklyStudy">0</h3>
+<p>📅 Weekly Study</p>
+</div>
+
+<div class="analytics-card">
+<h3 id="monthlyStudy">0</h3>
+<p>🗓️ Monthly Study</p>
+</div>
+
+<div class="analytics-card">
+<h3 id="longestStreak">0</h3>
+<p>🔥 Longest Streak</p>
+</div>
+
+<div class="analytics-card">
+<h3 id="totalXP">0</h3>
+<p>⭐ Total XP</p>
+
+<div class="analytics-card">
+<h3 id="studyRank">🌱 Beginner</h3>
+<p>🎖 Study Rank</p>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
 <div class="grid">
 
 <div class="analytics-card">
@@ -636,6 +697,55 @@ document.getElementById("totalAchievements").textContent =
 completed;
 
 }
+
+// Study Insights
+
+const totalXP =
+Number(localStorage.getItem("xp")) || 0;
+
+const weeklyStudy =
+Number(localStorage.getItem("focusSessions")) || 0;
+
+const monthlyStudy =
+weeklyStudy * 4;
+
+const studyRank =
+totalXP >= 1000 ? "🏆 Expert" :
+totalXP >= 500 ? "🥈 Intermediate" :
+totalXP >= 100 ? "🥉 Starter" :
+"🌱 Beginner";
+
+const longestStreak =
+Number(localStorage.getItem("studyStreak")) || 0;
+
+document.getElementById("weeklyStudy").textContent =
+weeklyStudy;
+
+document.getElementById("monthlyStudy").textContent =
+monthlyStudy;
+
+document.getElementById("longestStreak").textContent =
+longestStreak;
+
+document.getElementById("totalXP").textContent =
+totalXP;
+
+document.getElementById("studyRank").textContent =
+studyRank;
+
+
+const xpPercent =
+Math.min(Math.round((totalXP / 1000) * 100), 100);
+
+document.getElementById("xpPercent").textContent =
+xpPercent + "%";
+
+setTimeout(() => {
+
+document.getElementById("xpFill").style.width =
+xpPercent + "%";
+
+}, 300);
 
 const ctx = document.getElementById("progressChart");
 
