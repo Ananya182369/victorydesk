@@ -203,6 +203,18 @@ JSON.stringify(history)
 
 let answer = "";
 
+for (const key in victoryAIData.allTopics) {
+
+    if (question.includes(key)) {
+
+        answer = victoryAIData.allTopics[key];
+
+        break;
+
+    }
+
+}
+
 let matched = false;
 
 let originalQuestion = question;
@@ -225,6 +237,11 @@ question = question.replace("what is ", "");
 question = question.replace("tell me about ", "");
 question = question.replace("explain ", "");
 question = question.replace("define ", "");
+question = question.replace("what are ", "");
+question = question.replace("how does ", "");
+question = question.replace("how do ", "");
+question = question.replace("can you explain ", "");
+question = question.replace("please explain ", "");
 
 if(question==""){
 
@@ -262,6 +279,13 @@ if (matched) {
     title = "🤖 Victory AI";
 
 }
+
+if(answer !== ""){
+
+    title = "🤖 Victory AI";
+
+}
+else
 
 if(!matched && question.includes("cell")){
 

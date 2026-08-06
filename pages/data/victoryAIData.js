@@ -52,6 +52,32 @@ victoryAIData.allTopics = {
 
     jee: victoryAIData.exams.jee,
 
-    cuet: victoryAIData.exams.cuet
+    cuet: victoryAIData.exams.cuet,
+
+    "human heart": victoryAIData.biology.heart,
+
+    "heart chambers": victoryAIData.biology.heart,
+
+    "plant food": victoryAIData.biology.photosynthesis,
+
+    "genetic material": victoryAIData.biology.dna,
+
+    "powerhouse of cell": "⚡ Mitochondria is known as the powerhouse of the cell.",
+    
+    "laws of motion": victoryAIData.physics.newton,
+    
+    "biology": "🧬 Biology is the study of living organisms.",
+
+"physics": "⚡ Physics is the study of matter, energy and forces.",
+
+"chemistry": "🧪 Chemistry is the study of substances and their reactions.",
+
+"mock test": "📝 Practice mock tests regularly to improve your score.",
+
+"notes": "📚 Study chapter-wise notes before attempting MCQs.",
+
+"study plan": "📅 Study daily with revision and practice for better results.",
+
+"motivation": "💪 Consistency is the key to success. Keep learning every day!"
 
 };
