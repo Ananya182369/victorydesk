@@ -48,6 +48,14 @@ Test your preparation with a real exam experience.
 
 <div class="card">
 
+<h2>📝 Question Palette</h2>
+
+<div id="questionPalette"></div>
+
+</div>
+
+<div class="card">
+
     <p id="questionNumber"
 style="font-size:18px;font-weight:bold;">
 </p>
@@ -70,8 +78,16 @@ style="font-size:16px;">
 Submit
 </button>
 
+<button class="btn" onclick="markForReview()">
+🟠 Mark for Review
+</button>
+
 <button class="btn" onclick="nextQuestion()">
 Next
+</button>
+
+<button class="btn" onclick="finishTest()">
+🏁 Finish Test
 </button>
 
 <p id="result"></p>
@@ -95,6 +111,10 @@ let currentIndex = 0;
 let score = 0;
 
 let questions = [];
+
+let attemptedQuestions = [];
+
+let reviewQuestions = [];
 
 if (exam === "NEET" && subject.includes("Biology")) {
     questions = neetData.Biology.mcqs;
@@ -149,6 +169,69 @@ throw new Error("No Mock Test Found");
 
 }
 
+function createPalette(){
+
+let html = "";
+
+questions.forEach((q,index)=>{
+
+html += `
+<button class="btn"
+onclick="goToQuestion(${index})">
+${index+1}
+</button>
+`;
+
+});
+
+document.getElementById("questionPalette").innerHTML = html;
+
+document.querySelectorAll("#questionPalette button")
+.forEach((btn,index)=>{
+
+if(reviewQuestions[index]){
+
+    btn.style.background = "orange";
+    btn.style.color = "white";
+
+}
+else
+
+if(attemptedQuestions[index]){
+
+    btn.style.background = "green";
+    btn.style.color = "white";
+
+}
+else
+
+if(index===currentIndex){
+
+btn.style.background="#2563eb";
+btn.style.color="white";
+
+}
+else{
+
+btn.style.background="";
+btn.style.color="";
+
+}
+
+});
+
+}
+
+function goToQuestion(index){
+
+currentIndex = index;
+
+loadQuestion();
+
+}
+
+createPalette();
+
 loadQuestion();
 
 function loadQuestion(){
@@ -181,6 +264,8 @@ ${option}
 
 <br><br>
 `;
+
+createPalette();
 
 });
 
@@ -216,6 +301,9 @@ document.querySelectorAll('input[name="q1"]').forEach(option=>{
 document.getElementById("result").innerHTML =
 "✅ Correct!";
 
+attemptedQuestions[currentIndex] = true;
+createPalette();
+
 }
 
 else{
@@ -228,6 +316,16 @@ questions[currentIndex].options[questions[currentIndex].answer];
 
 document.getElementById("score").innerHTML =
 "Score : " + score + " / " + questions.length;
+
+}
+
+function markForReview(){
+
+reviewQuestions[currentIndex] = true;
+
+createPalette();
+
+nextQuestion();
 
 }
 
