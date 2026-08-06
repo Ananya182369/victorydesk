@@ -185,6 +185,10 @@ const resourceButtons = document.getElementById("resourceButtons");
 let question =
 questionInput.value.toLowerCase();
 
+question = question.replace(/[?.!,]/g, "");
+
+question = question.trim();
+
 let history =
 JSON.parse(localStorage.getItem("questionHistory")) || [];
 
@@ -199,6 +203,12 @@ JSON.stringify(history)
 
 let answer = "";
 
+let matched = false;
+
+let originalQuestion = question;
+
+for (let key in victoryAIData.allTopics) 
+
 let resources = "";
 
 let icon = "🤖";
@@ -211,7 +221,16 @@ question = question.trim();
 
 question = question.replace(/\s+/g," ");
 
+question = question.replace("what is ", "");
+question = question.replace("tell me about ", "");
+question = question.replace("explain ", "");
+question = question.replace("define ", "");
+
 if(question==""){
+
+    if(matched){
+    answer += "<br><br>✨ Smart Match Found";
+}
 
 answerBox.innerHTML =
 "<div class='ai-answer'><h3>⚠️ Empty Question</h3><p>Please type a question first.</p></div>";
@@ -224,28 +243,46 @@ return;
 
 }
 
-if(question.includes("cell")){
+for (let key in victoryAIData.allTopics) {
 
-    title = "🧬 Biology";
+    if (question.includes(key)) {
 
-answer =
-"🧬 Cell is the basic structural and functional unit of life.";
+        answer = victoryAIData.allTopics[key];
+
+        matched = true;
+
+        break;
+
+    }
 
 }
 
-else if(question.includes("mitochondria")){
+if (matched) {
+
+    title = "🤖 Victory AI";
+
+}
+
+if(!matched && question.includes("cell")){
+
+    title = "🧬 Biology";
+
+answer = victoryAIData.biology.cell;
+
+}
+
+else if(!matched && question.includes("mitochondria")){
 
 answer =
 "⚡ Mitochondria is known as the powerhouse of the cell.";
 
 }
 
-else if(question.includes("dna")){
+else if(!matched && question.includes("dna")){
 
     title = "🧬 Biology";
 
-answer =
-"🧬 DNA stores genetic information in living organisms.";
+answer = victoryAIData.biology.dna;
 
 }
 
@@ -253,8 +290,7 @@ else if(question.includes("photosynthesis")){
 
     title = "🌿 Biology";
 
-answer =
-"🌿 Photosynthesis is the process by which green plants prepare their food using sunlight.";
+answer = victoryAIData.biology.photosynthesis;
 
 }
 
@@ -262,8 +298,7 @@ else if(question.includes("heart")){
 
     title = "❤️ Human Biology";
 
-answer =
-"❤️ The human heart has four chambers and pumps blood throughout the body.";
+answer = victoryAIData.biology.heart;
 
 }
 
@@ -285,8 +320,7 @@ else if(question.includes("atom")){
 
     title = "⚛️ Chemistry";
 
-answer =
-"⚛️ Atom is the smallest unit of an element that retains its properties.";
+answer = victoryAIData.chemistry.atom;
 
 }
 
@@ -294,8 +328,7 @@ else if(question.includes("force")){
 
     title = "⚡ Physics";
 
-answer =
-"💪 Force is a push or pull that can change the motion of an object.";
+answer = victoryAIData.physics.force;
 
 }
 
@@ -303,8 +336,7 @@ answer =
 
 else if(question.includes("newton")){
 
-answer =
-"🍎 Newton's First Law states that an object remains at rest or in uniform motion unless acted upon by an external force.";
+answer = victoryAIData.physics.newton;
 
 }
 
@@ -392,6 +424,21 @@ resources = `
 
 }
 
+else if(!matched && question.includes("neet")){
+
+    title = "🩺 NEET";
+
+    answer = victoryAIData.exams.neet;
+
+    resources = `
+    <br>
+    <a href="../pages/exam.html?exam=NEET" class="btn">📚 NEET Notes</a>
+    <a href="../pages/exam.html?exam=NEET" class="btn">📄 NEET PDFs</a>
+    <a href="../pages/exam.html?exam=NEET" class="btn">📝 NEET PYQs</a>
+    `;
+
+}
+
 else if(question.includes("mock")){
 
 title = "🎯 Mock Tests";
@@ -411,7 +458,7 @@ else if(question.includes("jee")){
 
 title = "⚙️ JEE";
 
-answer = "Choose your JEE study resources.";
+answer = victoryAIData.exams.jee;
 
 answer += "<br><br>Choose one option below:";
 
@@ -428,7 +475,7 @@ else if(question.includes("cuet")){
 
 title = "🎓 CUET";
 
-answer = "Choose your CUET study resources.";
+answer = victoryAIData.exams.cuet;
 
 resources = `
 <br>
@@ -505,9 +552,19 @@ answer += "<br><br>Choose one option below:";
 }
 
 answerBox.innerHTML =
-"<div class='ai-answer'><h3>" + icon + " " + title + "</h3><p>" + answer + "</p></div>";
+`
+<div class="ai-answer">
 
+<h3>${icon} ${title}</h3>
 
+<p>${answer}</p>
+
+<small>
+🤖 Victory AI • Smart Learning Assistant
+</small>
+
+</div>
+`;
 
 let resourceTitle = "";
 
@@ -560,7 +617,12 @@ const topics = [
 "jee",
 "cuet",
 "mock test",
-"notes"
+"notes" ,
+"mitochondria",
+"respiration",
+"blood",
+"atom",
+"newton"
 ];
 
 const result = topics.filter(item =>
