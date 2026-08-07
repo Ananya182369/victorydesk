@@ -303,6 +303,16 @@ No activity yet.
 </div>
 
 <div class="analytics-card">
+
+<h3 id="averageAccuracy">
+0%
+</h3>
+
+<p>🎯 Average Accuracy</p>
+
+</div>
+
+<div class="analytics-card">
 <h3 id="analyticsStreak">
 0
 </h3>
@@ -347,6 +357,16 @@ No activity yet.
 <button class="btn" onclick="continueStudy()">
 📖 Continue Study
 </button>
+
+</div>
+
+<div class="card">
+
+<h3>📚 Mock Test History</h3>
+
+<div id="mockHistory">
+Loading history...
+</div>
 
 </div>
 
@@ -650,6 +670,31 @@ streak;
 const bestMockScore =
 Number(localStorage.getItem("bestScore")) || 0;
 
+let mockHistory =
+JSON.parse(localStorage.getItem("mockHistory")) || [];
+
+let totalMockTests = mockHistory.length;
+
+let averageAccuracy = 0;
+
+if(totalMockTests > 0){
+
+let totalAccuracy = 0;
+
+mockHistory.forEach(test=>{
+    totalAccuracy += test.percentage;
+});
+
+averageAccuracy =
+Math.round(totalAccuracy / totalMockTests);
+
+}
+
+document.getElementById("analyticsMock").textContent =
+totalMockTests;
+
+document.getElementById("averageAccuracy").textContent =
+averageAccuracy + "%";
 
 if(totalMocks > 0){
 

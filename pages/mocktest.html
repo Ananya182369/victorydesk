@@ -128,6 +128,8 @@ else if (exam === "NEET" && subject.includes("Physics")) {
 
 let timeLeft = 1800;
 
+const totalTime = 1800;
+
 const timer = setInterval(function(){
 
 let minutes = Math.floor(timeLeft / 60);
@@ -353,8 +355,36 @@ function finishTest(){
 
 clearInterval(timer);
 
+const timeTaken = totalTime - timeLeft;
+
+const minutesTaken = Math.floor(timeTaken / 60);
+
+const secondsTaken = timeTaken % 60;
+
 const percentage =
 Math.round((score / questions.length) * 100);
+
+const correctAnswers = score;
+
+const wrongAnswers = questions.length - score;
+
+let grade = "";
+
+if(percentage >= 90){
+    grade = "🏆 A+";
+}
+else if(percentage >= 75){
+    grade = "🥇 A";
+}
+else if(percentage >= 60){
+    grade = "🥈 B";
+}
+else if(percentage >= 40){
+    grade = "🥉 C";
+}
+else{
+    grade = "📚 Needs Improvement";
+}
 
 let totalMocks =
 Number(localStorage.getItem("totalMocks")) || 0;
@@ -372,6 +402,24 @@ if(percentage > bestScore){
 
 localStorage.setItem("lastScore", percentage);
 
+let mockHistory =
+JSON.parse(localStorage.getItem("mockHistory")) || [];
+
+mockHistory.push({
+    exam: exam,
+    subject: subject,
+    score: score,
+    total: questions.length,
+    percentage: percentage,
+    time: minutesTaken + " min " + secondsTaken + " sec",
+    date: new Date().toLocaleDateString()
+});
+
+localStorage.setItem(
+    "mockHistory",
+    JSON.stringify(mockHistory)
+);
+
 localStorage.setItem(
     "lastMockDate",
     new Date().toLocaleDateString()
@@ -385,8 +433,20 @@ document.querySelector(".container").innerHTML = `
 
 <h2>Your Score: ${score} / ${questions.length}</h2>
 
+<p>✅ Correct Answers: ${correctAnswers}</p>
+
+<p>❌ Wrong Answers: ${wrongAnswers}</p>
+
 <h3>
 Percentage: ${percentage}%
+</h3>
+
+<p>
+⏱ Time Taken: ${minutesTaken} min ${secondsTaken} sec
+</p>
+
+<h3>
+Performance Grade: ${grade}
 </h3>
 
 <p>
