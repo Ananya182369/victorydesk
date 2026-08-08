@@ -114,6 +114,8 @@ let questions = [];
 
 let attemptedQuestions = [];
 
+let attemptedCount = 0;
+
 let reviewQuestions = [];
 
 if (exam === "NEET" && subject.includes("Biology")) {
@@ -160,16 +162,13 @@ finishTest();
 
 if(questions.length === 0){
 
-document.querySelector(".container").innerHTML = `
-<div class="card">
-<h2>🚧 Coming Soon</h2>
-<p>Mock Test for this subject is not available yet.</p>
-</div>
-`;
+document.querySelector(".container").innerHTML =
+"<h2>No Mock Test Found</h2>";
 
 throw new Error("No Mock Test Found");
 
 }
+
 
 function createPalette(){
 
@@ -267,7 +266,7 @@ ${option}
 <br><br>
 `;
 
-createPalette();
+
 
 });
 
@@ -284,40 +283,43 @@ const answer =
 document.querySelector('input[name="q1"]:checked');
 
 if(!answer){
-
-alert("Please select an answer.");
-
-return;
-
+    alert("Please select an answer.");
+    return;
 }
 
-if(Number(answer.value) === questions[currentIndex].answer){
+if(attemptedQuestions[currentIndex]){
+    return;
+}
 
-score++;
+attemptedQuestions[currentIndex] = true;
+attemptedCount++;
+
 document.querySelector('button[onclick="checkAnswer()"]').disabled = true;
 
 document.querySelectorAll('input[name="q1"]').forEach(option=>{
     option.disabled = true;
 });
 
-document.getElementById("result").innerHTML =
-"✅ Correct!";
+if(Number(answer.value) === questions[currentIndex].answer){
 
-attemptedQuestions[currentIndex] = true;
-createPalette();
+    score++;
+
+    document.getElementById("result").innerHTML =
+    "✅ Correct!";
 
 }
-
 else{
 
-document.getElementById("result").innerHTML =
-"❌ Wrong! Correct Answer: " +
-questions[currentIndex].options[questions[currentIndex].answer];
+    document.getElementById("result").innerHTML =
+    "❌ Wrong! Correct Answer: " +
+    questions[currentIndex].options[questions[currentIndex].answer];
 
 }
 
 document.getElementById("score").innerHTML =
 "Score : " + score + " / " + questions.length;
+
+createPalette();
 
 }
 
@@ -353,6 +355,10 @@ finishTest();
 
 function finishTest(){
 
+    if(document.querySelector(".container").innerHTML.includes("Mock Test Completed!")){
+    return;
+}
+
 clearInterval(timer);
 
 const timeTaken = totalTime - timeLeft;
@@ -366,7 +372,9 @@ Math.round((score / questions.length) * 100);
 
 const correctAnswers = score;
 
-const wrongAnswers = questions.length - score;
+const wrongAnswers = attemptedCount - score;
+
+const unattemptedAnswers = questions.length - attemptedCount;
 
 let grade = "";
 
@@ -437,6 +445,8 @@ document.querySelector(".container").innerHTML = `
 
 <p>❌ Wrong Answers: ${wrongAnswers}</p>
 
+<p>⚪ Unattempted: ${unattemptedAnswers}</p>
+
 <h3>
 Percentage: ${percentage}%
 </h3>
@@ -448,6 +458,41 @@ Percentage: ${percentage}%
 <h3>
 Performance Grade: ${grade}
 </h3>
+
+<div class="card" style="margin-top:20px;">
+
+<h3>📊 Performance Summary</h3>
+
+<p>
+🎯 Accuracy: ${percentage}%
+</p>
+
+<p>
+📝 Attempted: ${attemptedCount} / ${questions.length}
+</p>
+
+<p>
+⚪ Unattempted: ${unattemptedAnswers}
+</p>
+
+<p>
+⏱ Average Time:
+${
+attemptedCount > 0
+? Math.round(timeTaken / attemptedCount)
+: 0
+} sec/question
+</p>
+
+</div>
+
+<p>
+📊 Accuracy: ${percentage}%
+</p>
+
+<p>
+📈 Attempted: ${correctAnswers + wrongAnswers} / ${questions.length}
+</p>
 
 <p>
 ${
