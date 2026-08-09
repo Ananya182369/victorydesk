@@ -1,3 +1,63 @@
+ore</h3>
+<p id="studyScore">0 Points</p>
+</div>
+
+<div class="card">
+<h3>📚 Continue Study</h3>
+<p>Resume your last subject.</p>
+</div>
+
+<div class="card">
+<h3>📈 Overall Progress</h3>
+
+
+</div>
+
+<div class="card">
+<h3>🔥 Study Streak</h3>
+
+<p id="studyStreak">0 Days</p>
+
+<small id="streakMessage">
+Start your study journey 🚀
+</small>
+</div>
+
+<div class="card">
+<h3>🎯 Today's Goal</h3>
+<p>Complete 1 Chapter</p>
+</div>
+
+<div class="card">
+<h3>🧪 Last Mock Test</h3>
+
+<p id="lastMock">
+Not Attempted Yet
+</p>
+
+<p id="bestScore">
+Best Score: --
+</p>
+</div>
+
+<div class="card">
+<h3>📖 Last Studied</h3>
+
+<p id="lastStudy">
+No Subject Opened
+</p>
+
+<hr style="margin:15px 0;">
+
+<h4>🕒 Recent Activity</h4>
+
+<p id="lastStudyDate">
+Last Study: Not Available
+</p>
+
+<p id="recentActivity">
+No Recent Activity
+</p>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -114,67 +174,7 @@ Loading...
 </div>
 
 <div class="card">
-<h3>⭐ Study Score</h3>
-<p id="studyScore">0 Points</p>
-</div>
-
-<div class="card">
-<h3>📚 Continue Study</h3>
-<p>Resume your last subject.</p>
-</div>
-
-<div class="card">
-<h3>📈 Overall Progress</h3>
-
-
-</div>
-
-<div class="card">
-<h3>🔥 Study Streak</h3>
-
-<p id="studyStreak">0 Days</p>
-
-<small id="streakMessage">
-Start your study journey 🚀
-</small>
-</div>
-
-<div class="card">
-<h3>🎯 Today's Goal</h3>
-<p>Complete 1 Chapter</p>
-</div>
-
-<div class="card">
-<h3>🧪 Last Mock Test</h3>
-
-<p id="lastMock">
-Not Attempted Yet
-</p>
-
-<p id="bestScore">
-Best Score: --
-</p>
-</div>
-
-<div class="card">
-<h3>📖 Last Studied</h3>
-
-<p id="lastStudy">
-No Subject Opened
-</p>
-
-<hr style="margin:15px 0;">
-
-<h4>🕒 Recent Activity</h4>
-
-<p id="lastStudyDate">
-Last Study: Not Available
-</p>
-
-<p id="recentActivity">
-No Recent Activity
-</p>
-
+<h3>⭐ Study Sc
 </div>
 
 <div class="card">
@@ -207,10 +207,6 @@ Level: Beginner
 <p id="focusSessions">
 0 Sessions Completed
 </p>
-
-</div>
-
-<div class="card">
 
 </div>
 
@@ -248,8 +244,6 @@ Level: Beginner
 
 <div id="studyTimeline">
 
-No activity yet.
-
 </div>
 
 </div>
@@ -275,9 +269,16 @@ No activity yet.
 <h3 id="totalXP">0</h3>
 <p>⭐ Total XP</p>
 
+</div>
+
 <div class="analytics-card">
 <h3 id="studyRank">🌱 Beginner</h3>
 <p>🎖 Study Rank</p>
+</div>
+
+<div class="analytics-card">
+<h3 id="playerLevel">🌱 Beginner</h3>
+<p>🏅 Current Level</p>
 </div>
 
 </div>
@@ -534,8 +535,6 @@ completed + " Completed";
 document.getElementById("achievementPercent").textContent =
 percent + "%";
 
-document.getElementById("totalSubjects").textContent = 3;
-document.getElementById("totalProgress").textContent = progress + "%";
 document.getElementById("totalAchievements").textContent = completed;
 
 const totalMocks =
@@ -568,17 +567,18 @@ else if (xp >= 500) {
 document.getElementById("studyScore").textContent =
 `XP: ${xp} • ${level} • ${focusHours.toFixed(1)}h Focus`;
 
-// Leaderboard System
-
 let playerLevel = "Beginner";
 
-if(xp >= 1000){
+if (xp >= 2000) {
+    playerLevel = "Master";
+}
+else if (xp >= 1000) {
     playerLevel = "Expert";
 }
-else if(xp >= 500){
+else if (xp >= 500) {
     playerLevel = "Intermediate";
 }
-else if(xp >= 100){
+else if (xp >= 100) {
     playerLevel = "Starter";
 }
 
@@ -589,6 +589,26 @@ document.getElementById("leaderXP").textContent =
 
 document.getElementById("leaderLevel").textContent =
 "🏅 Level: " + playerLevel;
+
+document.getElementById("playerLevel").textContent =
+"🏅 " + playerLevel;
+
+let nextLevelXP = 100;
+
+if (xp >= 2000) {
+    nextLevelXP = 2000;
+}
+else if (xp >= 1000) {
+    nextLevelXP = 2000;
+}
+else if (xp >= 500) {
+    nextLevelXP = 1000;
+}
+else if (xp >= 100) {
+    nextLevelXP = 500;
+}
+
+localStorage.setItem("nextLevelXP", nextLevelXP);
 
 document.getElementById("analyticsScore").textContent =
 score;
@@ -625,30 +645,6 @@ JSON.stringify(badges)
 
 document.getElementById("badgeCount").textContent =
 "🏆 " + badgeCount + " Badges Earned";
-
-
-// Progress Analytics
-
-let studyActivity = 0;
-
-if(lastExam && lastSubject){
-    studyActivity = 1;
-}
-
-document.getElementById("analyticsStudy").textContent =
-studyActivity;
-
-
-document.getElementById("analyticsMock").textContent =
-totalMocks;
-
-
-document.getElementById("analyticsStreak").textContent =
-streak;
-
-
-
-// Analytics Data
 
 let subjectsStarted = 0;
 
@@ -743,8 +739,6 @@ completed;
 
 }
 
-// Study Insights
-
 const totalXP =
 Number(localStorage.getItem("xp")) || 0;
 
@@ -778,12 +772,29 @@ totalXP;
 document.getElementById("studyRank").textContent =
 studyRank;
 
+const currentLevelXP =
+playerLevel === "Beginner" ? 0 :
+playerLevel === "Starter" ? 100 :
+playerLevel === "Intermediate" ? 500 :
+playerLevel === "Expert" ? 1000 :
+2000;
 
 const xpPercent =
-Math.min(Math.round((totalXP / 1000) * 100), 100);
+playerLevel === "Master"
+? 100
+: Math.min(
+    Math.round(
+        ((totalXP - currentLevelXP) /
+        (nextLevelXP - currentLevelXP)) * 100
+    ),
+    100
+);
+
 
 document.getElementById("xpPercent").textContent =
-xpPercent + "%";
+playerLevel === "Master"
+? "MAX LEVEL"
+: xpPercent + "%";
 
 setTimeout(() => {
 
