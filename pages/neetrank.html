@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>VictoryDesk | NEET Rank Predictor</title>
+
+<link rel="stylesheet" href="../style.css">
+
+</head>
+
+<body>
+
+<div class="top-banner">
+🏆 VictoryDesk NEET Rank Predictor
+</div>
+
+<header>
+
+<h1>🏆 NEET Rank Predictor</h1>
+
+<p class="hero-text">
+Get an estimated NEET rank range from your score.
+</p>
+
+<a href="dashboard.html" class="btn">
+⬅ Dashboard
+</a>
+
+</header>
+
+<section class="container">
+
+<div class="card">
+
+<h2>Enter Your NEET Score</h2>
+
+<input
+type="number"
+id="neetScore"
+min="0"
+max="720"
+placeholder="Enter score (0 - 720)"
+>
+
+<br><br>
+
+<button class="btn" onclick="predictRank()">
+🔮 Predict Rank
+</button>
+
+</div>
+
+<div class="card">
+
+<h2>📊 Estimated Result</h2>
+
+<p id="rankResult">
+Enter your score to see an estimated rank range.
+</p>
+
+</div>
+
+</section>
+
+<script>
+
+function predictRank(){
+
+let score =
+Number(document.getElementById("neetScore").value);
+
+let result = "";
+
+if(score < 0 || score > 720 || isNaN(score)){
+
+result = "⚠️ Please enter a score between 0 and 720.";
+
+}
+
+else if(score >= 650){
+
+result = "🏆 Estimated Rank: 1 – 5,000";
+
+}
+
+else if(score >= 600){
+
+result = "🥇 Estimated Rank: 5,000 – 25,000";
+
+}
+
+else if(score >= 550){
+
+result = "🥈 Estimated Rank: 25,000 – 60,000";
+
+}
+
+else if(score >= 500){
+
+result = "🥉 Estimated Rank: 60,000 – 1,20,000";
+
+}
+
+else if(score >= 450){
+
+result = "📚 Estimated Rank: 1,20,000 – 2,00,000";
+
+}
+
+else if(score >= 400){
+
+result = "📖 Estimated Rank: 2,00,000 – 3,00,000";
+
+}
+
+else{
+
+result = "🌱 Estimated Rank: 3,00,000+";
+
+}
+
+document.getElementById("rankResult").innerHTML =
+result;
+
+}
+
+</script>
+
+</body>
+
+</html>
