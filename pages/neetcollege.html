@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>VictoryDesk | NEET College Predictor</title>
+
+<link rel="stylesheet" href="../style.css">
+
+</head>
+
+<body>
+
+<div class="top-banner">
+🏫 VictoryDesk NEET College Predictor
+</div>
+
+<header>
+
+<h1>🏫 NEET College Predictor</h1>
+
+<p class="hero-text">
+Explore estimated college options based on your NEET score.
+</p>
+
+<a href="dashboard.html" class="btn">
+⬅ Dashboard
+</a>
+
+</header>
+
+<section class="container">
+
+<div class="card">
+
+<h2>Enter Your Details</h2>
+
+<label>NEET Score</label>
+
+<input
+type="number"
+id="neetScore"
+min="0"
+max="720"
+placeholder="Enter score"
+>
+
+<br><br>
+
+<label>Category</label>
+
+<select id="category">
+
+<option value="General">General</option>
+<option value="OBC">OBC</option>
+<option value="SC">SC</option>
+<option value="ST">ST</option>
+
+</select>
+
+<br><br>
+
+<button class="btn" onclick="predictCollege()">
+🏫 Find Colleges
+</button>
+
+</div>
+
+<div class="card">
+
+<h2>📊 Estimated Options</h2>
+
+<div id="collegeResult">
+
+Enter your score and category to see estimated options.
+
+</div>
+
+</div>
+
+</section>
+
+<script>
+
+function predictCollege(){
+
+let score =
+Number(document.getElementById("neetScore").value);
+
+let category =
+document.getElementById("category").value;
+
+let result = "";
+
+if(score < 0 || score > 720 || isNaN(score)){
+
+result =
+"⚠️ Please enter a valid score between 0 and 720.";
+
+}
+
+else if(score >= 650){
+
+result = `
+🏆 Strong Score Range<br><br>
+Possible options may include:<br>
+• Top government medical colleges<br>
+• Highly competitive state colleges<br>
+• Strong private medical colleges
+`;
+
+}
+
+else if(score >= 550){
+
+result = `
+🥇 Good Score Range<br><br>
+Possible options may include:<br>
+• Government medical colleges depending on state/category<br>
+• State counselling options<br>
+• Private medical colleges
+`;
+
+}
+
+else if(score >= 450){
+
+result = `
+🥈 Moderate Score Range<br><br>
+Possible options may include:<br>
+• Selected state quota opportunities<br>
+• Private medical colleges<br>
+• Other medical-course options
+`;
+
+}
+
+else if(score >= 350){
+
+result = `
+📚 Lower Score Range<br><br>
+Possible options may include:<br>
+• Private colleges depending on counselling<br>
+• Alternative healthcare courses
+`;
+
+}
+
+else{
+
+result = `
+🌱 Limited MBBS Options<br><br>
+Consider checking:<br>
+• Alternative medical/allied-health courses<br>
+• State counselling opportunities
+`;
+
+}
+
+result += `
+<br><br>
+<strong>Category:</strong> ${category}
+`;
+
+document.getElementById("collegeResult").innerHTML =
+result;
+
+}
+
+</script>
+
+</body>
+
+</html>
