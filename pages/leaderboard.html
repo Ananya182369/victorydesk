@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>VictoryDesk | Leaderboard</title>
+
+<link rel="stylesheet" href="../style.css">
+
+</head>
+
+<body>
+
+<div class="top-banner">
+🏆 VictoryDesk Leaderboard
+</div>
+
+<header>
+
+<h1>🏆 Leaderboard</h1>
+
+<p class="hero-text">
+See your study progress and XP.
+</p>
+
+<a href="dashboard.html" class="btn">
+⬅ Dashboard
+</a>
+
+</header>
+
+<section class="container">
+
+<div class="card">
+
+<h2>🌟 Your Ranking</h2>
+
+<div id="leaderboardList">
+
+<p>Loading leaderboard...</p>
+
+</div>
+
+</div>
+
+</section>
+
+<script>
+
+let xp =
+Number(localStorage.getItem("xp")) || 0;
+
+let level = "Beginner";
+
+if(xp >= 2000){
+    level = "Master";
+}
+else if(xp >= 1000){
+    level = "Expert";
+}
+else if(xp >= 500){
+    level = "Intermediate";
+}
+else if(xp >= 100){
+    level = "Starter";
+}
+
+const leaderboard = [
+{
+    name: "You",
+    xp: xp,
+    level: level
+},
+{
+    name: "Study Master",
+    xp: 850,
+    level: "Intermediate"
+},
+{
+    name: "Topper Pro",
+    xp: 650,
+    level: "Intermediate"
+},
+{
+    name: "Future Doctor",
+    xp: 420,
+    level: "Starter"
+},
+{
+    name: "Dream Chaser",
+    xp: 180,
+    level: "Starter"
+}
+];
+
+leaderboard.sort((a,b) => b.xp - a.xp);
+
+let html = "";
+
+leaderboard.forEach((player,index) => {
+
+let medal = "";
+
+if(index === 0){
+    medal = "🥇";
+}
+else if(index === 1){
+    medal = "🥈";
+}
+else if(index === 2){
+    medal = "🥉";
+}
+else{
+    medal = "🏅";
+}
+
+html += `
+
+<div class="card">
+
+<h2>
+${medal} #${index + 1} ${player.name}
+</h2>
+
+<p>
+⭐ XP: ${player.xp}
+</p>
+
+<p>
+🏅 Level: ${player.level}
+</p>
+
+</div>
+
+`;
+
+});
+
+document.getElementById("leaderboardList").innerHTML = html;
+
+</script>
+
+</body>
+
+</html>
