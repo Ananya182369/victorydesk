@@ -1246,3 +1246,35 @@ height:auto;
 .chart-box canvas{
     max-height:350px;
 }
+
+/* Leaderboard Styling */
+
+#leaderboardList{
+    display:grid;
+    gap:20px;
+    margin-top:25px;
+}
+
+#leaderboardList .card{
+    min-height:180px;
+    text-align:center;
+    align-items:center;
+}
+
+#leaderboardList .card h2{
+    margin-bottom:12px;
+}
+
+#leaderboardList .card p{
+    margin-bottom:8px;
+}
+
+#leaderboardList .card:first-child{
+    border:2px solid #ffd700;
+    background:linear-gradient(135deg,#fffdf0,#ffffff);
+    box-shadow:0 12px 30px rgba(255,215,0,.20);
+}
+
+#leaderboardList .card:first-child h2{
+    color:#b8860b;
+}
