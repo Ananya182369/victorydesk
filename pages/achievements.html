@@ -46,7 +46,7 @@ let html = "";
 
 let unlockedCount = 0;
 
-if(localStorage.getItem("firstMockCompleted")){
+
     
     // XP + Streak Based Unlock System
 
@@ -110,7 +110,7 @@ if(unlockedBadges === badges.length - 1){
 }
 
 
-}
+
 
 badges.forEach(item=>{
 
@@ -146,8 +146,6 @@ html =
 <div class="card">
 
 <h2>🏆 Achievement Summary</h2>
-
-document.getElementById("badgeContainer").innerHTML = html;
 
 <p>
 Unlocked Badges: ${unlockedCount} / ${badges.length}
