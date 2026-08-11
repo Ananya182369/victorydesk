@@ -491,10 +491,20 @@ const focusHours = (focusSessions * 25) / 60;
 let xp =
 Number(localStorage.getItem("xp")) || 0;
 
-xp += (completed * 100);
-xp += (focusSessions * 20);
+const savedXPBase =
+Number(localStorage.getItem("xpBase")) || 0;
 
+const calculatedXP =
+(completed * 100) + (focusSessions * 20);
+
+if(calculatedXP > savedXPBase){
+
+xp += calculatedXP - savedXPBase;
+
+localStorage.setItem("xpBase", calculatedXP);
 localStorage.setItem("xp", xp);
+
+}
 
 let level = "Beginner";
 
