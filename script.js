@@ -1,3 +1,11 @@
+// ===============================
+// VICTORYDESK — MAIN SCRIPT
+// ===============================
+
+// ===============================
+// SEARCH & NAVIGATION
+// ===============================
+
 function searchTools() {
 
     let searchBox = document.getElementById("searchInput");
@@ -22,9 +30,7 @@ else{
 });
 
 }
-function toggleDarkMode(){
-    document.body.classList.toggle("dark-mode");
-}
+
 window.onload = function () {
 
     let tools = document.getElementById("tools-count");
@@ -81,9 +87,19 @@ function topFunction() {
     });
 
 }
+
+// ===============================
+// PAGE NAVIGATION
+// ===============================
+
 function selectExam(exam){
     window.location.href = "pages/exam.html?exam=" + exam;
 }
+
+// ===============================
+// THEME / DARK MODE
+// ===============================
+
 function toggleDarkMode(){
 
 document.body.classList.toggle("dark-mode");
@@ -111,6 +127,11 @@ window.addEventListener("load", function () {
     }
 
 });
+
+// ===============================
+// DAILY MOTIVATION
+// ===============================
+
 const quotes = [
 
 "Success is the sum of small efforts repeated every day.",
@@ -187,11 +208,20 @@ alert("No matching result found yet.");
 }
 
 }
+
+// ===============================
+// LOGIN / PROFILE
+// ===============================
+
 function checkLogin(){
 
-    document.getElementById("profileActivity").innerHTML =
-"🕒 Last Activity: " +
-(localStorage.getItem("victoryRecentActivity") || "No Activity");
+    const profileActivity = document.getElementById("profileActivity");
+
+if (profileActivity) {
+    profileActivity.innerHTML =
+        "🕒 Last Activity: " +
+        (localStorage.getItem("victoryRecentActivity") || "No Activity");
+}
 
 const user = localStorage.getItem("victoryUser");
 
@@ -243,6 +273,11 @@ return false;
 }
 
 window.addEventListener("load", checkLogin);
+
+// ===============================
+// STUDY DATA / USER SETTINGS
+// ===============================
+
 function changeName(){
 
 const newName =

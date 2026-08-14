@@ -75,51 +75,131 @@ Number(document.getElementById("neetScore").value);
 
 let result = "";
 
-if(score < 0 || score > 720 || isNaN(score)){
+if(isNaN(score) || score < 0 || score > 720){
 
-result = "⚠️ Please enter a score between 0 and 720.";
+result = `
+<h3>⚠️ Invalid Score</h3>
+<p>Please enter a NEET score between 0 and 720.</p>
+`;
 
 }
 
 else if(score >= 650){
 
-result = "🏆 Estimated Rank: 1 – 5,000";
+result = `
+<h3>🏆 Excellent Score Range</h3>
+
+<p><strong>Score:</strong> ${score}</p>
+
+<hr>
+
+<p>🔢 Estimated Rank Range:</p>
+<h2>1 – 5,000</h2>
+
+<p>🎯 Very competitive score range.</p>
+`;
 
 }
 
 else if(score >= 600){
 
-result = "🥇 Estimated Rank: 5,000 – 25,000";
+result = `
+<h3>🥇 Strong Score Range</h3>
+
+<p><strong>Score:</strong> ${score}</p>
+
+<hr>
+
+<p>🔢 Estimated Rank Range:</p>
+<h2>5,000 – 25,000</h2>
+
+<p>🎯 Strong rank potential.</p>
+`;
 
 }
 
 else if(score >= 550){
 
-result = "🥈 Estimated Rank: 25,000 – 60,000";
+result = `
+<h3>🥈 Good Score Range</h3>
+
+<p><strong>Score:</strong> ${score}</p>
+
+<hr>
+
+<p>🔢 Estimated Rank Range:</p>
+<h2>25,000 – 60,000</h2>
+
+<p>📚 College options will depend on counselling, category and state.</p>
+`;
 
 }
 
 else if(score >= 500){
 
-result = "🥉 Estimated Rank: 60,000 – 1,20,000";
+result = `
+<h3>🥉 Moderate Score Range</h3>
+
+<p><strong>Score:</strong> ${score}</p>
+
+<hr>
+
+<p>🔢 Estimated Rank Range:</p>
+<h2>60,000 – 1,20,000</h2>
+
+<p>📚 Check state and category-wise counselling options.</p>
+`;
 
 }
 
 else if(score >= 450){
 
-result = "📚 Estimated Rank: 1,20,000 – 2,00,000";
+result = `
+<h3>📚 Lower Score Range</h3>
+
+<p><strong>Score:</strong> ${score}</p>
+
+<hr>
+
+<p>🔢 Estimated Rank Range:</p>
+<h2>1,20,000 – 2,00,000</h2>
+
+<p>🎯 Explore available counselling and alternative options.</p>
+`;
 
 }
 
 else if(score >= 400){
 
-result = "📖 Estimated Rank: 2,00,000 – 3,00,000";
+result = `
+<h3>📖 Lower Score Range</h3>
+
+<p><strong>Score:</strong> ${score}</p>
+
+<hr>
+
+<p>🔢 Estimated Rank Range:</p>
+<h2>2,00,000 – 3,00,000</h2>
+
+<p>📚 Check available courses and counselling opportunities.</p>
+`;
 
 }
 
 else{
 
-result = "🌱 Estimated Rank: 3,00,000+";
+result = `
+<h3>🌱 Limited Rank Range</h3>
+
+<p><strong>Score:</strong> ${score}</p>
+
+<hr>
+
+<p>🔢 Estimated Rank:</p>
+<h2>3,00,000+</h2>
+
+<p>📚 Consider exploring other medical and allied-health courses.</p>
+`;
 
 }
 

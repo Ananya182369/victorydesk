@@ -95,21 +95,34 @@ document.getElementById("category").value;
 
 let result = "";
 
-if(score < 0 || score > 720 || isNaN(score)){
+if(isNaN(score) || score < 0 || score > 720){
 
-result =
-"⚠️ Please enter a valid score between 0 and 720.";
+result = `
+<h3>⚠️ Invalid Score</h3>
+<p>Please enter a NEET score between 0 and 720.</p>
+`;
 
 }
 
 else if(score >= 650){
 
 result = `
-🏆 Strong Score Range<br><br>
-Possible options may include:<br>
-• Top government medical colleges<br>
-• Highly competitive state colleges<br>
-• Strong private medical colleges
+<h3>🏆 Excellent Score Range</h3>
+
+<p><strong>Score:</strong> ${score}</p>
+<p><strong>Category:</strong> ${category}</p>
+
+<hr>
+
+<h4>Possible Options</h4>
+
+<ul>
+<li>Top government medical colleges</li>
+<li>Highly competitive state quota colleges</li>
+<li>Strong private medical colleges</li>
+</ul>
+
+<p>🎯 Final college options depend on counselling, rank, state quota and category.</p>
 `;
 
 }
@@ -117,11 +130,22 @@ Possible options may include:<br>
 else if(score >= 550){
 
 result = `
-🥇 Good Score Range<br><br>
-Possible options may include:<br>
-• Government medical colleges depending on state/category<br>
-• State counselling options<br>
-• Private medical colleges
+<h3>🥇 Good Score Range</h3>
+
+<p><strong>Score:</strong> ${score}</p>
+<p><strong>Category:</strong> ${category}</p>
+
+<hr>
+
+<h4>Possible Options</h4>
+
+<ul>
+<li>Government medical colleges depending on state and category</li>
+<li>State counselling opportunities</li>
+<li>Private medical colleges</li>
+</ul>
+
+<p>🎯 Check your counselling eligibility before making a choice.</p>
 `;
 
 }
@@ -129,11 +153,22 @@ Possible options may include:<br>
 else if(score >= 450){
 
 result = `
-🥈 Moderate Score Range<br><br>
-Possible options may include:<br>
-• Selected state quota opportunities<br>
-• Private medical colleges<br>
-• Other medical-course options
+<h3>🥈 Moderate Score Range</h3>
+
+<p><strong>Score:</strong> ${score}</p>
+<p><strong>Category:</strong> ${category}</p>
+
+<hr>
+
+<h4>Possible Options</h4>
+
+<ul>
+<li>Selected state quota opportunities</li>
+<li>Private medical colleges</li>
+<li>Other medical and allied-health courses</li>
+</ul>
+
+<p>📚 Actual options depend heavily on counselling and category.</p>
 `;
 
 }
@@ -141,10 +176,21 @@ Possible options may include:<br>
 else if(score >= 350){
 
 result = `
-📚 Lower Score Range<br><br>
-Possible options may include:<br>
-• Private colleges depending on counselling<br>
-• Alternative healthcare courses
+<h3>📚 Lower Score Range</h3>
+
+<p><strong>Score:</strong> ${score}</p>
+<p><strong>Category:</strong> ${category}</p>
+
+<hr>
+
+<h4>Possible Options</h4>
+
+<ul>
+<li>Private colleges depending on counselling</li>
+<li>Alternative medical courses</li>
+<li>Allied-health courses</li>
+</ul>
+
 `;
 
 }
@@ -152,18 +198,24 @@ Possible options may include:<br>
 else{
 
 result = `
-🌱 Limited MBBS Options<br><br>
-Consider checking:<br>
-• Alternative medical/allied-health courses<br>
-• State counselling opportunities
+<h3>🌱 Limited MBBS Options</h3>
+
+<p><strong>Score:</strong> ${score}</p>
+<p><strong>Category:</strong> ${category}</p>
+
+<hr>
+
+<h4>Consider Exploring</h4>
+
+<ul>
+<li>Alternative medical courses</li>
+<li>Allied-health courses</li>
+<li>State counselling opportunities</li>
+</ul>
+
 `;
 
 }
-
-result += `
-<br><br>
-<strong>Category:</strong> ${category}
-`;
 
 document.getElementById("collegeResult").innerHTML =
 result;
