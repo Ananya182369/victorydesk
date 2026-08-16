@@ -18,7 +18,7 @@
         <div class="loader-circle"></div>
 
         <h1>VictoryDesk</h1>
-<h1 class="main-title"></h1>
+
 
         <p>📚 Learn • Practice • Achieve • Repeat</p>
 
@@ -34,38 +34,6 @@
 
 <header>
 
-    <section class="container">
-
-<div class="card" id="profileCard" style="display:none;">
-
-<h2>👤 Student Profile</h2>
-
-<p id="profileActivity"></p>
-
-<p id="profileName"></p>
-
-<p id="profileStreak"></p>
-
-<p id="profileGoal"></p>
-
-<button class="btn" onclick="clearStudyData()">
-🗑 Reset Study Progress
-</button>
-
-<input
-type="text"
-id="newName"
-class="contact-input"
-placeholder="Change your name">
-
-<button class="btn" onclick="changeName()">
-✏️ Update Name
-</button>
-
-</div>
-
-</section>
-
          <nav class="navbar">
            <a href="index.html" class="active">🏠 Home</a>
 <a href="pages/victoryai.html">🤖 Victory AI</a>
@@ -80,29 +48,19 @@ placeholder="Change your name">
 <a href="contact.html">📞 Contact</a>
          </nav>
 
-         <a href="login.html" class="btn" id="loginBtn">
-🔐 Login
-</a>
+         <div class="hero-actions">
+    <a href="login.html" class="btn">
+        🔐 Login
+    </a>
 
-<span id="welcomeUser" style="margin-left:15px;font-weight:bold;"></span>
+    <span id="welcomeUser"></span>
+</div>
 
          
 
       <h1 class="hero-title">
     VictoryDesk
 </h1>
-
-      <div class="card" id="quoteCard">
-
-<h2>💡 Daily Motivation</h2>
-
-<p id="dailyQuote">
-
-Success is the sum of small efforts repeated every day.
-
-</p>
-
-</div>
 
       <p class="hero-text">
 Your complete learning platform for school, college and competitive exam preparation.
@@ -112,77 +70,17 @@ Your complete learning platform for school, college and competitive exam prepara
 One Platform. Every Student. Every Dream.
 </h2>
 
-      <div class="logo-box">
-    🎓✨
-</div>
+      
 
     <p class="hero-badge">
 🎯 Trusted Learning • Official Updates • AI Powered
 </p>
 
-    <p class="hero-text">
-Welcome to India's growing education platform. Learn with high-quality notes, PYQs, mock tests, free lectures, official education updates, AI-powered study help, and fun learning for kids—all in one place. Whether you're in school, college, or preparing for competitive exams, VictoryDesk is built to support your learning journey.
-</p>
+    
 
     <div class="hero-buttons">
     <a href="#exam" class="btn">🚀 Start Learning</a>
-    <a href="#latest-news" class="btn secondary-btn">📰 Latest Updates</a>
 </div>
-
-    <button class="btn" onclick="toggleDarkMode()">
-    🌙 Dark / Light Mode
-    </button>
-
-<a href="pages/victoryai.html" class="btn">🤖 Open Victory AI</a>
-
-<div class="grid" style="margin-top:40px;">
-
-   <div class="card">
-     <h2>10+</h2>
-     <p>Study Features</p>
-   </div>
-
-   <div class="card">
-    <h2>100+</h2>
-    <p>Learning Resources</p>
-   </div>
-
-   <div class="card">
-    <h2>1000+</h2>
-    <p>Students Helped</p>
-   </div>
-
-  </div>
-
-
-<section class="education-updates">
-
-<h2>📢 Official Education Updates</h2>
-
-<p class="section-subtitle">
-Latest official notifications, NTA, CBSE, Universities, admissions, counselling and exam alerts — all in one place.
-</p>
-
-<div class="updates-grid">
-
-<div class="update-card">
-<h3>📝 NTA</h3>
-<p>NEET, JEE, CUET, UGC NET and other official notices.</p>
-</div>
-
-<div class="update-card">
-<h3>🏫 School Boards</h3>
-<p>CBSE, ICSE and State Board updates.</p>
-</div>
-
-<div class="update-card">
-<h3>🎓 Admissions</h3>
-<p>College admissions, counselling and important dates.</p>
-</div>
-
-</div>
-
-</section>
 
 </header>
 
@@ -190,13 +88,13 @@ Latest official notifications, NTA, CBSE, Universities, admissions, counselling 
 
 <div class="card">
 
-<h2>🔍 Search VictoryDesk</h2>
+<h2 class="section-title">🔎 Find What You Need</h2>
 
 <input
 type="text"
 id="globalSearch"
 class="contact-input"
-placeholder="Search notes, exams or topics...">
+placeholder="Search exams, notes, MCQs, PYQs or topics...">
 
 <button class="btn" onclick="searchWebsite()">
 Search
@@ -206,30 +104,7 @@ Search
 
 </section>
 
-<section class="container">
 
-<h2 class="section-title">📢 Latest Updates</h2>
-
-<div class="grid">
-
-<div class="card">
-<h3>🩺 NEET</h3>
-<p>Latest NEET news and announcements will appear here.</p>
-</div>
-
-<div class="card">
-<h3>🎓 CUET</h3>
-<p>Admission and counselling updates will appear here.</p>
-</div>
-
-<div class="card">
-<h3>💼 Career</h3>
-<p>Scholarships, internships and career opportunities.</p>
-</div>
-
-</div>
-
-</section>
 
 <section class="container" id="services">
 
@@ -262,43 +137,6 @@ Search
 
 </section>
 
-<section class="container">
-
-  <h2 class="section-title">🌟 What You Can Do on VictoryDesk</h2>
-
-    <div class="grid">
-
-      <div class="card">
-       <h3>🤖 Discover AI Tools</h3>
-       <p>Find the best free AI tools for study, coding and creativity.</p>
-      </div>
-
-      <div class="card">
-        <h3>🎓 Learn Better</h3>
-        <p>Access student resources, notes and career guidance.</p>
-      </div>
-
-      <div class="card">
-       <h3>🌍 Explore Useful Websites</h3>
-       <p>Use trusted websites for learning and productivity.</p>
-      </div>
-
-    </div>
-
-</section>
-
-
-<input
-class="contact-input"
-type="text"
-id="searchInput"
-placeholder="🔍 Search AI Tools..."
-onkeyup="searchTools()"
->
-
-  
-
-    
 
     <section class="container" id="studentDashboard" style="display:none;">
 
@@ -308,11 +146,7 @@ onkeyup="searchTools()"
 
     <div id="subjectArea">
 
-      <div id="studyOptions" style="display:none; margin-top:30px;">
-
       
-
-</div>
 
 </div>
 
@@ -320,10 +154,12 @@ onkeyup="searchTools()"
 Choose Subject
 </h3>
 
+
+<h3 style="text-align:center;margin-bottom:20px;">
+Choose Subject
+</h3>
+
 <div class="exam-grid" id="subjectGrid">
-
-</div>
-
 </div>
 
 <div class="grid">
@@ -332,7 +168,6 @@ Choose Subject
 <h3>📖 Notes</h3>
 <p>Open chapter-wise notes.</p>
 </div>
-
 
 <div class="card" onclick="openFeature('MCQs')">
 <h3>❓ MCQs</h3>
@@ -363,69 +198,91 @@ Choose Subject
 
 </section>
 
-<h2 class="section-title">🎓 Choose Your Exam</h2>
+<section class="container exam-section" id="exam">
 
-<p style="text-align:center;margin-bottom:30px;font-size:18px;">
-Select your exam to unlock your personalized study dashboard.
-</p>
+    <h2 class="section-title">🎓 Choose Your Exam</h2>
 
+    <p class="section-subtitle">
+        Select your exam and start your personalized learning journey.
+    </p>
 
+    <div class="exam-grid">
 
-<div class="exam-grid">
+        <div class="exam-card" onclick="window.location.href='pages/exam.html?exam=NEET'">
+            🩺
+            <h3>NEET</h3>
+            <p>Medical Entrance</p>
+        </div>
 
-</div>
+        <div class="exam-card" onclick="window.location.href='pages/exam.html?exam=JEE'">
+            ⚙️
+            <h3>JEE</h3>
+            <p>Engineering Entrance</p>
+        </div>
 
-<div class="exam-card" onclick="window.location.href='pages/exam.html?exam=JEE'">⚙️ JEE</div>
+        <div class="exam-card" onclick="window.location.href='pages/exam.html?exam=CUET'">
+            🎓
+            <h3>CUET</h3>
+            <p>University Entrance</p>
+        </div>
 
-<div class="exam-card" onclick="window.location.href='pages/exam.html?exam=CUET'">🎓 CUET</div>
+        <div class="exam-card" onclick="window.location.href='pages/exam.html?exam=UPSC'">
+            🏛️
+            <h3>UPSC</h3>
+            <p>Civil Services</p>
+        </div>
 
-<div class="exam-card" onclick="window.location.href='pages/exam.html?exam=UPSC'">🏛️ UPSC</div>
+        <div class="exam-card" onclick="window.location.href='pages/exam.html?exam=SSC'">
+            📚
+            <h3>SSC</h3>
+            <p>Government Exams</p>
+        </div>
 
-<div class="exam-card" onclick="window.location.href='pages/exam.html?exam=SSC'">📚 SSC</div>
+        <div class="exam-card">
+            🏦
+            <h3>Banking</h3>
+            <p>Banking Exams</p>
+        </div>
 
-<div class="exam-card">🏦 Banking</div>
+        <div class="exam-card">
+            ⚖️
+            <h3>CLAT</h3>
+            <p>Law Entrance</p>
+        </div>
 
-<div class="exam-card">⚖️ CLAT</div>
+        <div class="exam-card">
+            🪖
+            <h3>NDA</h3>
+            <p>Defence Entrance</p>
+        </div>
 
-<div class="exam-card">🪖 NDA</div>
+        <div class="exam-card">
+            🏫
+            <h3>Class 9–10</h3>
+            <p>School Preparation</p>
+        </div>
 
-<div class="exam-card">🏫 Class 9–10</div>
+        <div class="exam-card">
+            🎒
+            <h3>Class 11–12</h3>
+            <p>Senior Secondary</p>
+        </div>
 
-<div class="exam-card">🎒 Class 11–12</div>
+        <div class="exam-card">
+            🎓
+            <h3>College</h3>
+            <p>College Learning</p>
+        </div>
 
-<div class="exam-card">🎓 College</div>
+        <div class="exam-card">
+            ✨
+            <h3>Other</h3>
+            <p>Explore More</p>
+        </div>
 
-<div class="exam-card">✨ Other</div>
-
-</div>
+    </div>
 
 </section>
-
-
-
-    <section class="container" id="features">
-
-        <h2 class="section-title">📚 Everything a Student Needs</h2>
-        <div class="grid">
-
-           <div class="feature-box">
-<h3>🤖 Victory AI</h3>
-<p>Your personal AI study assistant to solve doubts, explain concepts and guide you in your preparation.</p>
-</div>
-
-           <div class="feature-box">
-<h3>📖 Notes • MCQs • PYQs</h3>
-<p>Access chapter-wise notes, practice MCQs, previous year questions and mock tests for your exam.</p>
-</div>
-
-           <div class="feature-box">
-<h3>🎥 Free Learning Resources</h3>
-<p>Watch free videos, revise difficult topics and learn from the best educators anytime.</p>
-</div>
-</div>
-</section>
-
-
 
 <section class="container">
 
@@ -434,25 +291,25 @@ Select your exam to unlock your personalized study dashboard.
 <div class="grid">
 
 <div class="card">
-<h1>1️⃣</h1>
+<div class="step-number">1️⃣</div>
 <h3>Select Your Exam</h3>
 <p>Choose the exam or class you are preparing for.</p>
 </div>
 
 <div class="card">
-<h1>2️⃣</h1>
+<div class="step-number">2️⃣</div>
 <h3>Choose Subject & Chapter</h3>
 <p>Open any subject and study chapter-wise.</p>
 </div>
 
 <div class="card">
-<h1>3️⃣</h1>
+<div class="step-number">3️⃣</div>
 <h3>Practice Daily</h3>
 <p>Solve Notes, MCQs, PYQs and Mock Tests regularly.</p>
 </div>
 
 <div class="card">
-<h1>4️⃣</h1>
+<div class="step-number">4️⃣</div>
 <h3>Ask Victory AI</h3>
 <p>Clear your doubts instantly with your AI study assistant.</p>
 </div>
@@ -460,35 +317,6 @@ Select your exam to unlock your personalized study dashboard.
 </div>
 
 </section>
-
-
-
-<section class="container">
-
-<h2 class="section-title">📊 VictoryDesk Stats</h2>
-
-<div class="grid">
-
-<div class="card">
-<h1 id="tools-count">10+</h1>
-<p>Study Features</p>
-</div>
-
-<div class="card">
-<h1 id="website-count">100+</h1>
-<p>Learning Resources</p>
-</div>
-
-<div class="card">
-<h1 id="student-count">1000+</h1>
-<p>Students Helped</p>
-</div>
-
-</div>
-
-</section>
-
-
 
     <section class="container" id="contact">
 
