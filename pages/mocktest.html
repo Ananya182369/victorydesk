@@ -11,6 +11,8 @@
 <link rel="stylesheet" href="../style.css">
 
 <script src="../data/neet.js"></script>
+<script src="../data/jee.js"></script>
+<script src="../data/cuet.js"></script>
 
 </head>
 
@@ -118,14 +120,28 @@ let attemptedCount = 0;
 
 let reviewQuestions = [];
 
-if (exam === "NEET" && subject.includes("Biology")) {
-    questions = neetData.Biology.mcqs;
+let examData = null;
+
+if (exam === "NEET") {
+    examData = neetData;
 }
-else if (exam === "NEET" && subject.includes("Chemistry")) {
-    questions = neetData.Chemistry.mcqs;
+else if (exam === "JEE") {
+    examData = jeeData;
 }
-else if (exam === "NEET" && subject.includes("Physics")) {
-    questions = neetData.Physics.mcqs;
+else if (exam === "CUET") {
+    examData = cuetData;
+}
+
+if (examData) {
+
+    const subjectKey = Object.keys(examData).find(key =>
+        subject.includes(key)
+    );
+
+    if (subjectKey && examData[subjectKey].mcqs) {
+        questions = examData[subjectKey].mcqs;
+    }
+
 }
 
 let timeLeft = 1800;
@@ -428,6 +444,27 @@ localStorage.setItem(
     JSON.stringify(mockHistory)
 );
 
+let xpActivities =
+JSON.parse(localStorage.getItem("xpActivities")) || [];
+
+const mockTestXP = 100;
+
+const activityId =
+"mock-" + Date.now();
+
+xpActivities.push({
+    id: activityId,
+    type: "Mock Test",
+    description: exam + " • " + subject,
+    xp: mockTestXP,
+    date: new Date().toLocaleDateString()
+});
+
+localStorage.setItem(
+    "xpActivities",
+    JSON.stringify(xpActivities)
+);
+
 localStorage.setItem(
     "lastMockDate",
     new Date().toLocaleDateString()
@@ -435,7 +472,7 @@ localStorage.setItem(
 
 document.querySelector(".container").innerHTML = `
 
-<div class="card">
+<div class="card mock-result">
 
 <h1>🎉 Mock Test Completed!</h1>
 
@@ -459,7 +496,7 @@ Percentage: ${percentage}%
 Performance Grade: ${grade}
 </h3>
 
-<div class="card" style="margin-top:20px;">
+<div class="performance-summary">
 
 <h3>📊 Performance Summary</h3>
 
@@ -485,14 +522,6 @@ attemptedCount > 0
 </p>
 
 </div>
-
-<p>
-📊 Accuracy: ${percentage}%
-</p>
-
-<p>
-📈 Attempted: ${correctAnswers + wrongAnswers} / ${questions.length}
-</p>
 
 <p>
 ${

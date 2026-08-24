@@ -201,6 +201,36 @@ window.location.href="pages/exam.html?exam=CUET";
 
 }
 
+else if(query.includes("banking")){
+
+window.location.href="pages/exam.html?exam=BANKING";
+
+}
+
+else if(query.includes("clat")){
+
+window.location.href="pages/exam.html?exam=CLAT";
+
+}
+
+else if(query.includes("nda")){
+
+window.location.href="pages/exam.html?exam=NDA";
+
+}
+
+else if(query.includes("upsc")){
+
+window.location.href="pages/exam.html?exam=UPSC";
+
+}
+
+else if(query.includes("ssc")){
+
+window.location.href="pages/exam.html?exam=SSC";
+
+}
+
 else{
 
 alert("No matching result found yet.");

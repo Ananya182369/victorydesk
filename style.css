@@ -26,32 +26,32 @@ body{
 
 header{
     background:
-        radial-gradient(circle at 15% 20%, rgba(255,255,255,.12), transparent 30%),
-        radial-gradient(circle at 85% 80%, rgba(16,185,129,.25), transparent 35%),
-        linear-gradient(135deg,#064e3b,#047857,#10b981);
-    background-size:cover;
+        radial-gradient(circle at 15% 20%, rgba(255,255,255,.10), transparent 28%),
+        radial-gradient(circle at 85% 75%, rgba(16,185,129,.20), transparent 32%),
+        linear-gradient(135deg,#022c22,#065f46,#047857);
     color:white;
     text-align:center;
-    padding:30px 20px 65px;
+    padding:24px 20px 70px;
     position:relative;
     overflow:hidden;
 }
 
 .hero-text{
-    max-width:760px;
+    max-width:680px;
     margin:0 auto;
     text-align:center;
-    font-size:18px;
+    font-size:17px;
     line-height:1.7;
-    color:rgba(255,255,255,.88);
+    color:rgba(255,255,255,.82);
 }
 
 .hero-buttons{
     display:flex;
     justify-content:center;
-    gap:15px;
+    align-items:center;
+    gap:12px;
     flex-wrap:wrap;
-    margin-top:28px;
+    margin-top:24px;
 }
 
 /* Navbar */
@@ -60,8 +60,8 @@ header{
     display:flex;
     justify-content:center;
     align-items:center;
-    gap:10px;
-    margin-bottom:35px;
+    gap:6px;
+    margin-bottom:24px;
     flex-wrap:wrap;
     position:relative;
     z-index:1000;
@@ -71,11 +71,12 @@ header{
     color:white;
     text-decoration:none;
     font-weight:500;
-    font-size:14px;
-    padding:9px 14px;
-    border-radius:10px;
+    font-size:15px;
+    padding:9px 13px;
+    border-radius:8px;
     transition:.3s ease;
     position:relative;
+    white-space:nowrap;
 }
 
 .navbar a:hover{
@@ -88,8 +89,10 @@ header{
 /* Button */
 
 .btn{
-    display:inline-block;
-    padding:12px 26px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    padding:13px 24px;
     background:linear-gradient(135deg,#10b981,#059669);
     color:#fff;
     text-decoration:none;
@@ -97,7 +100,7 @@ header{
     border-radius:12px;
     font-weight:600;
     cursor:pointer;
-    transition:.3s;
+    transition:.3s ease;
     box-shadow:0 8px 20px rgba(16,185,129,.25);
 }
 
@@ -125,15 +128,16 @@ transform:translateY(-3px);
     width:90%;
     max-width:1200px;
     margin:auto;
-    padding:60px 0;
+    padding:50px 0;
 }
 
 .section-title{
     text-align:center;
-    font-size:35px;
-    margin-bottom:40px;
-    text-transform:uppercase;
-    letter-spacing:1px;
+    font-size:32px;
+    margin-bottom:32px;
+    text-transform:none;
+    letter-spacing:.5px;
+    font-weight:700;
 }
 
 /* Cards */
@@ -151,33 +155,40 @@ transform:translateY(-3px);
     background:rgba(255,255,255,.95);
     backdrop-filter:blur(12px);
     border-radius:18px;
-    padding:25px;
+    padding:24px;
     box-shadow:0 10px 30px rgba(0,0,0,.08);
     transition:.3s;
     border:1px solid rgba(255,255,255,.4);
     height:100%;
     display:flex;
     flex-direction:column;
-    justify-content:center;
+    justify-content:flex-start;
+}
+
+.card .btn{
+    margin-top:auto;
 }
 
 .card:hover{
-    transform:translateY(-10px);
-    box-shadow:0 18px 40px rgba(16,185,129,.18);
+    transform:translateY(-6px);
+    box-shadow:0 10px 24px rgba(16,185,129,.12);
 }
 
 .card img{
-    width:70px;
-    margin-bottom:15px;
+    width:60px;
+    height:60px;
+    object-fit:contain;
+    margin:0 auto 18px;
 }
 
 .card h3{
-    margin-bottom:12px;
+    margin-bottom:10px;
 }
 
 .card p{
     color:#666;
-    margin-bottom:20px;
+    margin-bottom:18px;
+    line-height:1.6;
 }
 
 /* Features */
@@ -187,7 +198,6 @@ transform:translateY(-3px);
     padding:25px;
     border-radius:18px;
     box-shadow:0 8px 20px rgba(0,0,0,.08);
-    transition:.3s;
 }
 
 /* Contact */
@@ -247,11 +257,6 @@ color:#666;
 .dark-mode .feature-box{
     background:#1f1f1f;
     color:white;
-}
-
-.dark-mode .card p,
-.dark-mode .hero-text{
-    color:#ddd;
 }
 
 .dark-mode .contact-input{
@@ -337,13 +342,13 @@ letter-spacing:2px;
 =========================== */
 
 .exam-section{
-    padding:80px 10%;
+    padding:60px 5%;
     text-align:center;
     background:#f8fbff;
 }
 
 .exam-section h2{
-    font-size:38px;
+    font-size:34px;
     color:#065f46;
     margin-bottom:15px;
 }
@@ -354,28 +359,34 @@ letter-spacing:2px;
     font-size:18px;
 }
 
-.exam-grid{
-    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-    gap:20px;
-}
-
 .exam-card{
     background:#fff;
     border-radius:18px;
-    padding:25px;
+    padding:24px 18px;
     text-align:center;
     font-size:22px;
     font-weight:600;
     cursor:pointer;
-    box-shadow:0 8px 25px rgba(0,0,0,.08);
-    transition:.3s;
-    border:2px solid transparent;
+    box-shadow:0 8px 25px rgba(0,0,0,.07);
+    transition:.3s ease;
+    border:1px solid #e5e7eb;
 }
 
-.exam-card:hover{
-    transform:translateY(-8px);
-    border-color:#10b981;
-    box-shadow:0 15px 35px rgba(16,185,129,.25);
+.exam-card h3{
+    margin:10px 0 6px;
+    font-size:20px;
+}
+
+.exam-card p{
+    margin:0;
+    font-size:14px;
+    color:#666;
+}
+
+.exam-section h2{
+    font-size:34px;
+    color:#065f46;
+    margin-bottom:10px;
 }
 
 /* Career Page Styling */
@@ -384,10 +395,9 @@ letter-spacing:2px;
     background: white;
     padding: 25px;
     margin: 20px auto;
-    max-width: 350px;
+    max-width: 100%;
     border-radius: 15px;
     box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-    transition: 0.3s;
 }
 
 .career-card h3 {
@@ -428,12 +438,6 @@ letter-spacing:2px;
 .career-tips ul {
     list-style: none;
     padding: 0;
-}
-
-
-.career-tips li {
-    margin: 12px;
-    font-size: 17px;
 }
 
 /* Victory AI Answer Box */
@@ -528,7 +532,7 @@ animation:fadeIn 1s ease;
 
 display:flex;
 flex-direction:column;
-gap:12px;
+gap:8px;
 
 }
 
@@ -576,13 +580,15 @@ max-width:100%;
 height:auto;
 
 }
+
 .hero-title{
-    font-size:64px;
+    font-size:clamp(42px,7vw,64px);
     font-weight:700;
     text-align:center;
-    margin:25px 0 15px;
+    margin:35px 0 12px;
     color:#ffffff;
-    letter-spacing:2px;
+    letter-spacing:1px;
+    line-height:1.1;
     text-shadow:0 8px 30px rgba(0,0,0,.25);
 }
 
@@ -647,10 +653,801 @@ height:auto;
     color:#b8860b;
 }
 
-.tagline{
-    margin:10px auto 0;
+.hero-actions{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:12px;
+    margin-bottom:20px;
+}
+
+/* =========================
+   Dashboard Layout
+========================= */
+
+.stats-row{
+    width:90%;
+    max-width:1200px;
+    margin:0 auto 30px;
+    display:grid;
+    grid-template-columns:2fr 1fr 1fr 1fr;
+    gap:20px;
+    align-items:stretch;
+}
+
+.stat-box{
+    background:#ffffff;
+    border-radius:18px;
+    padding:24px;
+    text-align:center;
+    box-shadow:0 8px 25px rgba(0,0,0,.07);
+}
+
+.stat-box h3{
+    font-size:28px;
+    margin-bottom:8px;
+}
+
+.analytics-card{
+    background:#ffffff;
+    border-radius:18px;
+    padding:22px;
+    box-shadow:0 8px 25px rgba(0,0,0,.07);
+}
+
+.chart-box{
+    width:100%;
+    min-height:300px;
+    margin-top:20px;
+}
+
+@media (max-width:768px){
+
+    .stats-row{
+        grid-template-columns:1fr;
+        width:90%;
+    }
+
+    .chart-box{
+        min-height:250px;
+    }
+
+}
+
+/* =========================
+   Dashboard Quick Actions
+========================= */
+
+.quick-actions{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:16px;
+    margin-top:20px;
+}
+
+.quick-actions .btn,
+.quick-actions .feature-card{
+    width:100%;
+    text-align:center;
+}
+
+@media (max-width:768px){
+
+    .quick-actions{
+        grid-template-columns:1fr;
+    }
+
+}
+
+/* =========================
+   NEET Tools
+========================= */
+
+.neet-tools{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:16px;
+    width:100%;
+    margin-top:20px;
+}
+
+.neet-tools .btn{
+    width:100%;
+    text-align:center;
+}
+
+@media (max-width:768px){
+
+    .neet-tools{
+        grid-template-columns:1fr;
+    }
+
+}
+
+/* =========================
+   Mock Test History
+========================= */
+
+#mockHistory{
+    display:grid;
+    gap:15px;
+    margin-top:18px;
+}
+
+#mockHistory .history-item{
+    background:#f8fbff;
+    border-radius:14px;
+    padding:16px;
+    border:1px solid #e5e7eb;
+}
+
+.planner-progress{
+    width:0%;
+    height:15px;
+    border-radius:10px;
+    background:#4f46e5;
+    transition:width .4s ease;
+}
+
+.planner-progress-section,
+.revision-section{
+    margin-top:25px;
+    padding:20px;
+    border-radius:15px;
+    background:#f8fbff;
+}
+
+.planner-progress-section h3,
+.revision-section h3{
+    margin-bottom:15px;
+}
+
+.revision-section label{
+    display:block;
+    margin:12px 0;
+}
+
+.custom-tasks-section{
+    margin-top:25px;
+    padding:20px;
+    border-radius:15px;
+    background:#f8fbff;
+}
+
+.custom-tasks-section h3{
+    margin-bottom:15px;
+}
+
+.custom-tasks-section p{
+    margin:8px 0;
+}
+
+.achievement-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:20px;
+    margin-top:20px;
+}
+
+.achievement-grid .card{
+    margin:0;
+}
+
+.achievement-grid .card h2{
+    margin-bottom:10px;
+}
+
+.achievement-grid .card p{
+    margin:8px 0;
+}
+
+.badge-unlocked{
+    border:2px solid #22c55e;
+    background:#f0fdf4;
+}
+
+.badge-locked{
+    opacity:.65;
+    background:#f8fafc;
+}
+
+.achievement-summary{
+    margin-bottom:25px;
+}
+
+.achievement-summary h2{
+    margin-bottom:10px;
+}
+
+.achievement-summary p{
+    margin:0;
+    font-weight:600;
+}
+
+.notes-info{
+    margin:20px 0;
+    padding:18px;
+    border-radius:15px;
+    background:#f8fbff;
+}
+
+.notes-info h3{
+    margin-bottom:12px;
+}
+
+.notes-info p{
+    margin:8px 0;
+}
+
+.notes-list{
+    margin:15px 0;
+    padding-left:25px;
+}
+
+.notes-list li{
+    margin:8px 0;
+    line-height:1.6;
+}
+
+.notes-search-section{
+    margin-bottom:25px;
+}
+
+.notes-search-section .contact-input{
+    width:100%;
+}
+
+.mcq-card{
+    max-width:850px;
+    margin:0 auto;
+}
+
+.mcq-question-number{
+    font-size:18px;
+    font-weight:bold;
+    margin-bottom:15px;
+}
+
+.mcq-option{
+    display:block;
+    padding:12px 15px;
+    margin:10px 0;
+    border-radius:10px;
+    cursor:pointer;
+    background:#f8fbff;
+}
+
+.mcq-option input{
+    margin-right:10px;
+}
+
+.mcq-result{
+    margin-top:20px;
     font-size:20px;
-    font-weight:500;
-    color:rgba(255,255,255,.85);
-    letter-spacing:.5px;
+    font-weight:bold;
+}
+
+.mcq-score{
+    margin-top:10px;
+    font-size:18px;
+}
+
+/* =========================
+   Planner Goal Summary
+========================= */
+
+.goal-summary{
+    background:#f8fbff;
+    border:1px solid #e5e7eb;
+    border-radius:16px;
+    padding:20px;
+    margin-top:20px;
+}
+
+.goal-summary h3{
+    margin-bottom:12px;
+}
+
+.goal-summary p{
+    margin:8px 0;
+}
+
+/* =========================
+   Planner Revision Tracker
+========================= */
+
+.revision-section{
+    margin-top:24px;
+    padding:20px;
+    background:#f8fbff;
+    border:1px solid #e5e7eb;
+    border-radius:16px;
+}
+
+.revision-section h3{
+    margin-bottom:14px;
+}
+
+.revision-section label{
+    display:block;
+    padding:10px 0;
+}
+
+.revision-section p{
+    margin-top:12px;
+    font-weight:600;
+}
+
+/* =========================
+   Planner Custom Tasks
+========================= */
+
+.custom-tasks-section{
+    margin:20px 0;
+    padding:18px;
+    background:#f8fbff;
+    border:1px solid #e5e7eb;
+    border-radius:16px;
+}
+
+.custom-tasks-section h3{
+    margin-bottom:12px;
+}
+
+#customTasks{
+    display:grid;
+    gap:10px;
+}
+
+#customTasks p{
+    margin:0;
+    padding:12px 14px;
+    background:#ffffff;
+    border-radius:12px;
+    border:1px solid #e5e7eb;
+}
+
+/* =========================
+   Planner Tasks
+========================= */
+
+.container > .card > label{
+    display:block;
+    padding:14px 16px;
+    margin:10px 0;
+    background:#f8fbff;
+    border:1px solid #e5e7eb;
+    border-radius:12px;
+    cursor:pointer;
+}
+
+.container > .card > label input{
+    margin-right:10px;
+    accent-color:#4f46e5;
+}
+
+/* =========================
+   Planner Page
+========================= */
+
+.planner-page{
+    width:90%;
+    max-width:1000px;
+    margin:0 auto;
+}
+
+.planner-page > .card{
+    padding:30px;
+}
+
+/* =========================
+   Achievements
+========================= */
+
+.achievements-section{
+    width:100%;
+}
+
+.achievement-summary{
+    margin-bottom:20px;
+    text-align:center;
+}
+
+.achievement-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:20px;
+}
+
+.achievement-grid .card{
+    margin:0;
+    text-align:center;
+    padding:24px;
+}
+
+.achievement-grid .card h2{
+    margin-bottom:10px;
+}
+
+@media (max-width:768px){
+
+    .achievement-grid{
+        grid-template-columns:1fr;
+    }
+
+}
+
+/* =========================
+   Mock Test Performance
+========================= */
+
+.performance-summary{
+    margin-top:20px;
+    padding:22px;
+    background:#f8fbff;
+    border:1px solid #e5e7eb;
+    border-radius:16px;
+}
+
+.performance-summary h3{
+    margin-bottom:14px;
+}
+
+.performance-summary p{
+    margin:8px 0;
+}
+
+.mock-result{
+    text-align:center;
+    padding:30px;
+}
+
+.mock-result h1{
+    margin-bottom:15px;
+}
+
+.mock-result h2{
+    margin-bottom:15px;
+}
+
+.mock-result .btn{
+    display:inline-block;
+    margin-top:15px;
+}
+
+/* =========================
+   Mock Test Question Palette
+========================= */
+
+#questionPalette{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:15px;
+}
+
+#questionPalette .btn{
+    min-width:44px;
+    height:44px;
+    padding:8px 12px;
+    margin:0;
+}
+
+/* =========================
+   Mock Test Options
+========================= */
+
+#options{
+    display:grid;
+    gap:12px;
+    margin-top:20px;
+}
+
+#options label{
+    display:block;
+    padding:14px 16px;
+    background:#f8fbff;
+    border:1px solid #e5e7eb;
+    border-radius:12px;
+    cursor:pointer;
+    transition:transform .2s ease, box-shadow .2s ease;
+}
+
+#options label:hover{
+    transform:translateY(-2px);
+    box-shadow:0 6px 18px rgba(0,0,0,.06);
+}
+
+#options input{
+    margin-right:10px;
+    accent-color:#4f46e5;
+}
+
+/* =========================
+   Mock Test Timer
+========================= */
+
+#timer{
+    font-size:42px;
+    font-weight:700;
+    text-align:center;
+    margin-top:10px;
+    letter-spacing:2px;
+}
+
+/* =========================
+   Mock Test Actions
+========================= */
+
+#options + br + .btn,
+#options ~ .btn{
+    margin:6px;
+}
+
+/* =========================
+   Leaderboard
+========================= */
+
+.leaderboard-item{
+    padding:20px;
+    margin-top:14px;
+    background:#f8fbff;
+    border:1px solid #e5e7eb;
+    border-radius:16px;
+}
+
+.streak-status-box{
+    margin-top:14px;
+    padding:18px;
+    background:#f8fbff;
+    border:1px solid #e5e7eb;
+    border-radius:16px;
+}
+
+.streak-status-box p{
+    margin:6px 0;
+    font-weight:600;
+}
+
+.streak-status-box p:first-child{
+    font-size:18px;
+    color:#4f46e5;
+}
+
+.streak-status-box p:last-child{
+    color:#555;
+    font-size:14px;
+}
+
+.leaderboard-item:first-child{
+    margin-top:0;
+}
+
+.leaderboard-item h2{
+    margin-bottom:10px;
+}
+
+.leaderboard-item p{
+    margin:6px 0;
+}
+
+@media (max-width:600px){
+
+    .leaderboard-item{
+        padding:15px;
+        border-radius:14px;
+    }
+
+    .leaderboard-item h2{
+        font-size:20px;
+    }
+
+    .leaderboard-item p{
+        font-size:14px;
+    }
+
+}
+
+.your-rank{
+    border:2px solid #4f46e5;
+    box-shadow:0 8px 25px rgba(79,70,229,.15);
+    transform:scale(1.02);
+    background:#eef2ff;
+}
+
+.leaderboard-item:nth-child(1){
+    border:2px solid #f59e0b;
+}
+
+.leaderboard-item:nth-child(2){
+    border:2px solid #94a3b8;
+}
+
+.leaderboard-item:nth-child(3){
+    border:2px solid #d97706;
+}
+
+/* =========================
+   Exam Subject Grid
+========================= */
+
+.exam-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:20px;
+    margin-top:20px;
+}
+
+.exam-card{
+    padding:24px;
+    background:#ffffff;
+    border:1px solid #e5e7eb;
+    border-radius:16px;
+    text-align:center;
+    font-weight:600;
+    cursor:pointer;
+    transition:transform .2s ease, box-shadow .2s ease;
+}
+
+.exam-card:hover{
+    transform:translateY(-4px);
+    box-shadow:0 8px 22px rgba(0,0,0,.08);
+}
+
+@media (max-width:768px){
+
+    .exam-grid{
+        grid-template-columns:1fr;
+    }
+
+}
+
+/* =========================
+   Subject Today's Goal
+========================= */
+
+.today-goal{
+    padding:22px;
+    margin-bottom:25px;
+    background:#f8fbff;
+    border:1px solid #e5e7eb;
+    border-radius:16px;
+}
+
+.today-goal h3{
+    margin-bottom:12px;
+}
+
+.today-goal p{
+    margin:8px 0;
+}
+
+/* =========================
+   Subject Chapter Grid
+========================= */
+
+#chapterGrid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:20px;
+    margin-bottom:25px;
+}
+
+#chapterGrid .card{
+    margin:0;
+    cursor:pointer;
+    transition:transform .2s ease, box-shadow .2s ease;
+}
+
+#chapterGrid .card:hover{
+    transform:translateY(-4px);
+    box-shadow:0 8px 22px rgba(0,0,0,.08);
+}
+
+@media (max-width:768px){
+
+    #chapterGrid{
+        grid-template-columns:1fr;
+    }
+
+}
+
+/* =========================
+   Subject Progress
+========================= */
+
+.subject-progress{
+    padding:24px;
+    margin-top:25px;
+    background:#f8fbff;
+    border:1px solid #e5e7eb;
+    border-radius:16px;
+}
+
+.subject-progress h3{
+    margin-bottom:12px;
+}
+
+.subject-progress p{
+    margin:8px 0;
+}
+
+/* =========================
+   Subject Quick Actions
+========================= */
+
+.subject-quick-actions{
+    padding:22px;
+    margin-bottom:30px;
+    background:#f8fbff;
+    border:1px solid #e5e7eb;
+    border-radius:16px;
+}
+
+.subject-quick-actions h3{
+    margin-bottom:15px;
+}
+
+.subject-quick-actions .btn{
+    margin:5px;
+}
+
+/* ================================
+   DASHBOARD FINAL UI POLISH
+================================ */
+
+.container {
+    max-width: 1200px;
+    margin: 30px auto;
+}
+
+.container .card,
+.analytics-card,
+.stat-box,
+.gamification-card {
+    border-radius: 18px;
+}
+
+.grid {
+    gap: 20px;
+}
+
+.stats-row {
+    gap: 20px;
+    align-items: stretch;
+}
+
+.progress-box {
+    margin-top: 15px;
+}
+
+.progress-header {
+    margin-bottom: 8px;
+}
+
+.chart-box {
+    width: 100%;
+    min-height: 280px;
+}
+
+.quick-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.quick-actions + .btn,
+.card > .btn {
+    margin-top: 10px;
+}
+
+.history-item {
+    margin-top: 12px;
+    padding: 15px;
+    border-radius: 14px;
+}
+
+.analytics-card h3,
+.stat-box h3 {
+    margin-bottom: 6px;
 }

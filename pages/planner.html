@@ -15,9 +15,9 @@
 
 <header>
 
-<h1>Study Planner</h1>
+<h1 id="plannerTitle">Study Planner</h1>
 
-<p class="hero-text">
+<p class="hero-text" id="plannerSubtitle">
 Plan your daily study schedule.
 </p>
 
@@ -25,7 +25,7 @@ Plan your daily study schedule.
 
 </header>
 
-<section class="container">
+<section class="container planner-page">
 
 <div class="card">
 
@@ -37,42 +37,44 @@ id="customTask"
 class="contact-input"
 placeholder="➕ Add your own task">
 
-<br><br>
-
 <button class="btn" onclick="addTask()">
 Add Task
 </button>
 
+<div class="custom-tasks-section">
+
+<h3>📌 Custom Tasks</h3>
+
 <div id="customTasks"></div>
+
+</div>
 
 <label>
 <input type="checkbox" id="task1">
 📖 Study 1 Chapter
 </label>
 
-<br><br>
+
 
 <label>
 <input type="checkbox" id="task2">
 ❓ Solve 20 MCQs
 </label>
 
-<br><br>
+
 
 <label>
 <input type="checkbox" id="task3">
 🧪 Attempt 1 Mock Test
 </label>
 
-<br><br>
+
 
 <button class="btn" onclick="saveTasks()">
 💾 Save Progress
 </button>
 
-<br><br>
-
-<div class="card">
+<div class="goal-summary">
 
 <h3>🎯 Goal Summary</h3>
 
@@ -86,23 +88,19 @@ Completed Goals: <span id="completedGoals">0</span>
 
 </div>
 
+<div class="planner-progress-section">
+
 <h3>📊 Today's Progress</h3>
 
-<div style="width:100%;background:#ddd;border-radius:10px;height:15px;">
-
-<div id="plannerProgress"
-style="width:0%;height:15px;border-radius:10px;">
-</div>
-
-</div>
+<div id="plannerProgress" class="planner-progress"></div>
 
 <p id="plannerText">
 0% Completed
 </p>
 
-<br><br>
+</div>
 
-<div class="card">
+<div class="revision-section">
 
 <h3>🔁 Revision Tracker</h3>
 
@@ -111,14 +109,10 @@ style="width:0%;height:15px;border-radius:10px;">
 📖 Revise Chapter Notes
 </label>
 
-<br><br>
-
 <label>
 <input type="checkbox" id="revision2">
 ❓ Revise Important MCQs
 </label>
-
-<br><br>
 
 <label>
 <input type="checkbox" id="revision3">
@@ -133,9 +127,29 @@ style="width:0%;height:15px;border-radius:10px;">
 
 </div>
 
+</div>
+
 </section>
 
 <script>
+
+const params = new URLSearchParams(window.location.search);
+
+const exam = params.get("exam");
+const subject = params.get("subject");
+
+if (exam && subject) {
+
+    document.getElementById("plannerTitle").innerHTML =
+        "📅 " + exam + " • " + subject;
+
+    document.getElementById("plannerSubtitle").innerHTML =
+        "Create your study plan for this subject.";
+
+    localStorage.setItem("plannerExam", exam);
+    localStorage.setItem("plannerSubject", subject);
+
+}
 
 document.getElementById("task1").checked =
 localStorage.getItem("task1") === "true";

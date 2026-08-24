@@ -10,9 +10,7 @@
 
 <link rel="stylesheet" href="../style.css">
 
-<script src="../data/neet.js">
 
-</script>
 
 </head>
 
@@ -74,21 +72,27 @@ chapter;
 
 let pyqs = [];
 
-if(subject.includes("Biology")){
+let examData = null;
 
-pyqs = neetData.Biology.pyqs;
-
+if (exam === "NEET") {
+    examData = neetData;
+}
+else if (exam === "JEE") {
+    examData = jeeData;
+}
+else if (exam === "CUET") {
+    examData = cuetData;
 }
 
-else if(subject.includes("Chemistry")){
+if (examData) {
 
-pyqs = neetData.Chemistry.pyqs;
+    const subjectKey = Object.keys(examData).find(key =>
+        subject.includes(key)
+    );
 
-}
-
-else if(subject.includes("Physics")){
-
-pyqs = neetData.Physics.pyqs;
+    if (subjectKey && examData[subjectKey].pyqs) {
+        pyqs = examData[subjectKey].pyqs;
+    }
 
 }
 

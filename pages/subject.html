@@ -9,7 +9,9 @@
 
 <link rel="stylesheet" href="../style.css">
 
-<script src="../data/neet.js"></script>
+<script src="data/neet.js"></script>
+<script src="data/jee.js"></script>
+<script src="data/cuet.js"></script>
 
 </head>
 
@@ -39,7 +41,7 @@ Choose how you want to study.
 Study Options
 </h2>
 
-<div class="card">
+<div class="today-goal">
 
 <h3>🎯 Today's Goal</h3>
 
@@ -91,7 +93,7 @@ Welcome! Choose what you want to do for this subject.
 
 </div>
 
-<div class="card" onclick="window.location.href='planner.html'">
+<div class="card" onclick="window.location.href='planner.html?exam='+encodeURIComponent(exam)+'&subject='+encodeURIComponent(subject)">
 
 <h3>📅 Study Planner</h3>
 
@@ -110,7 +112,7 @@ Welcome! Choose what you want to do for this subject.
 
 <section class="container">
 
-    <div class="card">
+<div class="subject-quick-actions">
 
 <h3>🔥 Quick Actions</h3>
 
@@ -133,7 +135,11 @@ onclick="window.location.href='mcqs.html?exam='+encodeURIComponent(exam)+'&subje
 Start from Chapter 1 or choose any chapter you want to study.
 </p>
 
-<div class="card">
+<div class="grid" id="chapterGrid">
+
+</div>
+
+<div class="subject-progress">
 
 <h3>📊 Subject Progress</h3>
 
@@ -145,34 +151,6 @@ Start from Chapter 1 or choose any chapter you want to study.
 
 </div>
 
-<div class="grid">
-
-<div class="card">
-<h3>Chapter 1</h3>
-</div>
-
-<div class="card">
-<h3>Chapter 2</h3>
-</div>
-
-<div class="card">
-<h3>Chapter 3</h3>
-</div>
-
-<div class="card">
-<h3>Chapter 4</h3>
-</div>
-
-<div class="card">
-<h3>Chapter 5</h3>
-</div>
-
-<div class="card">
-<h3>Chapter 6</h3>
-</div>
-
-</div>
-
 </section>
 
 <script>
@@ -181,6 +159,11 @@ const params = new URLSearchParams(window.location.search);
 
 const exam = params.get("exam");
 const subject = params.get("subject");
+
+console.log("EXAM:", exam);
+console.log("SUBJECT:", subject);
+console.log("NEET DATA:", typeof neetData);
+console.log("NEET SUBJECTS:", Object.keys(neetData));
 
 localStorage.setItem("lastExam", exam);
 localStorage.setItem("lastSubject", subject);
@@ -235,27 +218,55 @@ if(lastStudyDate !== today){
 document.getElementById("subjectHeading").innerHTML =
 exam + " • " + subject;
 
-const chapterSection = document.querySelector(".grid:last-of-type");
+
+
+let examData = null;
+
+if(exam === "NEET"){
+    examData = neetData;
+}
+else if(exam === "JEE"){
+    examData = jeeData;
+}
+else if(exam === "CUET"){
+    examData = cuetData;
+}
+
+let selectedSubject = subject || "";
+
+selectedSubject = selectedSubject
+    .replace(/^[^\p{L}\p{N}]+/u, "")
+    .trim();
+
+let subjectData = null;
+
+if(examData){
+
+    const subjectKey = Object.keys(examData).find(key => {
+
+        return key.toLowerCase() === selectedSubject.toLowerCase();
+
+    });
+
+    if(subjectKey){
+
+        subjectData = examData[subjectKey];
+
+    }
+
+}
 
 let chapters = [];
 
-if(exam==="NEET" && subject.includes("Biology")){
+if(subjectData && subjectData.notes){
 
-chapters = neetData.Biology.notes.map(item => item.chapter);
-
-}
-
-else if(exam==="NEET" && subject.includes("Chemistry")){
-
-chapters = neetData.Chemistry.notes.map(item => item.chapter);
+    chapters = subjectData.notes.map(
+        item => item.chapter
+    );
 
 }
 
-else if(exam==="NEET" && subject.includes("Physics")){
-
-chapters = neetData.Physics.notes.map(item => item.chapter);
-
-}
+const chapterSection = document.getElementById("chapterGrid");
 
 document.getElementById("totalChapters").innerHTML =
 chapters.length;
@@ -270,17 +281,19 @@ chapters.length;
 
 chapterSection.innerHTML = "";
 
-chapters.forEach(chapter=>{
+chapters.forEach(chapter => {
 
-chapterSection.innerHTML += `
+    const card = document.createElement("div");
 
-<div class="card" onclick="openNotes('${chapter}')">
+    card.className = "card";
 
-<h3>📖 ${chapter}</h3>
+    card.innerHTML = `
+        <h3>📖 ${chapter}</h3>
+    `;
 
-</div>
+    card.onclick = () => openNotes(chapter);
 
-`;
+    chapterSection.appendChild(card);
 
 });
 
@@ -289,13 +302,8 @@ function openNotes(chapter){
 let currentProgress =
 Number(localStorage.getItem("progress")) || 0;
 
-if(currentProgress < 100){
-    currentProgress += 10;
-    localStorage.setItem("progress", currentProgress);
-}
-
 let progress =
-Number(localStorage.getItem("progress")) || 0;
+    Number(localStorage.getItem("progress")) || 0;
 
 progress = Math.min(progress + 10, 100);
 

@@ -36,7 +36,6 @@
 
          <nav class="navbar">
            <a href="index.html" class="active">🏠 Home</a>
-<a href="pages/victoryai.html">🤖 Victory AI</a>
 <a href="studenthub.html">📚 Study Hub</a>
 <a href="career.html">Career</a>
 
@@ -44,14 +43,14 @@
 🤖 Ask Victory AI
 </a>
 
-<a href="pages/exam.html?exam=NEET">📝 Practice</a>
+<a href="#exam">📝 Practice</a>
 <a href="contact.html">📞 Contact</a>
          </nav>
 
          <div class="hero-actions">
-    <a href="login.html" class="btn">
-        🔐 Login
-    </a>
+    <a href="login.html" class="btn" id="loginBtn">
+    🔐 Login
+</a>
 
     <span id="welcomeUser"></span>
 </div>
@@ -79,7 +78,7 @@ One Platform. Every Student. Every Dream.
     
 
     <div class="hero-buttons">
-    <a href="#exam" class="btn">🚀 Start Learning</a>
+    <a href="#exam" class="btn">🎯 Choose Your Exam</a>
 </div>
 
 </header>
@@ -97,7 +96,7 @@ class="contact-input"
 placeholder="Search exams, notes, MCQs, PYQs or topics...">
 
 <button class="btn" onclick="searchWebsite()">
-Search
+🔎 Search VictoryDesk
 </button>
 
 </div>
@@ -108,7 +107,11 @@ Search
 
 <section class="container" id="services">
 
-   <h2 class="section-title">What You'll Get</h2>
+   <h2 class="section-title">🚀 Everything You Need to Succeed</h2>
+
+<p class="section-subtitle">
+Notes, MCQs, PYQs, Mock Tests, AI, Analytics, Planning and more — all in one place.
+</p>
 
     <div class="grid">
 
@@ -149,11 +152,6 @@ Search
       
 
 </div>
-
-<h3 style="text-align:center;margin-bottom:20px;">
-Choose Subject
-</h3>
-
 
 <h3 style="text-align:center;margin-bottom:20px;">
 Choose Subject
@@ -238,47 +236,47 @@ Choose Subject
             <p>Government Exams</p>
         </div>
 
-        <div class="exam-card">
-            🏦
-            <h3>Banking</h3>
-            <p>Banking Exams</p>
-        </div>
+        <div class="exam-card" onclick="window.location.href='pages/exam.html?exam=BANKING'">
+    🏦
+    <h3>Banking</h3>
+    <p>Banking Exams</p>
+</div>
 
-        <div class="exam-card">
-            ⚖️
-            <h3>CLAT</h3>
-            <p>Law Entrance</p>
-        </div>
+        <div class="exam-card" onclick="window.location.href='pages/exam.html?exam=CLAT'">
+    ⚖️
+    <h3>CLAT</h3>
+    <p>Law Entrance</p>
+</div>
 
-        <div class="exam-card">
-            🪖
-            <h3>NDA</h3>
-            <p>Defence Entrance</p>
-        </div>
+        <div class="exam-card" onclick="window.location.href='pages/exam.html?exam=NDA'">
+    🪖
+    <h3>NDA</h3>
+    <p>Defence Entrance</p>
+</div>
 
-        <div class="exam-card">
-            🏫
-            <h3>Class 9–10</h3>
-            <p>School Preparation</p>
-        </div>
+        <div class="exam-card" onclick="window.location.href='pages/exam.html?exam=CLASS9_10'">
+    🏫
+    <h3>Class 9–10</h3>
+    <p>School Preparation</p>
+</div>
 
-        <div class="exam-card">
-            🎒
-            <h3>Class 11–12</h3>
-            <p>Senior Secondary</p>
-        </div>
+        <div class="exam-card" onclick="window.location.href='pages/exam.html?exam=CLASS11_12'">
+    🎒
+    <h3>Class 11–12</h3>
+    <p>Senior Secondary</p>
+</div>
 
-        <div class="exam-card">
-            🎓
-            <h3>College</h3>
-            <p>College Learning</p>
-        </div>
+        <div class="exam-card" onclick="window.location.href='pages/exam.html?exam=COLLEGE'">
+    🎓
+    <h3>College</h3>
+    <p>College Learning</p>
+</div>
 
-        <div class="exam-card">
-            ✨
-            <h3>Other</h3>
-            <p>Explore More</p>
-        </div>
+        <div class="exam-card" onclick="window.location.href='pages/exam.html?exam=OTHER'">
+    ✨
+    <h3>Other</h3>
+    <p>Explore More</p>
+</div>
 
     </div>
 

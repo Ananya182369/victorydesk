@@ -156,6 +156,8 @@ Level: Beginner
 <p>Ask doubts instantly (Coming Soon)</p>
 </div>
 
+<div class="neet-tools">
+
 <a href="neetcalculator.html" class="btn">
 🧮 NEET Score Calculator
 </a>
@@ -170,11 +172,62 @@ Level: Beginner
 
 </div>
 
-<div class="card">
+</div>
 
-<h2>📊 Progress Analytics</h2>
+<div class="card" id="xpNotification" style="display:none;">
 
-<div class="card">
+<h2>🎉 XP Update</h2>
+
+<p id="xpNotificationText"></p>
+
+</div>
+
+<div class="card gamification-card">
+
+    <h2>🎮 Your Progression</h2>
+
+    <p id="gameLevel">
+        🌱 Beginner
+    </p>
+
+    <p id="gameXP">
+        ⭐ 0 XP
+    </p>
+
+<p id="gameRank">
+    🎖️ Rank: Beginner
+</p>
+
+<p id="gameBadges">
+    🏆 Badges: 0
+</p>
+
+    <p id="gameNext">
+        🎯 Next Level: 100 XP
+    </p>
+
+<div class="progress-box">
+
+    <div class="progress-header">
+        <span id="gameProgressLabel">Level Progress</span>
+        <span id="gameProgressPercent">0%</span>
+        <p id="gameProgressXP">
+    0 / 100 XP
+</p>
+
+<p id="gameXPRemaining">
+    🎯 100 XP to next level
+</p>
+
+    </div>
+
+    <div class="progress-bar">
+        <div id="gameProgressFill" class="progress-fill"></div>
+    </div>
+
+</div>
+
+</div>
 
 <h2>📈 Study Insights</h2>
 
@@ -191,9 +244,21 @@ Level: Beginner
 
 </div>
 
-<div class="card">
+<div class="xp-milestone">
+
+<h3>🏆 XP Milestone</h3>
+
+<p id="xpMilestone">
+Keep studying to reach your next milestone!
+</p>
+
+</div>
 
 <h2>🕒 Study Timeline</h2>
+
+<p id="xpActivityCount">
+0 XP Activities
+</p>
 
 <div id="studyTimeline">
 
@@ -216,6 +281,32 @@ Level: Beginner
 <div class="analytics-card">
 <h3 id="longestStreak">0</h3>
 <p>🔥 Longest Streak</p>
+</div>
+
+</div>
+
+<p id="streakStatus">
+🔥 Current Streak: 0 Days
+</p>
+
+<p id="streakMilestone">
+🎯 Next Streak Milestone: 3 Days
+</p>
+
+<div class="progress-box">
+
+    <div class="progress-header">
+        <span>🔥 Streak Progress</span>
+        <span id="streakProgressPercent">0%</span>
+    </div>
+
+    <div class="progress-bar">
+        <div
+            id="streakProgressFill"
+            class="progress-fill">
+        </div>
+    </div>
+
 </div>
 
 <div class="analytics-card">
@@ -292,25 +383,27 @@ Level: Beginner
 📅 Study Planner
 </a>
 
-<a href="achievements.html" class="feature-card">
-
-🏆
-
-<h3>Achievements</h3>
-
-<p>Unlock badges and track your progress.</p>
-
+<a href="achievements.html" class="btn">
+🏆 Achievements
 </a>
 
-<a href="exam.html" class="btn">📚 Study Now</a>
+<a href="exam.html" class="btn">
+📚 Study Now
+</a>
 
-<a href="mocktest.html" class="btn">🧪 Mock Test</a>
+<a href="mocktest.html" class="btn">
+🧪 Mock Test
+</a>
 
-<a href="victoryai.html" class="btn">🤖 Victory AI</a>
+<a href="victoryai.html" class="btn">
+🤖 Victory AI
+</a>
 
 <button class="btn" onclick="continueStudy()">
 📖 Continue Study
 </button>
+
+</div>
 
 </div>
 
@@ -328,18 +421,56 @@ Loading history...
 
 <script>
 
-    const lastExam = localStorage.getItem("lastExam");
-const lastSubject = localStorage.getItem("lastSubject");
+    let completed = 0;
+let streak = Number(localStorage.getItem("studyStreak")) || 0;
+
+const today = new Date().toISOString().split("T")[0];
 
 const lastStudyDate =
 localStorage.getItem("lastStudyDate");
 
-if(lastStudyDate){
+if(lastStudyDate !== today){
 
-document.getElementById("lastStudyDate").textContent =
-"Last Study: " + lastStudyDate;
+    if(lastStudyDate){
 
+        const lastDate =
+        new Date(lastStudyDate);
+
+        const todayDate =
+        new Date(today);
+
+        const difference =
+        Math.floor(
+            (todayDate - lastDate) /
+            (1000 * 60 * 60 * 24)
+        );
+
+        if(difference === 1){
+            streak++;
+        }
+        else if(difference > 1){
+            streak = 1;
+        }
+
+    }
+    else{
+        streak = 1;
+    }
+
+    localStorage.setItem(
+        "studyStreak",
+        streak
+    );
+
+    localStorage.setItem(
+        "lastStudyDate",
+        today
+    );
 }
+
+    const lastExam = localStorage.getItem("lastExam");
+const lastSubject = localStorage.getItem("lastSubject");
+
 
 let progress =
 Number(localStorage.getItem("progress")) || 0;
@@ -347,20 +478,11 @@ Number(localStorage.getItem("progress")) || 0;
 
 if(lastExam && lastSubject){
 
-document.getElementById("lastStudy").innerHTML =
-lastExam + " • " + lastSubject;
-
-document.getElementById("recentActivity").textContent =
-"Opened " + lastSubject + " (" + lastExam + ")";
-
 }
 
 function continueStudy(){
 
 if(lastExam && lastSubject){
-
-    document.getElementById("recentActivity").textContent =
-"Opened " + lastSubject + " (" + lastExam + ")";
 
 window.location.href =
 "subject.html?exam=" +
@@ -382,71 +504,6 @@ alert("📚 Open a subject first.");
 
 <script>
 
-let completed = 0;
-
-let streak = Number(localStorage.getItem("studyStreak")) || 0;
-
-
-
-const today = new Date();
-
-const todayString = today.toDateString();
-
-const savedStudyDate = localStorage.getItem("lastStudyDate");
-
-if(savedStudyDate){
-
-    const lastDate = new Date(savedStudyDate);
-
-    const diffDays = Math.floor((today - lastDate) / (1000 * 60 * 60 * 24));
-
-    if(diffDays === 1){
-
-        streak++;
-
-    }
-    else if(diffDays > 1){
-
-        streak = 1;
-
-    }
-
-}
-else{
-
-    streak = 1;
-
-}
-
-if(savedStudyDate !== todayString){
-
-    localStorage.setItem("studyStreak", streak);
-
-    localStorage.setItem("savedStudyDate", todayString);
-
-}
-
-document.getElementById("studyStreak").textContent =
-streak + " Days";
-
-if(streak >= 7){
-
-document.getElementById("streakMessage").textContent =
-"🔥 Amazing! 7 day streak completed";
-
-}
-else if(streak >= 3){
-
-document.getElementById("streakMessage").textContent =
-"⭐ Great consistency! Keep going";
-
-}
-else if(streak > 0){
-
-document.getElementById("streakMessage").textContent =
-"📚 Keep building your streak";
-
-}
 
 if(localStorage.getItem("firstMockCompleted")){
 
@@ -459,9 +516,6 @@ if(localStorage.getItem("firstMockCompleted") && streak === 0){
 streak = 1;
 
 localStorage.setItem("studyStreak", streak);
-
-document.getElementById("studyStreak").textContent =
-streak + " Days";
 
 }
 
@@ -509,22 +563,32 @@ Number(localStorage.getItem("xpBase")) || 0;
 const calculatedXP =
 (completed * 100) + (focusSessions * 20);
 
-if(calculatedXP > savedXPBase){
+if(calculatedXP !== savedXPBase){
 
-xp += calculatedXP - savedXPBase;
+    xp += calculatedXP - savedXPBase;
 
-localStorage.setItem("xpBase", calculatedXP);
-localStorage.setItem("xp", xp);
+    if(xp < 0){
+        xp = 0;
+    }
+
+    localStorage.setItem("xpBase", calculatedXP);
+    localStorage.setItem("xp", xp);
 
 }
 
 let level = "Beginner";
 
-if (xp >= 1000) {
+if (xp >= 2000) {
+    level = "Master";
+}
+else if (xp >= 1000) {
     level = "Expert";
 }
 else if (xp >= 500) {
     level = "Intermediate";
+}
+else if (xp >= 100) {
+    level = "Starter";
 }
 
 document.getElementById("studyScore").textContent =
@@ -556,6 +620,8 @@ document.getElementById("leaderLevel").textContent =
 document.getElementById("playerLevel").textContent =
 "🏅 " + playerLevel;
 
+const totalXP = xp;
+
 let nextLevelXP = 100;
 
 if (xp >= 2000) {
@@ -572,6 +638,76 @@ else if (xp >= 100) {
 }
 
 localStorage.setItem("nextLevelXP", nextLevelXP);
+
+document.getElementById("playerLevel").textContent =
+"🏅 " + playerLevel;
+
+document.getElementById("gameLevel").textContent =
+"🏅 Level: " + playerLevel;
+
+document.getElementById("gameXP").textContent =
+"⭐ " + totalXP + " XP";
+
+document.getElementById("gameNext").textContent =
+playerLevel === "Master"
+? "👑 Maximum Level Reached!"
+: "🎯 Next Level: " + nextLevelXP + " XP";
+
+const gameCurrentXP =
+playerLevel === "Beginner" ? 0 :
+playerLevel === "Starter" ? 100 :
+playerLevel === "Intermediate" ? 500 :
+playerLevel === "Expert" ? 1000 :
+2000;
+
+let gameProgress = 100;
+
+if(playerLevel !== "Master"){
+
+    gameProgress = Math.round(
+        ((totalXP - gameCurrentXP) /
+        (nextLevelXP - gameCurrentXP)) * 100
+    );
+
+    gameProgress = Math.max(
+        0,
+        Math.min(gameProgress, 100)
+    );
+
+}
+
+document.getElementById("gameProgressPercent").textContent =
+playerLevel === "Master"
+? "MAX"
+: gameProgress + "%";
+
+document.getElementById("gameProgressXP").textContent =
+playerLevel === "Master"
+? totalXP + " / " + totalXP + " XP"
+: totalXP + " / " + nextLevelXP + " XP";
+
+let xpRemaining = 0;
+
+if(playerLevel !== "Master"){
+    xpRemaining = Math.max(0, nextLevelXP - totalXP);
+}
+
+document.getElementById("gameXPRemaining").textContent =
+playerLevel === "Master"
+? "👑 Maximum Level Achieved!"
+: "🎯 " + xpRemaining + " XP to next level";
+
+document.getElementById("gameProgressLabel").textContent =
+playerLevel === "Master"
+? "👑 Master Level"
+: "📊 " + playerLevel + " Level Progress";
+
+setTimeout(() => {
+
+    document.getElementById("gameProgressFill").style.width =
+    gameProgress + "%";
+
+}, 300);
 
 document.getElementById("analyticsScore").textContent =
 score;
@@ -609,6 +745,9 @@ JSON.stringify(badges)
 document.getElementById("badgeCount").textContent =
 "🏆 " + badgeCount + " Badges Earned";
 
+document.getElementById("gameBadges").textContent =
+"🏆 Badges: " + badgeCount;
+
 let subjectsStarted = 0;
 
 if(lastExam && lastSubject){
@@ -625,6 +764,52 @@ totalMocks;
 
 document.getElementById("analyticsStreak").textContent =
 streak;
+
+document.getElementById("streakStatus").textContent =
+"🔥 Current Streak: " + streak + " Days";
+
+let nextStreakMilestone = 3;
+
+if(streak >= 30){
+    nextStreakMilestone = 30;
+}
+else if(streak >= 14){
+    nextStreakMilestone = 30;
+}
+else if(streak >= 7){
+    nextStreakMilestone = 14;
+}
+else if(streak >= 3){
+    nextStreakMilestone = 7;
+}
+
+document.getElementById("streakMilestone").textContent =
+streak >= 30
+? "👑 30 Day Streak Master!"
+: "🎯 Next Streak Milestone: " +
+nextStreakMilestone + " Days";
+
+let streakTarget = nextStreakMilestone;
+
+const streakProgress =
+Math.min(
+    Math.round(
+        (streak / streakTarget) * 100
+    ),
+    100
+);
+
+document.getElementById("streakProgressPercent").textContent =
+streak >= 30
+? "MAX"
+: streakProgress + "%";
+
+setTimeout(() => {
+
+    document.getElementById("streakProgressFill").style.width =
+    streakProgress + "%";
+
+}, 300);
 
 const bestMockScore =
 Number(localStorage.getItem("bestScore")) || 0;
@@ -655,36 +840,6 @@ totalMockTests;
 document.getElementById("averageAccuracy").textContent =
 averageAccuracy + "%";
 
-if(totalMocks > 0){
-
-document.getElementById("lastMock").textContent =
-`${totalMocks} Test(s) Attempted`;
-
-document.getElementById("bestScore").textContent =
-`Best Score: ${bestMockScore}%`;
-
-const lastMockDate =
-localStorage.getItem("lastMockDate");
-
-if(lastMockDate){
-
-document.getElementById("lastMock").textContent =
-`${totalMocks} Test(s) Attempted`;
-
-document.getElementById("recentActivity").textContent =
-"🧪 Last Mock: " + lastMockDate;
-
-}
-
-}
-else{
-
-document.getElementById("lastMock").textContent =
-"Not Attempted Yet";
-
-document.getElementById("bestScore").textContent =
-"Best Score: --";
-
 let totalSubjects = 0;
 
 if(lastExam && lastSubject){
@@ -699,11 +854,6 @@ percent + "%";
 
 document.getElementById("totalAchievements").textContent =
 completed;
-
-}
-
-const totalXP =
-Number(localStorage.getItem("xp")) || 0;
 
 const weeklyStudy =
 Number(localStorage.getItem("focusSessions")) || 0;
@@ -730,10 +880,13 @@ document.getElementById("longestStreak").textContent =
 longestStreak;
 
 document.getElementById("totalXP").textContent =
-totalXP;
+totalXP + " XP";
 
 document.getElementById("studyRank").textContent =
 studyRank;
+
+document.getElementById("gameRank").textContent =
+"🎖️ Rank: " + studyRank.replace(/[🏆🥈🥉🌱]/g, "").trim();
 
 const currentLevelXP =
 playerLevel === "Beginner" ? 0 :
@@ -746,13 +899,168 @@ const xpPercent =
 playerLevel === "Master"
 ? 100
 : Math.min(
-    Math.round(
-        ((totalXP - currentLevelXP) /
-        (nextLevelXP - currentLevelXP)) * 100
+    Math.max(
+        Math.round(
+            ((totalXP - currentLevelXP) /
+            (nextLevelXP - currentLevelXP)) * 100
+        ),
+        0
     ),
     100
 );
 
+let milestoneText = "";
+
+const lastXP =
+Number(localStorage.getItem("lastKnownXP")) || 0;
+
+if(totalXP > lastXP){
+
+    const gainedXP = totalXP - lastXP;
+
+    document.getElementById("xpNotification").style.display =
+    "block";
+
+    document.getElementById("xpNotificationText").textContent =
+    `🎉 You earned +${gainedXP} XP!`;
+
+}
+
+localStorage.setItem("lastKnownXP", totalXP);
+
+const streakRewardDate =
+localStorage.getItem("streakRewardDate");
+
+const streakRewardedToday =
+streakRewardDate === today;
+
+if(!streakRewardedToday){
+
+    let currentXP =
+    Number(localStorage.getItem("xp")) || 0;
+
+    currentXP += 10;
+
+    localStorage.setItem(
+        "xp",
+        currentXP
+    );
+
+    localStorage.setItem(
+        "streakRewardDate",
+        today
+    );
+
+    const streakMilestoneRewards =
+JSON.parse(
+    localStorage.getItem("streakMilestoneRewards")
+) || [];
+
+const milestones = [
+    { days: 3, xp: 25 },
+    { days: 7, xp: 50 },
+    { days: 14, xp: 100 },
+    { days: 30, xp: 200 }
+];
+
+milestones.forEach(milestone => {
+
+    if(
+        streak >= milestone.days &&
+        !streakMilestoneRewards.includes(milestone.days)
+    ){
+
+        let currentXP =
+        Number(localStorage.getItem("xp")) || 0;
+
+        currentXP += milestone.xp;
+
+        localStorage.setItem(
+            "xp",
+            currentXP
+        );
+
+        streakMilestoneRewards.push(
+            milestone.days
+        );
+
+let milestoneActivities =
+JSON.parse(
+    localStorage.getItem("xpActivities")
+) || [];
+
+milestoneActivities.push({
+
+    type: "🏆 Streak Milestone",
+    description:
+    milestone.days + " Day Streak Milestone Reached",
+    xp: milestone.xp,
+    date: today
+
+});
+
+localStorage.setItem(
+    "xpActivities",
+    JSON.stringify(milestoneActivities)
+);
+
+    }
+
+});
+
+localStorage.setItem(
+    "streakMilestoneRewards",
+    JSON.stringify(streakMilestoneRewards)
+);
+
+    let xpActivities =
+JSON.parse(localStorage.getItem("xpActivities")) || [];
+
+xpActivities.push({
+
+    type: "🔥 Daily Streak",
+    description: "Daily study streak maintained",
+    xp: 10,
+    date: today
+
+});
+
+localStorage.setItem(
+    "xpActivities",
+    JSON.stringify(xpActivities)
+);
+
+}
+
+if(totalXP > lastXP){
+
+    setTimeout(() => {
+
+        document.getElementById("xpNotification").style.display =
+        "none";
+
+    }, 5000);
+
+}
+
+if(totalXP >= 2000){
+    milestoneText = "👑 2000 XP — Master Milestone Reached!";
+}
+else if(totalXP >= 1000){
+    milestoneText = "🏆 1000 XP — Expert Milestone Reached!";
+}
+else if(totalXP >= 500){
+    milestoneText = "🥇 500 XP — Intermediate Milestone Reached!";
+}
+else if(totalXP >= 100){
+    milestoneText = "🌟 100 XP — Starter Milestone Reached!";
+}
+else{
+    milestoneText = "🌱 First Milestone: Reach 100 XP";
+}
+
+document.getElementById("xpMilestone").textContent =
+milestoneText;
 
 document.getElementById("xpPercent").textContent =
 playerLevel === "Master"
@@ -801,6 +1109,61 @@ responsive:true
 }
 
 });
+
+let historyHTML = "";
+
+mockHistory.forEach(test => {
+
+    historyHTML += `
+        <div class="history-item">
+            <h3>🧪 ${test.exam} • ${test.subject}</h3>
+            <p>📊 Score: ${test.score} / ${test.total}</p>
+            <p>🎯 Accuracy: ${test.percentage}%</p>
+            <p>⏱ Time: ${test.time}</p>
+            <p>📅 Date: ${test.date}</p>
+        </div>
+    `;
+
+});
+
+if(historyHTML === ""){
+    historyHTML = "<p>📚 No mock tests attempted yet.</p>";
+}
+
+document.getElementById("mockHistory").innerHTML = historyHTML;
+
+const xpActivities =
+JSON.parse(localStorage.getItem("xpActivities")) || [];
+
+xpActivities.reverse();
+
+const recentXPActivities =
+xpActivities.slice(0, 10);
+
+document.getElementById("xpActivityCount").textContent =
+xpActivities.length + " XP Activities";
+
+let xpHistoryHTML = "";
+
+recentXPActivities.forEach(activity=>{
+
+    xpHistoryHTML += `
+        <div class="history-item">
+            <h3>⭐ ${activity.type}</h3>
+            <p>${activity.description}</p>
+            <p>🎁 +${activity.xp} XP</p>
+            <p>📅 ${activity.date}</p>
+        </div>
+    `;
+
+});
+
+if(xpHistoryHTML === ""){
+    xpHistoryHTML = "<p>⭐ No XP activity yet.</p>";
+}
+
+document.getElementById("studyTimeline").innerHTML =
+xpHistoryHTML;
 
 </script>
 

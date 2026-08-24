@@ -10,6 +10,8 @@
 <link rel="stylesheet" href="../style.css">
 
 <script src="../data/neet.js"></script>
+<script src="../data/jee.js"></script>
+<script src="../data/cuet.js"></script>
 
 </head>
 
@@ -37,10 +39,7 @@ Practice chapter-wise questions and improve your score.
 Practice MCQs
 </h2>
 
-<div class="card">
-
-    <p id="questionNumber"
-style="font-size:18px;font-weight:bold;">
+<p id="questionNumber" class="mcq-question-number">
 </p>
 
 <h3 id="question"></h3>
@@ -57,12 +56,10 @@ Submit
 Next Question →
 </button>
 
-<p id="result"
-style="margin-top:20px;font-size:20px;font-weight:bold;">
+<p id="result" class="mcq-result">
 </p>
 
-<p id="score"
-style="margin-top:10px;font-size:18px;">
+<p id="score" class="mcq-score">
 </p>
 
 </div>
@@ -83,14 +80,28 @@ let score = 0;
 
 let questions = [];
 
-if (exam === "NEET" && subject.includes("Biology")) {
-    questions = neetData.Biology.mcqs;
+let examData = null;
+
+if (exam === "NEET") {
+    examData = neetData;
 }
-else if (exam === "NEET" && subject.includes("Chemistry")) {
-    questions = neetData.Chemistry.mcqs;
+else if (exam === "JEE") {
+    examData = jeeData;
 }
-else if (exam === "NEET" && subject.includes("Physics")) {
-    questions = neetData.Physics.mcqs;
+else if (exam === "CUET") {
+    examData = cuetData;
+}
+
+if (examData) {
+
+    const subjectKey = Object.keys(examData).find(key =>
+        subject.includes(key)
+    );
+
+    if (subjectKey) {
+        questions = examData[subjectKey].mcqs;
+    }
+
 }
 
 if(questions.length === 0){
@@ -122,16 +133,13 @@ let html="";
 questions[currentIndex].options.forEach((option,index)=>{
 
 html += `
-<label>
+<label class="mcq-option">
 
 <input type="radio" name="q1" value="${index}">
 
 ${option}
 
 </label>
-
-<br><br>
-
 `;
 
 });

@@ -34,7 +34,37 @@ Unlock badges by completing your study goals.
 
 <section class="container">
 
+<div class="achievements-section">
+
+<div class="card achievement-stats">
+
+<h2>📊 Your Achievement Progress</h2>
+
+<p id="achievementProgress">
+0 / 0 Unlocked
+</p>
+
+<div class="progress-box">
+
+    <div class="progress-header">
+        <span>Badge Progress</span>
+        <span id="achievementPercent">0%</span>
+    </div>
+
+    <div class="progress-bar">
+        <div
+            id="achievementProgressFill"
+            class="progress-fill">
+        </div>
+    </div>
+
+</div>
+
+</div>
+
 <div id="badgeContainer"></div>
+
+</div>
 
 </section>
 
@@ -46,7 +76,13 @@ let html = "";
 
 let unlockedCount = 0;
 
+const savedBadges =
+    JSON.parse(localStorage.getItem("unlockedBadges")) || [];
 
+badges.forEach(badge => {
+    badge.unlocked =
+        savedBadges.includes(badge.title);
+});
     
     // XP + Streak Based Unlock System
 
@@ -99,18 +135,42 @@ if(
     badges[5].unlocked = true;
 }
 
-// Victory Champion
-let unlockedBadges = badges.filter(
-item => item.unlocked
-).length;
+const unlockedBadges = badges
+    .filter(badge => badge.unlocked)
+    .map(badge => badge.title);
 
+let rewardedBadges =
+    JSON.parse(localStorage.getItem("rewardedBadges")) || [];
 
-if(unlockedBadges === badges.length - 1){
-    badges[5].unlocked = true;
-}
+badges.forEach(badge => {
 
+    if(
+        badge.unlocked &&
+        badge.reward &&
+        !rewardedBadges.includes(badge.title)
+    ){
 
+        xp += badge.reward;
 
+        rewardedBadges.push(badge.title);
+
+    }
+
+});
+
+localStorage.setItem("xp", xp);
+
+localStorage.setItem(
+    "rewardedBadges",
+    JSON.stringify(rewardedBadges)
+);
+
+localStorage.setItem(
+    "unlockedBadges",
+    JSON.stringify(unlockedBadges)
+);
+
+html += `<div class="achievement-grid">`;
 
 badges.forEach(item=>{
 
@@ -120,7 +180,7 @@ badges.forEach(item=>{
 
 html += `
 
-<div class="card">
+<div class="card ${item.unlocked ? "badge-unlocked" : "badge-locked"}">
 
 <h2>${item.icon} ${item.title}</h2>
 
@@ -132,18 +192,29 @@ ${item.unlocked ? "✅ Unlocked" : "🔒 Locked"}
 
 </p>
 
+<p>
+⭐ Reward: ${item.reward || 0} XP
+</p>
+
+<p>
+${
+    item.unlocked
+    ? "🎉 Achievement unlocked!"
+    : "🔒 Keep studying to unlock"
+}
+</p>
+
 </div>
 
 `;
 
 });
 
-
-
+html += `</div>`;
 
 html =
 `
-<div class="card">
+<div class="card achievement-summary">
 
 <h2>🏆 Achievement Summary</h2>
 
@@ -151,11 +222,42 @@ html =
 Unlocked Badges: ${unlockedCount} / ${badges.length}
 </p>
 
+<p>
+⭐ Badge XP Earned:
+${badges
+    .filter(badge => badge.unlocked)
+    .reduce((total, badge) => total + (badge.reward || 0), 0)}
+XP
+</p>
+
+<p id="totalAchievementXP">
+⭐ Total XP: 0
+</p>
+
 </div>
 `
 + html;
 
+const badgePercent = Math.round(
+    (unlockedCount / badges.length) * 100
+);
+
+document.getElementById("achievementProgress").textContent =
+`${unlockedCount} / ${badges.length} Unlocked`;
+
+document.getElementById("achievementPercent").textContent =
+badgePercent + "%";
+
+setTimeout(() => {
+    document.getElementById("achievementProgressFill").style.width =
+    badgePercent + "%";
+}, 300);
+
 document.getElementById("badgeContainer").innerHTML = html;
+
+document.getElementById("totalAchievementXP").textContent =
+"⭐ Total XP: " +
+(Number(localStorage.getItem("xp")) || 0);
 
 </script>
 
