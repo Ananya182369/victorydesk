@@ -76,6 +76,18 @@ let html = "";
 
 let unlockedCount = 0;
 
+    
+let xp =
+    Number(localStorage.getItem("xp")) || 0;
+
+let streak =
+    Number(localStorage.getItem("studyStreak")) || 0;
+
+let mcqsSolved =
+    Number(localStorage.getItem("mcqsSolved")) || 0;
+
+
+// Load previously unlocked badges
 const savedBadges =
     JSON.parse(localStorage.getItem("unlockedBadges")) || [];
 
@@ -83,48 +95,41 @@ badges.forEach(badge => {
     badge.unlocked =
         savedBadges.includes(badge.title);
 });
-    
-    // XP + Streak Based Unlock System
-
-let xp =
-Number(localStorage.getItem("xp")) || 0;
-
-let streak =
-Number(localStorage.getItem("studyStreak")) || 0;
 
 
-// First Mock
+// 🥇 First Mock Test
 if(localStorage.getItem("firstMockCompleted")){
     badges[0].unlocked = true;
 }
 
 
-// 7 Day Streak
+// 🔥 7-Day Streak
 if(streak >= 7){
     badges[1].unlocked = true;
 }
 
-// 100 MCQs Solved
-let mcqsSolved =
-Number(localStorage.getItem("mcqsSolved")) || 0;
 
+// 📚 100 MCQs
 if(mcqsSolved >= 100){
     badges[2].unlocked = true;
 }
 
-// Chapter Master
+
+// 🎯 Chapter Master
 if(localStorage.getItem("chapterMaster")){
     badges[3].unlocked = true;
 }
 
-// Early Bird
+
+// ⚡ Early Bird
 const studyHour = new Date().getHours();
 
 if(studyHour < 8){
     badges[4].unlocked = true;
 }
 
-// Victory Champion
+
+// 👑 Victory Champion
 if(
     badges[0].unlocked &&
     badges[1].unlocked &&
@@ -135,35 +140,11 @@ if(
     badges[5].unlocked = true;
 }
 
+
+// Save unlocked badges
 const unlockedBadges = badges
     .filter(badge => badge.unlocked)
     .map(badge => badge.title);
-
-let rewardedBadges =
-    JSON.parse(localStorage.getItem("rewardedBadges")) || [];
-
-badges.forEach(badge => {
-
-    if(
-        badge.unlocked &&
-        badge.reward &&
-        !rewardedBadges.includes(badge.title)
-    ){
-
-        xp += badge.reward;
-
-        rewardedBadges.push(badge.title);
-
-    }
-
-});
-
-localStorage.setItem("xp", xp);
-
-localStorage.setItem(
-    "rewardedBadges",
-    JSON.stringify(rewardedBadges)
-);
 
 localStorage.setItem(
     "unlockedBadges",
