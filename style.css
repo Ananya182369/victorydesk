@@ -1451,3 +1451,66 @@ height:auto;
 .stat-box h3 {
     margin-bottom: 6px;
 }
+
+/* =========================
+   Notes Chapter Details
+========================= */
+
+.chapter-details{
+    margin-top:20px;
+    padding:20px;
+    background:#f8fbff;
+    border:1px solid #e5e7eb;
+    border-radius:16px;
+}
+
+.chapter-details h3{
+    margin-bottom:12px;
+}
+
+.chapter-details p{
+    margin:8px 0;
+}
+
+/* =========================
+   Notes Content
+========================= */
+
+.notes-content{
+    padding:28px;
+    margin-top:20px;
+    background:#ffffff;
+    border:1px solid #e5e7eb;
+    border-radius:16px;
+}
+
+.notes-content h2{
+    margin-bottom:18px;
+}
+
+.notes-content h3{
+    margin-top:22px;
+    margin-bottom:10px;
+}
+
+.notes-content p{
+    line-height:1.7;
+}
+
+/* =========================
+   Notes List
+========================= */
+
+.notes-list{
+    margin:18px 0;
+    padding-left:22px;
+}
+
+.notes-list li{
+    margin:10px 0;
+    padding:10px 12px;
+    background:#f8fbff;
+    border:1px solid #e5e7eb;
+    border-radius:10px;
+    line-height:1.6;
+}
