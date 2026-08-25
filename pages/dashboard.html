@@ -563,6 +563,65 @@ Number(localStorage.getItem("xpBase")) || 0;
 const calculatedXP =
 (completed * 100) + (focusSessions * 20);
 
+let xpActivities =
+JSON.parse(localStorage.getItem("xpActivities")) || [];
+
+if(completed > Number(localStorage.getItem("lastCompletedMocks"))){
+
+    const newMocks =
+    completed -
+    Number(localStorage.getItem("lastCompletedMocks") || 0);
+
+    xpActivities.push({
+
+        type: "🧪 Mock Test",
+
+        description:
+        newMocks + " Mock Test Completed",
+
+        xp: newMocks * 100,
+
+        date: today
+
+    });
+
+    localStorage.setItem(
+        "lastCompletedMocks",
+        completed
+    );
+}
+
+if(focusSessions >
+Number(localStorage.getItem("lastFocusSessions") || 0)){
+
+    const newFocusSessions =
+    focusSessions -
+    Number(localStorage.getItem("lastFocusSessions") || 0);
+
+    xpActivities.push({
+
+        type: "⏰ Focus Session",
+
+        description:
+        newFocusSessions + " Focus Session Completed",
+
+        xp: newFocusSessions * 20,
+
+        date: today
+
+    });
+
+    localStorage.setItem(
+        "lastFocusSessions",
+        focusSessions
+    );
+}
+
+localStorage.setItem(
+    "xpActivities",
+    JSON.stringify(xpActivities)
+);
+
 if(calculatedXP !== savedXPBase){
 
     xp += calculatedXP - savedXPBase;
@@ -573,6 +632,25 @@ if(calculatedXP !== savedXPBase){
 
     localStorage.setItem("xpBase", calculatedXP);
     localStorage.setItem("xp", xp);
+
+}
+
+const todayXPRewardDate =
+localStorage.getItem("todayXPRewardDate");
+
+if(todayXPRewardDate !== today){
+
+    xp += 10;
+
+    localStorage.setItem(
+        "xp",
+        xp
+    );
+
+    localStorage.setItem(
+        "todayXPRewardDate",
+        today
+    );
 
 }
 
@@ -928,30 +1006,7 @@ if(totalXP > lastXP){
 
 localStorage.setItem("lastKnownXP", totalXP);
 
-const streakRewardDate =
-localStorage.getItem("streakRewardDate");
-
-const streakRewardedToday =
-streakRewardDate === today;
-
-if(!streakRewardedToday){
-
-    let currentXP =
-    Number(localStorage.getItem("xp")) || 0;
-
-    currentXP += 10;
-
-    localStorage.setItem(
-        "xp",
-        currentXP
-    );
-
-    localStorage.setItem(
-        "streakRewardDate",
-        today
-    );
-
-    const streakMilestoneRewards =
+const streakMilestoneRewards =
 JSON.parse(
     localStorage.getItem("streakMilestoneRewards")
 ) || [];
@@ -970,39 +1025,35 @@ milestones.forEach(milestone => {
         !streakMilestoneRewards.includes(milestone.days)
     ){
 
-        let currentXP =
-        Number(localStorage.getItem("xp")) || 0;
-
-        currentXP += milestone.xp;
-
-        localStorage.setItem(
-            "xp",
-            currentXP
-        );
+        xp += milestone.xp;
 
         streakMilestoneRewards.push(
             milestone.days
         );
 
-let milestoneActivities =
-JSON.parse(
-    localStorage.getItem("xpActivities")
-) || [];
+        let milestoneActivities =
+        JSON.parse(
+            localStorage.getItem("xpActivities")
+        ) || [];
 
-milestoneActivities.push({
+        milestoneActivities.push({
 
-    type: "🏆 Streak Milestone",
-    description:
-    milestone.days + " Day Streak Milestone Reached",
-    xp: milestone.xp,
-    date: today
+            type: "🏆 Streak Milestone",
 
-});
+            description:
+            milestone.days +
+            " Day Streak Milestone Reached",
 
-localStorage.setItem(
-    "xpActivities",
-    JSON.stringify(milestoneActivities)
-);
+            xp: milestone.xp,
+
+            date: today
+
+        });
+
+        localStorage.setItem(
+            "xpActivities",
+            JSON.stringify(milestoneActivities)
+        );
 
     }
 
@@ -1011,6 +1062,11 @@ localStorage.setItem(
 localStorage.setItem(
     "streakMilestoneRewards",
     JSON.stringify(streakMilestoneRewards)
+);
+
+localStorage.setItem(
+    "xp",
+    xp
 );
 
     let xpActivities =
@@ -1061,6 +1117,18 @@ else{
 
 document.getElementById("xpMilestone").textContent =
 milestoneText;
+
+const refreshedXP =
+Number(localStorage.getItem("xp")) || 0;
+
+document.getElementById("totalXP").textContent =
+refreshedXP + " XP";
+
+document.getElementById("gameXP").textContent =
+"⭐ " + refreshedXP + " XP";
+
+document.getElementById("leaderXP").textContent =
+"⭐ XP: " + refreshedXP;
 
 document.getElementById("xpPercent").textContent =
 playerLevel === "Master"
@@ -1132,7 +1200,7 @@ if(historyHTML === ""){
 
 document.getElementById("mockHistory").innerHTML = historyHTML;
 
-const xpActivities =
+let xpActivities =
 JSON.parse(localStorage.getItem("xpActivities")) || [];
 
 xpActivities.reverse();
