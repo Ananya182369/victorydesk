@@ -698,7 +698,9 @@ document.getElementById("leaderLevel").textContent =
 document.getElementById("playerLevel").textContent =
 "🏅 " + playerLevel;
 
-const totalXP = xp;
+let totalXP = xp;
+
+localStorage.setItem("xp", totalXP);
 
 let nextLevelXP = 100;
 
@@ -1069,24 +1071,14 @@ localStorage.setItem(
     xp
 );
 
-    let xpActivities =
-JSON.parse(localStorage.getItem("xpActivities")) || [];
+totalXP = xp;
 
-xpActivities.push({
-
-    type: "🔥 Daily Streak",
-    description: "Daily study streak maintained",
-    xp: 10,
-    date: today
-
-});
-
-localStorage.setItem(
-    "xpActivities",
-    JSON.stringify(xpActivities)
-);
-
-}
+playerLevel =
+totalXP >= 2000 ? "Master" :
+totalXP >= 1000 ? "Expert" :
+totalXP >= 500 ? "Intermediate" :
+totalXP >= 100 ? "Starter" :
+"Beginner";
 
 if(totalXP > lastXP){
 
@@ -1118,6 +1110,8 @@ else{
 document.getElementById("xpMilestone").textContent =
 milestoneText;
 
+totalXP = Number(localStorage.getItem("xp")) || 0;
+
 const refreshedXP =
 Number(localStorage.getItem("xp")) || 0;
 
@@ -1129,6 +1123,9 @@ document.getElementById("gameXP").textContent =
 
 document.getElementById("leaderXP").textContent =
 "⭐ XP: " + refreshedXP;
+
+document.getElementById("studyScore").textContent =
+`XP: ${refreshedXP} • ${playerLevel} • ${focusHours.toFixed(1)}h Focus`;
 
 document.getElementById("xpPercent").textContent =
 playerLevel === "Master"
@@ -1172,7 +1169,7 @@ streak
 
 options:{
 
-responsive:true
+responsive: true
 
 }
 
@@ -1200,10 +1197,6 @@ if(historyHTML === ""){
 
 document.getElementById("mockHistory").innerHTML = historyHTML;
 
-let xpActivities =
-JSON.parse(localStorage.getItem("xpActivities")) || [];
-
-xpActivities.reverse();
 
 const recentXPActivities =
 xpActivities.slice(0, 10);
@@ -1227,7 +1220,12 @@ recentXPActivities.forEach(activity=>{
 });
 
 if(xpHistoryHTML === ""){
-    xpHistoryHTML = "<p>⭐ No XP activity yet.</p>";
+    xpHistoryHTML = `
+        <div class="history-item">
+            <h3>⭐ No XP Activity Yet</h3>
+            <p>Complete a mock test or focus session to start earning XP.</p>
+        </div>
+    `;
 }
 
 document.getElementById("studyTimeline").innerHTML =

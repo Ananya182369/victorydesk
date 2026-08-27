@@ -140,6 +140,37 @@ if(
     badges[5].unlocked = true;
 }
 
+// 🎁 Give badge XP reward only once
+let currentXP =
+    Number(localStorage.getItem("xp")) || 0;
+
+let claimedBadgeRewards =
+    JSON.parse(localStorage.getItem("claimedBadgeRewards")) || [];
+
+badges.forEach(badge => {
+
+    if(
+        badge.unlocked &&
+        !claimedBadgeRewards.includes(badge.title)
+    ){
+
+        currentXP += badge.reward || 0;
+
+        claimedBadgeRewards.push(badge.title);
+
+    }
+
+});
+
+localStorage.setItem(
+    "xp",
+    currentXP
+);
+
+localStorage.setItem(
+    "claimedBadgeRewards",
+    JSON.stringify(claimedBadgeRewards)
+);
 
 // Save unlocked badges
 const unlockedBadges = badges
