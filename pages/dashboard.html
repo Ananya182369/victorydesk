@@ -976,18 +976,18 @@ playerLevel === "Expert" ? 1000 :
 2000;
 
 const xpPercent =
-playerLevel === "Master"
-? 100
-: Math.min(
-    Math.max(
-        Math.round(
-            ((totalXP - currentLevelXP) /
-            (nextLevelXP - currentLevelXP)) * 100
+    playerLevel === "Master"
+    ? 100
+    : Math.min(
+        Math.max(
+            Math.round(
+                ((totalXP - currentLevelXP) /
+                (nextLevelXP - currentLevelXP)) * 100
+            ),
+            0
         ),
-        0
-    ),
-    100
-);
+        100
+    );
 
 let milestoneText = "";
 
