@@ -424,878 +424,1036 @@ Loading history...
 
 </section>
 
+
 <script>
+/* =========================================================
+   VictoryDesk Dashboard — Consolidated Dashboard Logic
+   ========================================================= */
 
-    let completed = 0;
-let streak = Number(localStorage.getItem("studyStreak")) || 0;
+(() => {
 
-const today = new Date().toISOString().split("T")[0];
+    /* -------------------------
+       BASIC DATA
+    ------------------------- */
 
-const lastStudyDate =
-localStorage.getItem("lastStudyDate");
+    const today = new Date().toISOString().split("T")[0];
 
-if(lastStudyDate !== today){
+    const getNumber = (key, fallback = 0) =>
+        Number(localStorage.getItem(key)) || fallback;
 
-    if(lastStudyDate){
-
-        const lastDate =
-        new Date(lastStudyDate);
-
-        const todayDate =
-        new Date(today);
-
-        const difference =
-        Math.floor(
-            (todayDate - lastDate) /
-            (1000 * 60 * 60 * 24)
-        );
-
-        if(difference === 1){
-            streak++;
+    const getArray = (key) => {
+        try {
+            const value = JSON.parse(localStorage.getItem(key));
+            return Array.isArray(value) ? value : [];
+        } catch {
+            return [];
         }
-        else if(difference > 1){
+    };
+
+    const setJSON = (key, value) => {
+        localStorage.setItem(key, JSON.stringify(value));
+    };
+
+    let streak = getNumber("studyStreak");
+    const lastStudyDate = localStorage.getItem("lastStudyDate");
+
+    /* -------------------------
+       STUDY STREAK
+    ------------------------- */
+
+    if (lastStudyDate !== today) {
+
+        if (!lastStudyDate) {
             streak = 1;
+        } else {
+
+            const lastDate = new Date(lastStudyDate);
+            const todayDate = new Date(today);
+
+            const difference = Math.floor(
+                (todayDate - lastDate) /
+                (1000 * 60 * 60 * 24)
+            );
+
+            if (difference === 1) {
+                streak++;
+            } else if (difference > 1) {
+                streak = 1;
+            }
         }
 
-    }
-    else{
-        streak = 1;
+        localStorage.setItem("studyStreak", streak);
+        localStorage.setItem("lastStudyDate", today);
     }
 
-    localStorage.setItem(
-        "studyStreak",
-        streak
-    );
-
-    localStorage.setItem(
-        "lastStudyDate",
-        today
-    );
-}
+    /* -------------------------
+       LAST STUDY
+    ------------------------- */
 
     const lastExam = localStorage.getItem("lastExam");
-const lastSubject = localStorage.getItem("lastSubject");
+    const lastSubject = localStorage.getItem("lastSubject");
 
+    /* -------------------------
+       MOCK / MCQ / FOCUS DATA
+    ------------------------- */
 
-let progress =
-Number(localStorage.getItem("progress")) || 0;
+    const totalMocks =
+        getNumber("totalMocks");
 
+    const mcqsSolved =
+        getNumber("mcqsSolved");
 
-if(lastExam && lastSubject){
+    const focusSessions =
+        getNumber("focusSessions");
 
-}
+    const focusHours =
+        (focusSessions * 25) / 60;
 
-function continueStudy(){
+    const mockHistory =
+        getArray("mockHistory");
 
-if(lastExam && lastSubject){
+    const completed = mockHistory.length;
 
-window.location.href =
-"subject.html?exam=" +
-encodeURIComponent(lastExam) +
-"&subject=" +
-encodeURIComponent(lastSubject);
+    /* -------------------------
+       PROGRESS
+    ------------------------- */
 
-}
+    const totalAchievements = 10;
 
-else{
-
-alert("📚 Open a subject first.");
-
-}
-
-}
-
-</script>
-
-<script>
-
-
-if(localStorage.getItem("firstMockCompleted")){
-
-completed++;
-
-}
-
-if(localStorage.getItem("firstMockCompleted") && streak === 0){
-
-streak = 1;
-
-localStorage.setItem("studyStreak", streak);
-
-}
-
-document.getElementById("achievementText").innerHTML =
-completed + " Achievement Completed";
-
-const totalAchievements = 10;
-
-const percent = Math.round((completed / totalAchievements) * 100);
-
-document.getElementById("progressPercent").textContent =
-percent + "%";
-
-setTimeout(()=>{
-
-document.getElementById("progressFill").style.width =
-percent + "%";
-
-},300);
-
-document.getElementById("mockCount").textContent =
-completed + " Completed";
-
-document.getElementById("achievementPercent").textContent =
-percent + "%";
-
-document.getElementById("totalAchievements").textContent = completed;
-
-const totalMocks =
-Number(localStorage.getItem("totalMocks")) || 0;
-
-const mcqsSolved =
-Number(localStorage.getItem("mcqsSolved")) || 0;
-
-document.getElementById("mcqsSolvedCount").textContent =
-mcqsSolved + " Solved";
-
-const score =
-    (completed * 100) +
-    (streak * 20) +
-    (mcqsSolved * 10);
-
-const focusSessions =
-Number(localStorage.getItem("focusSessions")) || 0;
-
-const focusHours = (focusSessions * 25) / 60;
-
-let xp =
-Number(localStorage.getItem("xp")) || 0;
-
-const savedXPBase =
-Number(localStorage.getItem("xpBase")) || 0;
-
-const calculatedXP =
-(completed * 100) +
-(focusSessions * 20) +
-(mcqsSolved * 10);
-
-let xpActivities =
-JSON.parse(localStorage.getItem("xpActivities")) || [];
-
-if(completed > Number(localStorage.getItem("lastCompletedMocks"))){
-
-    const newMocks =
-    completed -
-    Number(localStorage.getItem("lastCompletedMocks") || 0);
-
-    xpActivities.push({
-
-        type: "🧪 Mock Test",
-
-        description:
-        newMocks + " Mock Test Completed",
-
-        xp: newMocks * 100,
-
-        date: today
-
-    });
-
-    localStorage.setItem(
-        "lastCompletedMocks",
-        completed
+    const achievementPercent = Math.min(
+        Math.round(
+            (completed / totalAchievements) * 100
+        ),
+        100
     );
-}
 
-if(focusSessions >
-Number(localStorage.getItem("lastFocusSessions") || 0)){
+    document.getElementById("achievementText").textContent =
+        completed + " Achievement Completed";
 
-    if(mcqsSolved >
-Number(localStorage.getItem("lastMcqsSolved") || 0)){
+    document.getElementById("progressPercent").textContent =
+        achievementPercent + "%";
 
-    const newMCQs =
-    mcqsSolved -
-    Number(localStorage.getItem("lastMcqsSolved") || 0);
+    document.getElementById("achievementPercent").textContent =
+        achievementPercent + "%";
 
-    xpActivities.push({
+    document.getElementById("totalAchievements").textContent =
+        completed;
 
-        type: "❓ MCQ Practice",
+    document.getElementById("totalProgress").textContent =
+        achievementPercent + "%";
 
-        description:
-        newMCQs + " MCQs Solved",
+    document.getElementById("mockCount").textContent =
+        completed + " Completed";
 
-        xp: newMCQs * 10,
+    document.getElementById("mcqsSolvedCount").textContent =
+        mcqsSolved + " Solved";
 
-        date: today
+    setTimeout(() => {
 
-    });
+        const progressFill =
+            document.getElementById("progressFill");
 
-    localStorage.setItem(
-        "lastMcqsSolved",
-        mcqsSolved
-    );
-}
+        if (progressFill) {
+            progressFill.style.width =
+                achievementPercent + "%";
+        }
 
-    const newFocusSessions =
-    focusSessions -
-    Number(localStorage.getItem("lastFocusSessions") || 0);
+    }, 300);
 
-    xpActivities.push({
+    /* -------------------------
+       XP SYSTEM
+    ------------------------- */
 
-        type: "⏰ Focus Session",
+    let xp =
+        getNumber("xp");
 
-        description:
-        newFocusSessions + " Focus Session Completed",
+    let xpActivities =
+        getArray("xpActivities");
 
-        xp: newFocusSessions * 20,
+    const oldMockCount =
+        getNumber("lastCompletedMocks");
 
-        date: today
+    const oldFocusSessions =
+        getNumber("lastFocusSessions");
 
-    });
+    const oldMcqsSolved =
+        getNumber("lastMcqsSolved");
 
-    localStorage.setItem(
-        "lastFocusSessions",
-        focusSessions
-    );
-}
+    /* -------------------------
+       MOCK XP
+    ------------------------- */
 
-localStorage.setItem(
-    "xpActivities",
-    JSON.stringify(xpActivities)
-);
+    if (completed > oldMockCount) {
 
-if(calculatedXP !== savedXPBase){
+        const newMocks =
+            completed - oldMockCount;
 
-    xp += calculatedXP - savedXPBase;
+        xpActivities.unshift({
 
-    if(xp < 0){
-        xp = 0;
+            type: "🧪 Mock Test",
+
+            description:
+                newMocks + " Mock Test Completed",
+
+            xp:
+                newMocks * 100,
+
+            date:
+                today
+
+        });
+
+        xp += newMocks * 100;
+
+        localStorage.setItem(
+            "lastCompletedMocks",
+            completed
+        );
     }
 
-    localStorage.setItem("xpBase", calculatedXP);
-    localStorage.setItem("xp", xp);
+    /* -------------------------
+       MCQ XP
+    ------------------------- */
 
-}
+    if (mcqsSolved > oldMcqsSolved) {
 
-const todayXPRewardDate =
-localStorage.getItem("todayXPRewardDate");
+        const newMCQs =
+            mcqsSolved - oldMcqsSolved;
 
-// Daily login XP reward
-if(todayXPRewardDate !== today){
+        xpActivities.unshift({
 
-    xp += 10;
+            type: "❓ MCQ Practice",
+
+            description:
+                newMCQs + " MCQs Solved",
+
+            xp:
+                newMCQs * 10,
+
+            date:
+                today
+
+        });
+
+        xp += newMCQs * 10;
+
+        localStorage.setItem(
+            "lastMcqsSolved",
+            mcqsSolved
+        );
+    }
+
+    /* -------------------------
+       FOCUS XP
+    ------------------------- */
+
+    if (focusSessions > oldFocusSessions) {
+
+        const newFocusSessions =
+            focusSessions - oldFocusSessions;
+
+        xpActivities.unshift({
+
+            type: "⏰ Focus Session",
+
+            description:
+                newFocusSessions +
+                " Focus Session Completed",
+
+            xp:
+                newFocusSessions * 20,
+
+            date:
+                today
+
+        });
+
+        xp += newFocusSessions * 20;
+
+        localStorage.setItem(
+            "lastFocusSessions",
+            focusSessions
+        );
+    }
+
+    /* -------------------------
+       DAILY LOGIN XP
+    ------------------------- */
+
+    const todayXPRewardDate =
+        localStorage.getItem("todayXPRewardDate");
+
+    if (todayXPRewardDate !== today) {
+
+        xp += 10;
+
+        xpActivities.unshift({
+
+            type: "📅 Daily Login",
+
+            description:
+                "Daily Study Login Reward",
+
+            xp:
+                10,
+
+            date:
+                today
+
+        });
+
+        localStorage.setItem(
+            "todayXPRewardDate",
+            today
+        );
+    }
+
+    /* -------------------------
+       STREAK MILESTONE XP
+    ------------------------- */
+
+    const streakMilestoneRewards =
+        getArray("streakMilestoneRewards");
+
+    const milestones = [
+        { days: 3, xp: 25 },
+        { days: 7, xp: 50 },
+        { days: 14, xp: 100 },
+        { days: 30, xp: 200 }
+    ];
+
+    milestones.forEach(milestone => {
+
+        if (
+            streak >= milestone.days &&
+            !streakMilestoneRewards.includes(
+                milestone.days
+            )
+        ) {
+
+            xp += milestone.xp;
+
+            streakMilestoneRewards.push(
+                milestone.days
+            );
+
+            xpActivities.unshift({
+
+                type: "🏆 Streak Milestone",
+
+                description:
+                    milestone.days +
+                    " Day Streak Milestone Reached",
+
+                xp:
+                    milestone.xp,
+
+                date:
+                    today
+            });
+        }
+    });
+
+    setJSON(
+        "streakMilestoneRewards",
+        streakMilestoneRewards
+    );
+
+    setJSON(
+        "xpActivities",
+        xpActivities
+    );
+
+    xp = Math.max(0, xp);
 
     localStorage.setItem(
         "xp",
         xp
     );
 
+    /* -------------------------
+       LEVEL SYSTEM
+    ------------------------- */
+
+    let playerLevel = "Beginner";
+    let currentLevelXP = 0;
+    let nextLevelXP = 100;
+
+    if (xp >= 2000) {
+
+        playerLevel = "Master";
+        currentLevelXP = 2000;
+        nextLevelXP = 2000;
+
+    } else if (xp >= 1000) {
+
+        playerLevel = "Expert";
+        currentLevelXP = 1000;
+        nextLevelXP = 2000;
+
+    } else if (xp >= 500) {
+
+        playerLevel = "Intermediate";
+        currentLevelXP = 500;
+        nextLevelXP = 1000;
+
+    } else if (xp >= 100) {
+
+        playerLevel = "Starter";
+        currentLevelXP = 100;
+        nextLevelXP = 500;
+
+    }
+
     localStorage.setItem(
-        "todayXPRewardDate",
-        today
+        "nextLevelXP",
+        nextLevelXP
     );
 
-}
+    /* -------------------------
+       LEVEL PROGRESS
+    ------------------------- */
 
-let level = "Beginner";
+    let gameProgress = 0;
 
-if (xp >= 2000) {
-    level = "Master";
-}
-else if (xp >= 1000) {
-    level = "Expert";
-}
-else if (xp >= 500) {
-    level = "Intermediate";
-}
-else if (xp >= 100) {
-    level = "Starter";
-}
+    if (playerLevel === "Master") {
 
-document.getElementById("studyScore").textContent =
-`XP: ${xp} • ${level} • ${focusHours.toFixed(1)}h Focus`;
+        gameProgress = 100;
 
-let playerLevel = "Beginner";
+    } else {
 
-if (xp >= 2000) {
-    playerLevel = "Master";
-}
-else if (xp >= 1000) {
-    playerLevel = "Expert";
-}
-else if (xp >= 500) {
-    playerLevel = "Intermediate";
-}
-else if (xp >= 100) {
-    playerLevel = "Starter";
-}
+        gameProgress = Math.round(
 
+            (
+                (xp - currentLevelXP) /
+                (nextLevelXP - currentLevelXP)
+            ) * 100
 
-document.getElementById("leaderXP").textContent =
-"⭐ XP: " + xp;
+        );
 
-
-document.getElementById("leaderLevel").textContent =
-"🏅 Level: " + playerLevel;
-
-document.getElementById("playerLevel").textContent =
-"🏅 " + playerLevel;
-
-let totalXP = xp;
-
-localStorage.setItem("xp", totalXP);
-
-let nextLevelXP = 100;
-
-if (xp >= 2000) {
-    nextLevelXP = 2000;
-}
-else if (xp >= 1000) {
-    nextLevelXP = 2000;
-}
-else if (xp >= 500) {
-    nextLevelXP = 1000;
-}
-else if (xp >= 100) {
-    nextLevelXP = 500;
-}
-
-localStorage.setItem("nextLevelXP", nextLevelXP);
-
-document.getElementById("playerLevel").textContent =
-"🏅 " + playerLevel;
-
-document.getElementById("gameLevel").textContent =
-"🏅 Level: " + playerLevel;
-
-document.getElementById("gameXP").textContent =
-"⭐ " + totalXP + " XP";
-
-document.getElementById("gameNext").textContent =
-playerLevel === "Master"
-? "👑 Maximum Level Reached!"
-: "🎯 Next Level: " + nextLevelXP + " XP";
-
-const gameCurrentXP =
-playerLevel === "Beginner" ? 0 :
-playerLevel === "Starter" ? 100 :
-playerLevel === "Intermediate" ? 500 :
-playerLevel === "Expert" ? 1000 :
-2000;
-
-let gameProgress = 100;
-
-if(playerLevel !== "Master"){
-
-    gameProgress = Math.round(
-        ((totalXP - gameCurrentXP) /
-        (nextLevelXP - gameCurrentXP)) * 100
-    );
-
-    gameProgress = Math.max(
-        0,
-        Math.min(gameProgress, 100)
-    );
-
-}
-
-document.getElementById("gameProgressPercent").textContent =
-playerLevel === "Master"
-? "MAX"
-: gameProgress + "%";
-
-document.getElementById("gameProgressXP").textContent =
-playerLevel === "Master"
-? totalXP + " / " + totalXP + " XP"
-: totalXP + " / " + nextLevelXP + " XP";
-
-let xpRemaining = 0;
-
-if(playerLevel !== "Master"){
-    xpRemaining = Math.max(0, nextLevelXP - totalXP);
-}
-
-document.getElementById("gameXPRemaining").textContent =
-playerLevel === "Master"
-? "👑 Maximum Level Achieved!"
-: "🎯 " + xpRemaining + " XP to next level";
-
-document.getElementById("gameProgressLabel").textContent =
-playerLevel === "Master"
-? "👑 Master Level"
-: "📊 " + playerLevel + " Level Progress";
-
-setTimeout(() => {
-
-    document.getElementById("gameProgressFill").style.width =
-    gameProgress + "%";
-
-}, 300);
-
-document.getElementById("analyticsScore").textContent =
-score;
-
-document.getElementById("focusSessions").textContent =
-focusSessions + " Sessions Completed";
-
-let badgeCount = 0;
-
-let badges = [];
-
-if(localStorage.getItem("firstMockCompleted")){
-    badges.push("🥉 First Mock Completed");
-}
-
-if(streak >= 7){
-    badges.push("🔥 7 Day Streak");
-}
-
-if(completed >= 5){
-    badges.push("🧠 Quiz Master");
-}
-
-if(xp >= 500){
-    badges.push("⭐ XP Champion");
-}
-
-badgeCount = badges.length;
-
-localStorage.setItem(
-"badges",
-JSON.stringify(badges)
-);
-
-document.getElementById("badgeCount").textContent =
-"🏆 " + badgeCount + " Badges Earned";
-
-document.getElementById("gameBadges").textContent =
-"🏆 Badges: " + badgeCount;
-
-let subjectsStarted = 0;
-
-if(lastExam && lastSubject){
-
-    let subjectHistory =
-    JSON.parse(
-        localStorage.getItem("subjectHistory")
-    ) || [];
-
-    const subjectKey =
-    lastExam + " • " + lastSubject;
-
-    if(!subjectHistory.includes(subjectKey)){
-
-        subjectHistory.push(subjectKey);
-
-        localStorage.setItem(
-            "subjectHistory",
-            JSON.stringify(subjectHistory)
+        gameProgress = Math.max(
+            0,
+            Math.min(gameProgress, 100)
         );
     }
 
-    subjectsStarted = subjectHistory.length;
-}
-
-document.getElementById("analyticsStudy").textContent =
-subjectsStarted;
-
-
-document.getElementById("analyticsMock").textContent =
-totalMocks;
-
-
-document.getElementById("analyticsStreak").textContent =
-streak;
-
-document.getElementById("streakStatus").textContent =
-"🔥 Current Streak: " + streak + " Days";
-
-let nextStreakMilestone = 3;
-
-if(streak >= 30){
-    nextStreakMilestone = 30;
-}
-else if(streak >= 14){
-    nextStreakMilestone = 30;
-}
-else if(streak >= 7){
-    nextStreakMilestone = 14;
-}
-else if(streak >= 3){
-    nextStreakMilestone = 7;
-}
-
-document.getElementById("streakMilestone").textContent =
-streak >= 30
-? "👑 30 Day Streak Master!"
-: "🎯 Next Streak Milestone: " +
-nextStreakMilestone + " Days";
-
-let streakTarget = nextStreakMilestone;
-
-const streakProgress =
-Math.min(
-    Math.round(
-        (streak / streakTarget) * 100
-    ),
-    100
-);
-
-document.getElementById("streakProgressPercent").textContent =
-streak >= 30
-? "MAX"
-: streakProgress + "%";
-
-setTimeout(() => {
-
-    document.getElementById("streakProgressFill").style.width =
-    streakProgress + "%";
-
-}, 300);
-
-const bestMockScore =
-Number(localStorage.getItem("bestScore")) || 0;
-
-let mockHistory =
-JSON.parse(localStorage.getItem("mockHistory")) || [];
-
-let totalMockTests = mockHistory.length;
-
-let averageAccuracy = 0;
-
-if(totalMockTests > 0){
-
-let totalAccuracy = 0;
-
-mockHistory.forEach(test=>{
-    totalAccuracy += test.percentage;
-});
-
-averageAccuracy =
-Math.round(totalAccuracy / totalMockTests);
-
-}
-
-document.getElementById("analyticsMock").textContent =
-totalMockTests;
-
-document.getElementById("averageAccuracy").textContent =
-averageAccuracy + "%";
-
-let totalSubjects = 0;
-
-if(lastExam && lastSubject){
-    totalSubjects = 1;
-}
-
-document.getElementById("totalSubjects").textContent =
-totalSubjects;
-
-document.getElementById("totalProgress").textContent =
-percent + "%";
-
-document.getElementById("totalAchievements").textContent =
-completed;
-
-const weeklyStudy =
-Number(localStorage.getItem("focusSessions")) || 0;
-
-const monthlyStudy =
-weeklyStudy * 4;
-
-const studyRank =
-totalXP >= 1000 ? "🏆 Expert" :
-totalXP >= 500 ? "🥈 Intermediate" :
-totalXP >= 100 ? "🥉 Starter" :
-"🌱 Beginner";
-
-const longestStreak =
-Number(localStorage.getItem("studyStreak")) || 0;
-
-document.getElementById("weeklyStudy").textContent =
-weeklyStudy;
-
-document.getElementById("monthlyStudy").textContent =
-monthlyStudy;
-
-document.getElementById("longestStreak").textContent =
-longestStreak;
-
-document.getElementById("totalXP").textContent =
-totalXP + " XP";
-
-document.getElementById("studyRank").textContent =
-studyRank;
-
-document.getElementById("gameRank").textContent =
-"🎖️ Rank: " + studyRank.replace(/[🏆🥈🥉🌱]/g, "").trim();
-
-const    currentLevelXP =
-playerLevel === "Beginner" ? 0 :
-playerLevel === "Starter" ? 100 :
-playerLevel === "Intermediate" ? 500 :
-playerLevel === "Expert" ? 1000 :
-2000;
-
-const xpPercent =
-    playerLevel === "Master"
-    ? 100
-    : Math.min(
-        Math.max(
-            Math.round(
-                ((totalXP - currentLevelXP) /
-                (nextLevelXP - currentLevelXP)) * 100
-            ),
-            0
-        ),
-        100
-    );
-
-let milestoneText = "";
-
-const lastXP =
-Number(localStorage.getItem("lastKnownXP")) || 0;
-
-if(totalXP > lastXP){
-
-    const gainedXP = totalXP - lastXP;
-
-    document.getElementById("xpNotification").style.display =
-    "block";
-
-    document.getElementById("xpNotificationText").textContent =
-    `🎉 You earned +${gainedXP} XP!`;
-
-}
-
-localStorage.setItem("lastKnownXP", totalXP);
-
-const streakMilestoneRewards =
-JSON.parse(
-    localStorage.getItem("streakMilestoneRewards")
-) || [];
-
-const milestones = [
-    { days: 3, xp: 25 },
-    { days: 7, xp: 50 },
-    { days: 14, xp: 100 },
-    { days: 30, xp: 200 }
-];
-
-milestones.forEach(milestone => {
-
-    if(
-        streak >= milestone.days &&
-        !streakMilestoneRewards.includes(milestone.days)
-    ){
-
-        xp += milestone.xp;
-
-        streakMilestoneRewards.push(
-            milestone.days
-        );
-
-        let milestoneActivities =
-        JSON.parse(
-            localStorage.getItem("xpActivities")
-        ) || [];
-
-        milestoneActivities.push({
-
-            type: "🏆 Streak Milestone",
-
-            description:
-            milestone.days +
-            " Day Streak Milestone Reached",
-
-            xp: milestone.xp,
-
-            date: today
-
-        });
-
-        localStorage.setItem(
-            "xpActivities",
-            JSON.stringify(milestoneActivities)
-        );
-
-    }
-
-});
-
-localStorage.setItem(
-    "streakMilestoneRewards",
-    JSON.stringify(streakMilestoneRewards)
-);
-
-localStorage.setItem(
-    "xp",
-    xp
-);
-
-totalXP = xp;
-
-playerLevel =
-totalXP >= 2000 ? "Master" :
-totalXP >= 1000 ? "Expert" :
-totalXP >= 500 ? "Intermediate" :
-totalXP >= 100 ? "Starter" :
-"Beginner";
-
-if(totalXP > lastXP){
+    /* -------------------------
+       XP UI
+    ------------------------- */
+
+    document.getElementById("totalXP").textContent =
+        xp + " XP";
+
+    document.getElementById("gameXP").textContent =
+        "⭐ " + xp + " XP";
+
+    document.getElementById("leaderXP").textContent =
+        "⭐ XP: " + xp;
+
+    document.getElementById("studyScore").textContent =
+        `XP: ${xp} • ${playerLevel} • ${focusHours.toFixed(1)}h Focus`;
+
+    document.getElementById("playerLevel").textContent =
+        "🏅 " + playerLevel;
+
+    document.getElementById("gameLevel").textContent =
+        "🏅 Level: " + playerLevel;
+
+    document.getElementById("leaderLevel").textContent =
+        "🏅 Level: " + playerLevel;
+
+    document.getElementById("gameNext").textContent =
+        playerLevel === "Master"
+            ? "👑 Maximum Level Reached!"
+            : "🎯 Next Level: " + nextLevelXP + " XP";
+
+    document.getElementById("gameProgressPercent").textContent =
+        playerLevel === "Master"
+            ? "MAX"
+            : gameProgress + "%";
+
+    document.getElementById("gameProgressXP").textContent =
+        playerLevel === "Master"
+            ? xp + " / " + xp + " XP"
+            : xp + " / " + nextLevelXP + " XP";
+
+    const xpRemaining =
+        playerLevel === "Master"
+            ? 0
+            : Math.max(0, nextLevelXP - xp);
+
+    document.getElementById("gameXPRemaining").textContent =
+        playerLevel === "Master"
+            ? "👑 Maximum Level Achieved!"
+            : "🎯 " + xpRemaining + " XP to next level";
+
+    document.getElementById("gameProgressLabel").textContent =
+        playerLevel === "Master"
+            ? "👑 Master Level"
+            : "📊 " + playerLevel + " Level Progress";
 
     setTimeout(() => {
 
-        document.getElementById("xpNotification").style.display =
-        "none";
+        const fill =
+            document.getElementById("gameProgressFill");
 
-    }, 5000);
+        if (fill) {
+            fill.style.width =
+                gameProgress + "%";
+        }
 
-}
+    }, 300);
 
-if(totalXP >= 2000){
-    milestoneText = "👑 2000 XP — Master Milestone Reached!";
-}
-else if(totalXP >= 1000){
-    milestoneText = "🏆 1000 XP — Expert Milestone Reached!";
-}
-else if(totalXP >= 500){
-    milestoneText = "🥇 500 XP — Intermediate Milestone Reached!";
-}
-else if(totalXP >= 100){
-    milestoneText = "🌟 100 XP — Starter Milestone Reached!";
-}
-else{
-    milestoneText = "🌱 First Milestone: Reach 100 XP";
-}
+    /* -------------------------
+       XP PROGRESS
+    ------------------------- */
 
-document.getElementById("xpMilestone").textContent =
-milestoneText;
+    document.getElementById("xpPercent").textContent =
+        playerLevel === "Master"
+            ? "MAX LEVEL"
+            : gameProgress + "%";
 
-totalXP = Number(localStorage.getItem("xp")) || 0;
+    setTimeout(() => {
 
-const refreshedXP =
-Number(localStorage.getItem("xp")) || 0;
+        const fill =
+            document.getElementById("xpFill");
 
-document.getElementById("totalXP").textContent =
-refreshedXP + " XP";
+        if (fill) {
+            fill.style.width =
+                gameProgress + "%";
+        }
 
-document.getElementById("gameXP").textContent =
-"⭐ " + refreshedXP + " XP";
+    }, 300);
 
-document.getElementById("leaderXP").textContent =
-"⭐ XP: " + refreshedXP;
+    /* -------------------------
+       XP MILESTONE
+    ------------------------- */
 
-document.getElementById("studyScore").textContent =
-`XP: ${refreshedXP} • ${playerLevel} • ${focusHours.toFixed(1)}h Focus`;
+    let milestoneText;
 
-document.getElementById("xpPercent").textContent =
-playerLevel === "Master"
-? "MAX LEVEL"
-: xpPercent + "%";
+    if (xp >= 2000) {
 
-setTimeout(() => {
+        milestoneText =
+            "👑 2000 XP — Master Milestone Reached!";
 
-document.getElementById("xpFill").style.width =
-xpPercent + "%";
+    } else if (xp >= 1000) {
 
-}, 300);
+        milestoneText =
+            "🏆 1000 XP — Expert Milestone Reached!";
 
-const ctx = document.getElementById("progressChart");
+    } else if (xp >= 500) {
 
-new Chart(ctx, {
+        milestoneText =
+            "🥇 500 XP — Intermediate Milestone Reached!";
 
-type:"bar",
+    } else if (xp >= 100) {
 
-data:{
+        milestoneText =
+            "🌟 100 XP — Starter Milestone Reached!";
 
-labels:[
-"Subjects",
-"Mocks",
-"MCQs",
-"Streak"
-],
+    } else {
 
-datasets:[{
+        milestoneText =
+            "🌱 First Milestone: Reach 100 XP";
+    }
 
-label:"Your Progress",
+    document.getElementById("xpMilestone").textContent =
+        milestoneText;
 
-data:[
-subjectsStarted,
-totalMocks,
-mcqsSolved,
-streak
-]
+    /* -------------------------
+       XP NOTIFICATION
+    ------------------------- */
 
-}]
+    const lastKnownXP =
+        getNumber("lastKnownXP");
 
-},
+    if (xp > lastKnownXP) {
 
-options:{
+        const gainedXP =
+            xp - lastKnownXP;
 
-responsive: true
+        document.getElementById(
+            "xpNotification"
+        ).style.display = "block";
 
-}
+        document.getElementById(
+            "xpNotificationText"
+        ).textContent =
+            `🎉 You earned +${gainedXP} XP!`;
 
-});
+        setTimeout(() => {
 
-let historyHTML = "";
+            document.getElementById(
+                "xpNotification"
+            ).style.display = "none";
 
-mockHistory.forEach(test => {
+        }, 5000);
+    }
 
-    historyHTML += `
-        <div class="history-item">
-            <h3>🧪 ${test.exam} • ${test.subject}</h3>
-            <p>📊 Score: ${test.score} / ${test.total}</p>
-            <p>🎯 Accuracy: ${test.percentage}%</p>
-            <p>⏱ Time: ${test.time}</p>
-            <p>📅 Date: ${test.date}</p>
-        </div>
-    `;
+    localStorage.setItem(
+        "lastKnownXP",
+        xp
+    );
 
-});
+    /* -------------------------
+       BADGES
+    ------------------------- */
 
-if(historyHTML === ""){
-    historyHTML = "<p>📚 No mock tests attempted yet.</p>";
-}
+    const badges = [];
 
-document.getElementById("mockHistory").innerHTML = historyHTML;
+    if (
+        localStorage.getItem(
+            "firstMockCompleted"
+        )
+    ) {
+        badges.push(
+            "🥉 First Mock Completed"
+        );
+    }
 
+    if (streak >= 7) {
 
-const recentXPActivities =
-xpActivities.slice(0, 10);
+        badges.push(
+            "🔥 7 Day Streak"
+        );
+    }
 
-document.getElementById("xpActivityCount").textContent =
-xpActivities.length + " XP Activities";
+    if (completed >= 5) {
 
-let xpHistoryHTML = "";
+        badges.push(
+            "🧠 Quiz Master"
+        );
+    }
 
-recentXPActivities.forEach(activity=>{
+    if (xp >= 500) {
 
-    xpHistoryHTML += `
-        <div class="history-item">
-            <h3>⭐ ${activity.type}</h3>
-            <p>${activity.description}</p>
-            <p>🎁 +${activity.xp} XP</p>
-            <p>📅 ${activity.date}</p>
-        </div>
-    `;
+        badges.push(
+            "⭐ XP Champion"
+        );
+    }
 
-});
+    setJSON(
+        "badges",
+        badges
+    );
 
-if(xpHistoryHTML === ""){
-    xpHistoryHTML = `
-        <div class="history-item">
-            <h3>⭐ No XP Activity Yet</h3>
-            <p>Complete a mock test or focus session to start earning XP.</p>
-        </div>
-    `;
-}
+    document.getElementById("badgeCount").textContent =
+        "🏆 " + badges.length + " Badges Earned";
 
-document.getElementById("studyTimeline").innerHTML =
-xpHistoryHTML;
+    document.getElementById("gameBadges").textContent =
+        "🏆 Badges: " + badges.length;
 
+    /* -------------------------
+       STUDY SCORE
+    ------------------------- */
+
+    const score =
+        (completed * 100) +
+        (streak * 20) +
+        (mcqsSolved * 10);
+
+    document.getElementById("analyticsScore").textContent =
+        score;
+
+    /* -------------------------
+       SUBJECT HISTORY
+    ------------------------- */
+
+    let subjectHistory =
+        getArray("subjectHistory");
+
+    if (lastExam && lastSubject) {
+
+        const subjectKey =
+            lastExam + " • " + lastSubject;
+
+        if (!subjectHistory.includes(subjectKey)) {
+
+            subjectHistory.push(
+                subjectKey
+            );
+
+            setJSON(
+                "subjectHistory",
+                subjectHistory
+            );
+        }
+    }
+
+    const subjectsStarted =
+        subjectHistory.length;
+
+    document.getElementById(
+        "analyticsStudy"
+    ).textContent =
+        subjectsStarted;
+
+    document.getElementById(
+        "totalSubjects"
+    ).textContent =
+        subjectsStarted;
+
+    /* -------------------------
+       MOCK ANALYTICS
+    ------------------------- */
+
+    const totalMockTests =
+        mockHistory.length;
+
+    let averageAccuracy = 0;
+
+    if (totalMockTests > 0) {
+
+        const totalAccuracy =
+            mockHistory.reduce(
+                (sum, test) =>
+                    sum + Number(test.percentage || 0),
+                0
+            );
+
+        averageAccuracy =
+            Math.round(
+                totalAccuracy / totalMockTests
+            );
+    }
+
+    document.getElementById(
+        "analyticsMock"
+    ).textContent =
+        totalMockTests;
+
+    document.getElementById(
+        "averageAccuracy"
+    ).textContent =
+        averageAccuracy + "%";
+
+    /* -------------------------
+       FOCUS / STREAK ANALYTICS
+    ------------------------- */
+
+    document.getElementById(
+        "focusSessions"
+    ).textContent =
+        focusSessions +
+        " Sessions Completed";
+
+    document.getElementById(
+        "analyticsStreak"
+    ).textContent =
+        streak;
+
+    document.getElementById(
+        "streakStatus"
+    ).textContent =
+        "🔥 Current Streak: " +
+        streak +
+        " Days";
+
+    /* -------------------------
+       STREAK MILESTONE
+    ------------------------- */
+
+    let nextStreakMilestone = 3;
+
+    if (streak >= 30) {
+
+        nextStreakMilestone = 30;
+
+    } else if (streak >= 14) {
+
+        nextStreakMilestone = 30;
+
+    } else if (streak >= 7) {
+
+        nextStreakMilestone = 14;
+
+    } else if (streak >= 3) {
+
+        nextStreakMilestone = 7;
+    }
+
+    document.getElementById(
+        "streakMilestone"
+    ).textContent =
+        streak >= 30
+            ? "👑 30 Day Streak Master!"
+            : "🎯 Next Streak Milestone: " +
+              nextStreakMilestone +
+              " Days";
+
+    const streakProgress =
+        streak >= 30
+            ? 100
+            : Math.min(
+                Math.round(
+                    (streak /
+                    nextStreakMilestone) * 100
+                ),
+                100
+            );
+
+    document.getElementById(
+        "streakProgressPercent"
+    ).textContent =
+        streak >= 30
+            ? "MAX"
+            : streakProgress + "%";
+
+    setTimeout(() => {
+
+        const fill =
+            document.getElementById(
+                "streakProgressFill"
+            );
+
+        if (fill) {
+            fill.style.width =
+                streakProgress + "%";
+        }
+
+    }, 300);
+
+    /* -------------------------
+       STUDY RANK
+    ------------------------- */
+
+    const studyRank =
+        xp >= 2000 ? "👑 Master" :
+        xp >= 1000 ? "🏆 Expert" :
+        xp >= 500 ? "🥈 Intermediate" :
+        xp >= 100 ? "🥉 Starter" :
+        "🌱 Beginner";
+
+    document.getElementById(
+        "studyRank"
+    ).textContent =
+        studyRank;
+
+    document.getElementById(
+        "gameRank"
+    ).textContent =
+        "🎖️ Rank: " +
+        studyRank
+            .replace(/[👑🏆🥈🥉🌱]/g, "")
+            .trim();
+
+    /* -------------------------
+       WEEKLY / MONTHLY STUDY
+    ------------------------- */
+
+    const weeklyStudy =
+        focusSessions;
+
+    const monthlyStudy =
+        weeklyStudy * 4;
+
+    document.getElementById(
+        "weeklyStudy"
+    ).textContent =
+        weeklyStudy;
+
+    document.getElementById(
+        "monthlyStudy"
+    ).textContent =
+        monthlyStudy;
+
+    const longestStreak =
+    getNumber("longestStreak");
+
+document.getElementById(
+    "longestStreak"
+).textContent =
+    longestStreak;
+
+    /* -------------------------
+       MOCK HISTORY UI
+    ------------------------- */
+
+    let historyHTML = "";
+
+    mockHistory.forEach(test => {
+
+        historyHTML += `
+            <div class="history-item">
+
+                <h3>
+                    🧪 ${test.exam || "Mock Test"}
+                    • ${test.subject || ""}
+                </h3>
+
+                <p>
+                    📊 Score:
+                    ${test.score || 0}
+                    /
+                    ${test.total || 0}
+                </p>
+
+                <p>
+                    🎯 Accuracy:
+                    ${test.percentage || 0}%
+                </p>
+
+                <p>
+                    ⏱ Time:
+                    ${test.time || "N/A"}
+                </p>
+
+                <p>
+                    📅 Date:
+                    ${test.date || "N/A"}
+                </p>
+
+            </div>
+        `;
+    });
+
+    if (!historyHTML) {
+
+        historyHTML =
+            "<p>📚 No mock tests attempted yet.</p>";
+    }
+
+    document.getElementById(
+        "mockHistory"
+    ).innerHTML =
+        historyHTML;
+
+    /* -------------------------
+       XP ACTIVITY TIMELINE
+    ------------------------- */
+
+    const recentXPActivities =
+        xpActivities.slice(0, 10);
+
+    document.getElementById(
+        "xpActivityCount"
+    ).textContent =
+        xpActivities.length +
+        " XP Activities";
+
+    let xpHistoryHTML = "";
+
+    recentXPActivities.forEach(activity => {
+
+        xpHistoryHTML += `
+            <div class="history-item">
+
+                <h3>
+                    ⭐ ${activity.type}
+                </h3>
+
+                <p>
+                    ${activity.description}
+                </p>
+
+                <p>
+                    🎁 +${activity.xp} XP
+                </p>
+
+                <p>
+                    📅 ${activity.date}
+                </p>
+
+            </div>
+        `;
+    });
+
+    if (!xpHistoryHTML) {
+
+        xpHistoryHTML = `
+            <div class="history-item">
+
+                <h3>
+                    ⭐ No XP Activity Yet
+                </h3>
+
+                <p>
+                    Complete a mock test,
+                    MCQ practice, or focus session
+                    to start earning XP.
+                </p>
+
+            </div>
+        `;
+    }
+
+    document.getElementById(
+        "studyTimeline"
+    ).innerHTML =
+        xpHistoryHTML;
+
+    /* -------------------------
+       CONTINUE STUDY
+    ------------------------- */
+
+    window.continueStudy = function () {
+
+        if (lastExam && lastSubject) {
+
+            window.location.href =
+                "subject.html?exam=" +
+                encodeURIComponent(lastExam) +
+                "&subject=" +
+                encodeURIComponent(lastSubject);
+
+        } else {
+
+            alert(
+                "📚 Open a subject first."
+            );
+        }
+    };
+
+    /* -------------------------
+       PROGRESS CHART
+    ------------------------- */
+
+    const chartCanvas =
+        document.getElementById(
+            "progressChart"
+        );
+
+    if (
+        chartCanvas &&
+        typeof Chart !== "undefined"
+    ) {
+
+        new Chart(chartCanvas, {
+
+            type: "bar",
+
+            data: {
+
+                labels: [
+                    "Subjects",
+                    "Mocks",
+                    "MCQs",
+                    "Streak"
+                ],
+
+                datasets: [{
+
+                    label:
+                        "Your Progress",
+
+                    data: [
+                        subjectsStarted,
+                        totalMockTests,
+                        mcqsSolved,
+                        streak
+                    ]
+                }]
+            },
+
+            options: {
+                responsive: true
+            }
+        });
+    }
+
+})();
 </script>
+
 
 </body>
 </html>
