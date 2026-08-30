@@ -211,6 +211,11 @@ document.getElementById(
 ).style.display =
 "inline-flex";
 
+document.getElementById(
+"result"
+).textContent =
+"✅ Answer revealed — now move to the next question.";
+
 }
 
 
@@ -273,6 +278,31 @@ if(!completedSessions.includes(sessionKey)){
         "xp",
         xp
     );
+
+let xpActivities =
+JSON.parse(
+    localStorage.getItem("xpActivities")
+) || [];
+
+xpActivities.push({
+
+    type: "🧠 Active Recall",
+
+    description:
+    questions.length +
+    " Questions Reviewed",
+
+    xp: 10,
+
+    date:
+    new Date().toISOString().split("T")[0]
+
+});
+
+localStorage.setItem(
+    "xpActivities",
+    JSON.stringify(xpActivities)
+);
 
     completedSessions.push(sessionKey);
 
