@@ -205,3 +205,56 @@ if(html === ""){
     "<li>Notes coming soon...</li>";
 }
 
+const completionKey =
+    "notesCompleted_" +
+    exam +
+    "_" +
+    subject +
+    "_" +
+    chapter;
+
+const notesContent =
+    document.querySelector(".notes-content");
+
+const completionBox =
+    document.createElement("div");
+
+completionBox.className = "notes-completion";
+
+const isCompleted =
+    localStorage.getItem(completionKey) === "true";
+
+completionBox.innerHTML = `
+
+    <h3>✅ Chapter Completion</h3>
+
+    <p>
+        ${isCompleted
+            ? "This chapter has been completed."
+            : "Finished studying this chapter?"}
+    </p>
+
+    <button class="btn" id="completeChapterBtn">
+        ${isCompleted
+            ? "✅ Chapter Completed"
+            : "📚 Mark Chapter Complete"}
+    </button>
+
+`;
+
+notesContent.appendChild(completionBox);
+
+const completeChapterBtn =
+    document.getElementById("completeChapterBtn");
+
+completeChapterBtn.onclick = () => {
+
+    localStorage.setItem(
+        completionKey,
+        "true"
+    );
+
+    completeChapterBtn.innerHTML =
+        "✅ Chapter Completed";
+
+};

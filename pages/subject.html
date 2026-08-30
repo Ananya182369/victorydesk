@@ -12,6 +12,8 @@
 <script src="data/neet.js"></script>
 <script src="data/jee.js"></script>
 <script src="data/cuet.js"></script>
+<script src="data/concept-map.js"></script>
+<script src="../data/smart-revision.js"></script>
 
 </head>
 
@@ -104,6 +106,14 @@ Welcome! Choose what you want to do for this subject.
 <div class="card" onclick="openAI()">
 <h3>🤖 Victory AI</h3>
 <p>Your personal AI study assistant</p>
+</div>
+
+<div class="card" onclick="openSmartRevision()">
+
+<h3>🧠 Smart Revision</h3>
+
+<p>Revise chapters at the right time.</p>
+
 </div>
 
 </div>
@@ -288,14 +298,29 @@ chapters.forEach(chapter => {
     card.className = "card";
 
     card.innerHTML = `
-        <h3>📖 ${chapter}</h3>
-    `;
+    <h3>📖 ${chapter}</h3>
+    <button class="btn" onclick="event.stopPropagation(); openConceptMap('${chapter}')">
+        🧩 Concept Map
+    </button>
+`;
 
     card.onclick = () => openNotes(chapter);
 
     chapterSection.appendChild(card);
 
 });
+
+function openConceptMap(chapter){
+
+    window.location.href =
+        "concept-map.html?exam=" +
+        encodeURIComponent(exam) +
+        "&subject=" +
+        encodeURIComponent(subject) +
+        "&chapter=" +
+        encodeURIComponent(chapter);
+
+}
 
 function openNotes(chapter){
 
@@ -328,6 +353,16 @@ window.location.href =
 encodeURIComponent(exam) +
 "&subject=" +
 encodeURIComponent(subject);
+
+}
+
+function openSmartRevision(){
+
+    window.location.href =
+        "smart-revision.html?exam=" +
+        encodeURIComponent(exam) +
+        "&subject=" +
+        encodeURIComponent(subject);
 
 }
 

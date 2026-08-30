@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>VictoryDesk | Active Recall</title>
+
+<link rel="stylesheet" href="../style.css">
+
+</head>
+
+<body>
+
+<div class="top-banner">
+🧠 VictoryDesk Active Recall
+</div>
+
+<header>
+
+<h1>
+🧠 Active Recall Mode
+</h1>
+
+<p class="hero-text">
+Think first. Reveal the answer later.
+Train your memory instead of simply rereading.
+</p>
+
+<a href="dashboard.html" class="btn">
+⬅ Dashboard
+</a>
+
+</header>
+
+
+<section class="container">
+
+<div class="card">
+
+<p id="progress">
+Question 1
+</p>
+
+<h2 id="question">
+Loading...
+</h2>
+
+<div
+id="answerBox"
+style="display:none;">
+
+<hr>
+
+<h3>
+✅ Correct Answer
+</h3>
+
+<p id="correctAnswer"></p>
+
+</div>
+
+<br>
+
+<button
+id="revealBtn"
+class="btn"
+onclick="revealAnswer()">
+
+👁️ Reveal Answer
+
+</button>
+
+<button
+id="nextBtn"
+class="btn"
+onclick="nextQuestion()"
+style="display:none;">
+
+Next ➡
+
+</button>
+
+<p id="result"></p>
+
+</div>
+
+</section>
+
+
+<script>
+
+/* ================================
+   LOAD QUESTIONS
+================================ */
+
+let questions =
+JSON.parse(
+localStorage.getItem("activeRecallQuestions")
+) || [];
+
+let currentIndex = 0;
+
+
+/* ================================
+   CHECK DATA
+================================ */
+
+if(questions.length === 0){
+
+document.querySelector(".container").innerHTML = `
+
+<div class="card">
+
+<h2>
+🧠 No Questions Available
+</h2>
+
+<p>
+Complete some practice first to build your Active Recall question set.
+</p>
+
+<a href="exam.html" class="btn">
+🧪 Practice Questions
+</a>
+
+</div>
+
+`;
+
+}
+else{
+
+loadQuestion();
+
+}
+
+
+/* ================================
+   LOAD QUESTION
+================================ */
+
+function loadQuestion(){
+
+const current =
+questions[currentIndex];
+
+document.getElementById(
+"progress"
+).textContent =
+"🎯 Question " +
+(currentIndex + 1) +
+" of " +
+questions.length;
+
+document.getElementById(
+"question"
+).textContent =
+current.question;
+
+document.getElementById(
+"answerBox"
+).style.display =
+"none";
+
+document.getElementById(
+"revealBtn"
+).style.display =
+"inline-flex";
+
+document.getElementById(
+"nextBtn"
+).style.display =
+"none";
+
+document.getElementById(
+"result"
+).textContent = "";
+
+}
+
+
+/* ================================
+   REVEAL ANSWER
+================================ */
+
+function revealAnswer(){
+
+const current =
+questions[currentIndex];
+
+document.getElementById(
+"correctAnswer"
+).textContent =
+current.correctAnswer;
+
+document.getElementById(
+"answerBox"
+).style.display =
+"block";
+
+document.getElementById(
+"revealBtn"
+).style.display =
+"none";
+
+document.getElementById(
+"nextBtn"
+).style.display =
+"inline-flex";
+
+}
+
+
+/* ================================
+   NEXT QUESTION
+================================ */
+
+function nextQuestion(){
+
+if(
+currentIndex <
+questions.length - 1
+){
+
+currentIndex++;
+
+loadQuestion();
+
+}
+else{
+
+finishRecall();
+
+}
+
+}
+
+
+/* ================================
+   FINISH
+================================ */
+
+function finishRecall(){
+
+/* ================================
+   ACTIVE RECALL XP
+================================ */
+
+const sessionKey =
+"activeRecallCompleted_" +
+questions
+.map(question => question.question)
+.join("|");
+
+const completedSessions =
+JSON.parse(
+localStorage.getItem("activeRecallCompleted")
+) || [];
+
+let xpEarned = 0;
+
+if(!completedSessions.includes(sessionKey)){
+
+    let xp =
+    Number(localStorage.getItem("xp")) || 0;
+
+    xp += 10;
+
+    localStorage.setItem(
+        "xp",
+        xp
+    );
+
+    completedSessions.push(sessionKey);
+
+    localStorage.setItem(
+        "activeRecallCompleted",
+        JSON.stringify(completedSessions)
+    );
+
+    xpEarned = 10;
+
+}
+
+
+/* ================================
+   COMPLETION SCREEN
+================================ */
+
+document.querySelector(
+".container"
+).innerHTML = `
+
+<div class="card">
+
+<h1>
+🎉 Active Recall Complete!
+</h1>
+
+<h2>
+You reviewed ${questions.length} question(s).
+</h2>
+
+<p>
+🧠 Great job training your memory!
+</p>
+
+<p>
+⭐ XP Earned: <strong>+${xpEarned} XP</strong>
+</p>
+
+<a
+href="dashboard.html"
+class="btn">
+
+📊 Back to Dashboard
+
+</a>
+
+</div>
+
+`;
+
+}
+
+</script>
+
+</body>
+
+</html>

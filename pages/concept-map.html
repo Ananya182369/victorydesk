@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>VictoryDesk | Concept Map</title>
+
+<link rel="stylesheet" href="../style.css">
+
+<script src="../data/concept-map.js"></script>
+
+</head>
+
+<body>
+
+<div class="top-banner">
+🧩 VictoryDesk Concept Map
+</div>
+
+<header>
+
+<h1 id="conceptTitle">
+Concept Map
+</h1>
+
+<p class="hero-text">
+Understand what to study before and after this chapter.
+</p>
+
+<a href="#" id="backButton" class="btn">
+⬅ Back to Subject
+</a>
+
+</header>
+
+
+<section class="container">
+
+<h2 class="section-title">
+🧩 Chapter Concept Map
+</h2>
+
+<div class="concept-map">
+
+<div class="card">
+
+<h3>📚 Prerequisites</h3>
+
+<div id="prerequisites">
+No prerequisites found.
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h3>📖 Current Chapter</h3>
+
+<div id="currentChapter">
+Loading...
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h3>🚀 Next Chapters</h3>
+
+<div id="nextChapters">
+No next chapters found.
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<script>
+
+const params = new URLSearchParams(window.location.search);
+
+const exam = params.get("exam");
+const subject = params.get("subject");
+const chapter = params.get("chapter");
+
+const conceptTitle =
+document.getElementById("conceptTitle");
+
+const currentChapter =
+document.getElementById("currentChapter");
+
+const prerequisites =
+document.getElementById("prerequisites");
+
+const nextChapters =
+document.getElementById("nextChapters");
+
+const backButton =
+document.getElementById("backButton");
+
+
+conceptTitle.innerHTML =
+"🧩 " + chapter;
+
+currentChapter.innerHTML =
+"<h2>" + chapter + "</h2>";
+
+
+backButton.href =
+"subject.html?exam=" +
+encodeURIComponent(exam) +
+"&subject=" +
+encodeURIComponent(subject);
+
+
+let chapterData = null;
+
+
+if(
+    conceptMap &&
+    conceptMap[exam] &&
+    conceptMap[exam][subject] &&
+    conceptMap[exam][subject][chapter]
+){
+
+    chapterData =
+        conceptMap[exam][subject][chapter];
+
+}
+
+
+if(chapterData){
+
+    if(chapterData.prerequisites.length > 0){
+
+        prerequisites.innerHTML = "";
+
+        chapterData.prerequisites.forEach(item => {
+
+            const div =
+                document.createElement("div");
+
+            div.className = "card";
+
+            div.innerHTML =
+    "📘 " + item;
+
+div.onclick = () => {
+
+    window.location.href =
+        "notes.html?exam=" +
+        encodeURIComponent(exam) +
+        "&subject=" +
+        encodeURIComponent(subject) +
+        "&chapter=" +
+        encodeURIComponent(item);
+
+};
+
+            prerequisites.appendChild(div);
+
+        });
+
+    }
+
+
+    if(chapterData.next.length > 0){
+
+        nextChapters.innerHTML = "";
+
+        chapterData.next.forEach(item => {
+
+            const div =
+                document.createElement("div");
+
+            div.className = "card";
+
+            div.innerHTML =
+                "➡️ " + item;
+
+                div.onclick = () => {
+
+    window.location.href =
+        "notes.html?exam=" +
+        encodeURIComponent(exam) +
+        "&subject=" +
+        encodeURIComponent(subject) +
+        "&chapter=" +
+        encodeURIComponent(item);
+
+};
+
+            nextChapters.appendChild(div);
+
+        });
+
+    }
+
+}
+
+else{
+
+    prerequisites.innerHTML =
+        "⚠️ Concept Map data not available for this chapter.";
+
+    nextChapters.innerHTML =
+        "⚠️ Concept Map data not available for this chapter.";
+
+}
+
+</script>
+
+</body>
+
+</html>

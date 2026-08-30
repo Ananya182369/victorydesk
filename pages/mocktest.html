@@ -80,6 +80,63 @@ style="font-size:16px;">
 Submit
 </button>
 
+/* ================================
+   SMART MISTAKE BOOK
+================================ */
+
+function saveMistake(question, selectedAnswer){
+
+    let mistakes =
+    JSON.parse(
+        localStorage.getItem("mistakeBook")
+    ) || [];
+
+    const mistake = {
+
+        exam: exam,
+
+        subject: subject,
+
+        question: question.question,
+
+        options: question.options,
+
+        selectedAnswer:
+        question.options[Number(selectedAnswer)],
+
+        correctAnswer:
+        question.options[question.answer],
+
+        correctIndex:
+        question.answer,
+
+        date:
+        new Date().toLocaleDateString(),
+
+        reviewed: false
+
+    };
+
+    const alreadyExists =
+    mistakes.some(item =>
+        item.question === mistake.question &&
+        item.exam === mistake.exam &&
+        item.subject === mistake.subject
+    );
+
+    if(!alreadyExists){
+
+        mistakes.push(mistake);
+
+    }
+
+    localStorage.setItem(
+        "mistakeBook",
+        JSON.stringify(mistakes)
+    );
+
+}
+
 <button class="btn" onclick="markForReview()">
 🟠 Mark for Review
 </button>
@@ -324,11 +381,17 @@ if(Number(answer.value) === questions[currentIndex].answer){
     "✅ Correct!";
 
 }
+
 else{
 
     document.getElementById("result").innerHTML =
     "❌ Wrong! Correct Answer: " +
     questions[currentIndex].options[questions[currentIndex].answer];
+
+    saveMistake(
+        questions[currentIndex],
+        answer.value
+    );
 
 }
 

@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>VictoryDesk | Mistake Practice</title>
+
+<link rel="stylesheet" href="../style.css">
+
+</head>
+
+<body>
+
+<div class="top-banner">
+🧠 VictoryDesk Mistake Practice
+</div>
+
+<header>
+
+<h1>
+🧠 Practice Your Mistakes
+</h1>
+
+<p class="hero-text">
+Retry questions you previously got wrong.
+</p>
+
+<a href="mistakes.html" class="btn">
+⬅ Mistake Book
+</a>
+
+</header>
+
+
+<section class="container">
+
+<div class="card">
+
+<p id="progress">
+Question 1
+</p>
+
+<h2 id="question">
+Loading...
+</h2>
+
+<div id="options"></div>
+
+<br>
+
+<button
+id="submitBtn"
+class="btn"
+onclick="checkAnswer()">
+
+Submit Answer
+
+</button>
+
+<button
+class="btn"
+onclick="nextQuestion()">
+
+Next ➡
+
+</button>
+
+<p id="result"></p>
+
+</div>
+
+</section>
+
+
+<script>
+
+/* ================================
+   LOAD MISTAKES
+================================ */
+
+let mistakes =
+JSON.parse(
+localStorage.getItem("mistakePractice")
+) || [];
+
+let currentIndex = 0;
+
+let score = 0;
+
+
+/* ================================
+   CHECK DATA
+================================ */
+
+if(mistakes.length === 0){
+
+document.querySelector(".container").innerHTML = `
+
+<div class="card">
+
+<h2>
+🎉 No Mistakes To Practice
+</h2>
+
+<p>
+Your remaining mistakes will appear here.
+</p>
+
+<a href="mistakes.html" class="btn">
+📕 Back to Mistake Book
+</a>
+
+</div>
+
+`;
+
+}
+else{
+
+loadQuestion();
+
+}
+
+
+/* ================================
+   LOAD QUESTION
+================================ */
+
+function loadQuestion(){
+
+const current =
+mistakes[currentIndex];
+
+
+document.getElementById("progress").textContent =
+"🎯 Question " +
+(currentIndex + 1) +
+" of " +
+mistakes.length;
+
+
+document.getElementById("question").textContent =
+current.question;
+
+
+let html = "";
+
+
+current.options.forEach(
+(option,index)=>{
+
+html += `
+
+<label>
+
+<input
+type="radio"
+name="mistakeAnswer"
+value="${index}">
+
+${option}
+
+</label>
+
+<br><br>
+
+`;
+
+});
+
+
+document.getElementById(
+"options"
+).innerHTML = html;
+
+
+document.getElementById(
+"result"
+).textContent = "";
+
+
+document.getElementById(
+"submitBtn"
+).disabled = false;
+
+}
+
+
+/* ================================
+   CHECK ANSWER
+================================ */
+
+function checkAnswer(){
+
+const answer =
+document.querySelector(
+'input[name="mistakeAnswer"]:checked'
+);
+
+
+if(!answer){
+
+alert(
+"Please select an answer."
+);
+
+return;
+
+}
+
+
+const current =
+mistakes[currentIndex];
+
+
+document.querySelectorAll(
+'input[name="mistakeAnswer"]'
+).forEach(
+option => {
+option.disabled = true;
+});
+
+
+document.getElementById(
+"submitBtn"
+).disabled = true;
+
+if(
+Number(answer.value) ===
+current.correctAnswerIndex
+){
+
+score++;
+
+current.reviewed = true;
+
+const originalMistakes =
+JSON.parse(
+localStorage.getItem("mistakeBook")
+) || [];
+
+const mistakeIndex =
+originalMistakes.findIndex(
+mistake =>
+mistake.question === current.question
+);
+
+if(mistakeIndex !== -1){
+
+originalMistakes[mistakeIndex].reviewed = true;
+
+localStorage.setItem(
+"mistakeBook",
+JSON.stringify(originalMistakes)
+);
+
+}
+
+document.getElementById(
+"result"
+).textContent =
+"✅ Correct! This mistake has been marked as reviewed.";
+
+}
+
+else{
+
+document.getElementById(
+"result"
+).textContent =
+"❌ Not quite. Correct answer: " +
+current.correctAnswer;
+
+}
+
+}
+
+
+/* ================================
+   NEXT QUESTION
+================================ */
+
+function nextQuestion(){
+
+if(
+currentIndex <
+mistakes.length - 1
+){
+
+currentIndex++;
+
+loadQuestion();
+
+}
+else{
+
+finishPractice();
+
+}
+
+}
+
+
+/* ================================
+   FINISH PRACTICE
+================================ */
+
+function finishPractice(){
+
+const percentage =
+Math.round(
+(score / mistakes.length) * 100
+);
+
+
+localStorage.setItem(
+"lastMistakePracticeScore",
+percentage
+);
+
+
+document.querySelector(
+".container"
+).innerHTML = `
+
+<div class="card">
+
+<h1>
+🎉 Practice Complete!
+</h1>
+
+<h2>
+Score: ${score} / ${mistakes.length}
+</h2>
+
+<h3>
+Accuracy: ${percentage}%
+</h3>
+
+<p>
+${
+percentage >= 80
+? "🔥 Excellent! Your mistakes are becoming strengths."
+: percentage >= 50
+? "👍 Good improvement! Keep practicing."
+: "📚 Keep reviewing these mistakes and try again."
+}
+</p>
+
+<a
+href="mistakes.html"
+class="btn">
+
+📕 Back to Mistake Book
+
+</a>
+
+</div>
+
+`;
+
+}
+
+</script>
+
+</body>
+
+</html>

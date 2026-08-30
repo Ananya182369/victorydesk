@@ -196,13 +196,56 @@ questions[currentIndex].options[questions[currentIndex].answer];
 document.getElementById("score").innerHTML =
 "🏆 Score: " + score;
 
-document.querySelectorAll('input[name="q1"]').forEach(option=>{
-    option.disabled = true;
+
+/* ================================
+   SAVE FOR ACTIVE RECALL
+================================ */
+
+let activeRecallQuestions =
+JSON.parse(
+localStorage.getItem("activeRecallQuestions")
+) || [];
+
+const currentQuestion =
+questions[currentIndex];
+
+const alreadyExists =
+activeRecallQuestions.some(
+item => item.question === currentQuestion.question
+);
+
+if(!alreadyExists){
+
+activeRecallQuestions.push({
+
+question: currentQuestion.question,
+
+correctAnswer:
+currentQuestion.options[
+currentQuestion.answer
+]
+
 });
+
+localStorage.setItem(
+"activeRecallQuestions",
+JSON.stringify(activeRecallQuestions)
+);
 
 }
 
 
+/* ================================
+   DISABLE OPTIONS
+================================ */
+
+document.querySelectorAll(
+'input[name="q1"]'
+).forEach(option=>{
+    option.disabled = true;
+});
+
+}
 
 }
 

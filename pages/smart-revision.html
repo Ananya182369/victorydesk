@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>VictoryDesk | Smart Revision</title>
+
+<link rel="stylesheet" href="../style.css">
+
+<script src="data/smart-revision.js"></script>
+
+</head>
+
+<body>
+
+<div class="top-banner">
+🧠 VictoryDesk Smart Revision
+</div>
+
+<header>
+
+<h1 id="revisionTitle">
+Smart Revision
+</h1>
+
+<p class="hero-text">
+Revise your chapters at the right time.
+</p>
+
+<a href="#" id="backButton" class="btn">
+⬅ Back to Subject
+</a>
+
+</header>
+
+
+<section class="container">
+
+<h2 class="section-title">
+🧠 Revision Schedule
+</h2>
+
+<p style="text-align:center;margin-bottom:30px;">
+Your recommended revision plan for this subject.
+</p>
+
+<div class="revision-summary">
+
+    <h3>📊 Revision Progress</h3>
+
+    <p>
+        <span id="revisedCount">0</span>
+        /
+        <span id="totalRevisionCount">0</span>
+        Chapters Revised
+    </p>
+
+</div>
+
+<div id="revisionContainer" class="grid">
+
+</div>
+
+</section>
+
+
+<script>
+
+const params =
+new URLSearchParams(window.location.search);
+
+const exam =
+params.get("exam");
+
+const subject =
+params.get("subject");
+
+
+document.getElementById("revisionTitle").innerHTML =
+"🧠 " + subject + " Smart Revision";
+
+
+document.getElementById("backButton").href =
+"subject.html?exam=" +
+encodeURIComponent(exam) +
+"&subject=" +
+encodeURIComponent(subject);
+
+
+const revisionContainer =
+document.getElementById("revisionContainer");
+
+const revisedCountElement =
+document.getElementById("revisedCount");
+
+const totalRevisionCountElement =
+document.getElementById("totalRevisionCount");
+
+let subjectRevision = null;
+
+
+if(
+    smartRevision &&
+    smartRevision[exam] &&
+    smartRevision[exam][subject]
+){
+
+    subjectRevision =
+        smartRevision[exam][subject];
+
+}
+
+
+if(subjectRevision){
+
+    totalRevisionCountElement.innerHTML =
+    Object.keys(subjectRevision).length;
+
+    let revisedCount = 0;
+
+    Object.keys(subjectRevision).forEach(chapter => {
+
+        const data =
+            subjectRevision[chapter];
+
+        const card =
+            document.createElement("div");
+
+        card.className = "card";
+
+        card.style.cursor = "pointer";
+
+card.onclick = () => {
+
+    window.location.href =
+        "notes.html?exam=" +
+        encodeURIComponent(exam) +
+        "&subject=" +
+        encodeURIComponent(subject) +
+        "&chapter=" +
+        encodeURIComponent(chapter);
+
+};
+
+        const revisionKey =
+    "revision_" +
+    exam +
+    "_" +
+    subject +
+    "_" +
+    chapter;
+
+const isRevised =
+    localStorage.getItem(revisionKey) === "true";
+
+    const isNotesCompleted =
+    localStorage.getItem(
+        "notesCompleted_" +
+        exam +
+        "_" +
+        subject +
+        "_" +
+        chapter
+    ) === "true";
+
+    if(isRevised){
+    revisedCount++;
+}
+
+if(isRevised){
+
+    card.classList.add("revision-complete");
+
+}
+
+if(isNotesCompleted){
+
+    card.classList.add("notes-complete");
+
+}
+
+card.innerHTML = `
+
+    <h3>📚 ${chapter}</h3>
+
+    <p>
+    ⭐ Priority:
+    <strong>${data.priority}</strong>
+    </p>
+
+    <p>
+    🔄 Revision Days:
+    ${data.revisionDays.join(" • ")}
+    </p>
+
+    <button class="btn revision-btn">
+        ${isRevised ? "✅ Revised" : "🔄 Mark as Revised"}
+    </button>
+
+    if(isNotesCompleted){
+
+    const statusText =
+        document.createElement("p");
+
+    statusText.innerHTML =
+        "📖 Notes Completed";
+
+    statusText.style.fontWeight = "600";
+    statusText.style.marginTop = "10px";
+
+    card.appendChild(statusText);
+
+}
+
+`;
+
+const revisionButton =
+    card.querySelector(".revision-btn");
+
+revisionButton.onclick = (event) => {
+
+    event.stopPropagation();
+
+    if(localStorage.getItem(revisionKey) !== "true"){
+
+        localStorage.setItem(revisionKey, "true");
+
+        revisedCount++;
+
+        revisedCountElement.innerHTML =
+            revisedCount;
+
+    }
+
+    revisionButton.innerHTML =
+        "✅ Revised";
+
+};
+
+        revisionContainer.appendChild(card);
+
+    });
+
+    revisedCountElement.innerHTML =
+    revisedCount;
+
+}
+
+else{
+
+    revisionContainer.innerHTML = `
+
+        <div class="card">
+
+            <h3>⚠️ No Revision Data</h3>
+
+            <p>
+            Smart Revision data is not available
+            for this subject yet.
+            </p>
+
+        </div>
+
+    `;
+
+}
+
+</script>
+
+</body>
+
+</html>

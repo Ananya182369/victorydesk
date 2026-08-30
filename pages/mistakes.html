@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>VictoryDesk | Smart Mistake Book</title>
+
+<link rel="stylesheet" href="../style.css">
+
+</head>
+
+<body>
+
+<div class="top-banner">
+📕 VictoryDesk Smart Mistake Book
+</div>
+
+<header>
+
+<h1>
+📕 Smart Mistake Book
+</h1>
+
+<p class="hero-text">
+Review your mistakes and turn them into improvement.
+</p>
+
+<a href="dashboard.html" class="btn">
+⬅ Dashboard
+</a>
+
+</header>
+
+
+<section class="container">
+
+<div class="card">
+
+<h2>📊 Mistake Summary</h2>
+
+<p>
+❌ Total Mistakes:
+<strong id="mistakeCount">0</strong>
+</p>
+
+<p>
+🔄 Reviewed:
+<strong id="reviewedCount">0</strong>
+</p>
+
+<p>
+📌 Remaining:
+<strong id="remainingCount">0</strong>
+</p>
+
+<p id="mistakeMessage">
+Loading your mistakes...
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h2>🔎 Filter Mistakes</h2>
+
+<select id="examFilter" class="contact-input">
+<option value="all">📚 All Exams</option>
+</select>
+
+<select id="subjectFilter" class="contact-input">
+<option value="all">📖 All Subjects</option>
+</select>
+
+<select id="statusFilter" class="contact-input">
+
+<option value="all">
+📚 All Mistakes
+</option>
+
+<option value="remaining">
+🔄 Remaining
+</option>
+
+<option value="reviewed">
+✅ Reviewed
+</option>
+
+</select>
+
+<button
+class="btn"
+onclick="startMistakePractice()">
+🧠 Practice My Mistakes
+</button>
+
+</div>
+
+<div id="mistakeContainer"></div>
+
+
+</section>
+
+
+<script>
+
+/* ================================
+   LOAD MISTAKES
+================================ */
+
+let mistakes =
+JSON.parse(
+localStorage.getItem("mistakeBook")
+) || [];
+
+
+document.getElementById(
+"mistakeCount"
+).textContent =
+mistakes.length;
+
+function updateMistakeSummary(){
+
+    const reviewed =
+    mistakes.filter(
+        mistake => mistake.reviewed
+    ).length;
+
+    const remaining =
+    mistakes.length - reviewed;
+
+    document.getElementById(
+        "reviewedCount"
+    ).textContent = reviewed;
+
+    document.getElementById(
+        "remainingCount"
+    ).textContent = remaining;
+
+}
+
+/* ================================
+   DISPLAY MESSAGE
+================================ */
+
+if(mistakes.length === 0){
+
+document.getElementById(
+"mistakeMessage"
+).textContent =
+"🎉 No mistakes recorded yet. Complete a mock test to build your Mistake Book.";
+
+}
+
+
+/* ================================
+   DISPLAY MISTAKES
+================================ */
+
+updateMistakeSummary();
+
+/* ================================
+   MISTAKE FILTERS
+================================ */
+
+function loadFilters(){
+
+    const examFilter =
+    document.getElementById("examFilter");
+
+    const subjectFilter =
+    document.getElementById("subjectFilter");
+
+    const exams =
+    [...new Set(
+        mistakes.map(mistake => mistake.exam)
+    )];
+
+    const subjects =
+    [...new Set(
+        mistakes.map(mistake => mistake.subject)
+    )];
+
+    exams.forEach(examName => {
+
+        examFilter.innerHTML += `
+        <option value="${examName}">
+        ${examName}
+        </option>
+        `;
+
+    });
+
+    subjects.forEach(subjectName => {
+
+        subjectFilter.innerHTML += `
+        <option value="${subjectName}">
+        ${subjectName}
+        </option>
+        `;
+
+    });
+
+}
+
+
+function applyMistakeFilter(){
+
+    const selectedExam =
+    document.getElementById("examFilter").value;
+
+    const selectedSubject =
+    document.getElementById("subjectFilter").value;
+
+    const selectedStatus =
+document.getElementById("statusFilter").value;
+
+    const filteredMistakes =
+mistakes.filter(mistake => {
+
+    const examMatch =
+    selectedExam === "all" ||
+    mistake.exam === selectedExam;
+
+    const subjectMatch =
+    selectedSubject === "all" ||
+    mistake.subject === selectedSubject;
+
+    const statusMatch =
+    selectedStatus === "all" ||
+    (selectedStatus === "reviewed" && mistake.reviewed) ||
+    (selectedStatus === "remaining" && !mistake.reviewed);
+
+    return examMatch &&
+           subjectMatch &&
+           statusMatch;
+
+});
+
+    showMistakes(filteredMistakes);
+
+}
+
+
+document
+.getElementById("examFilter")
+.addEventListener(
+"change",
+applyMistakeFilter
+);
+
+
+document
+.getElementById("subjectFilter")
+.addEventListener(
+"change",
+applyMistakeFilter
+);
+
+document
+.getElementById("statusFilter")
+.addEventListener(
+"change",
+applyMistakeFilter
+);
+
+function showMistakes(list = mistakes){
+
+const container =
+document.getElementById(
+"mistakeContainer"
+);
+
+let html = "";
+
+
+if(list.length === 0){
+
+container.innerHTML = `
+<div class="card">
+
+<h2>📚 Your Mistake Book is Empty</h2>
+
+<p>
+Complete a mock test and your wrong questions will appear here automatically.
+</p>
+
+<a href="exam.html" class="btn">
+🧪 Practice Mock Test
+</a>
+
+</div>
+`;
+
+return;
+
+}
+
+list.forEach((mistake)=>{
+
+html += `
+
+<div class="card">
+
+<h2>
+❌ Mistake ${index + 1}
+</h2>
+
+<p>
+<strong>Exam:</strong>
+${mistake.exam}
+</p>
+
+<p>
+<strong>Subject:</strong>
+${mistake.subject}
+</p>
+
+<hr>
+
+<h3>
+${mistake.question}
+</h3>
+
+<div>
+
+${mistake.options.map(
+(option,optionIndex)=>`
+
+<p>
+${optionIndex + 1}.
+${option}
+</p>
+
+`
+).join("")}
+
+</div>
+
+<p>
+❌ Your Answer:
+<strong>
+${mistake.selectedAnswer}
+</strong>
+</p>
+
+<p>
+✅ Correct Answer:
+<strong>
+${mistake.correctAnswer}
+</strong>
+</p>
+
+<p>
+📅 Recorded:
+${mistake.date}
+</p>
+
+<button
+class="btn"
+onclick="markReviewedByQuestion(${JSON.stringify(mistake.question)})">
+
+${mistake.reviewed
+? "✅ Reviewed"
+: "🔄 Mark as Reviewed"}
+
+</button>
+
+<button
+class="btn"
+onclick="deleteMistakeByQuestion(${JSON.stringify(mistake.question)})">
+
+🗑️ Delete Mistake
+
+</button>
+
+</div>
+
+`;
+
+});
+
+
+container.innerHTML =
+html;
+
+}
+
+
+/* ================================
+   MARK REVIEWED
+================================ */
+
+function markReviewedByQuestion(question){
+
+    const mistake =
+    mistakes.find(
+        mistake => mistake.question === question
+    );
+
+    if(!mistake){
+        return;
+    }
+
+    mistake.reviewed =
+    !mistake.reviewed;
+
+    /* ================================
+   MISTAKE REVIEW XP
+================================ */
+
+if(mistake.reviewed && !mistake.xpAwarded){
+
+    let xp =
+    Number(localStorage.getItem("xp")) || 0;
+
+    xp += 10;
+
+    localStorage.setItem(
+        "xp",
+        xp
+    );
+
+    mistake.xpAwarded = true;
+
+}
+
+    localStorage.setItem(
+        "mistakeBook",
+        JSON.stringify(mistakes)
+    );
+
+    updateMistakeSummary();
+
+    applyMistakeFilter();
+
+}
+
+/* ================================
+   MISTAKE-BASED PRACTICE
+================================ */
+
+function startMistakePractice(){
+
+    const remainingMistakes =
+    mistakes.filter(
+        mistake => !mistake.reviewed
+    );
+
+    if(remainingMistakes.length === 0){
+
+        alert(
+            "🎉 No remaining mistakes to practice!"
+        );
+
+        return;
+
+    }
+
+    localStorage.setItem(
+        "mistakePractice",
+        JSON.stringify(remainingMistakes)
+    );
+
+    window.location.href =
+    "mistake-practice.html";
+
+}
+
+/* ================================
+   DELETE MISTAKE
+================================ */
+
+function deleteMistakeByQuestion(question){
+
+    const confirmDelete =
+    confirm(
+        "🗑️ Delete this mistake from your Mistake Book?"
+    );
+
+    if(!confirmDelete){
+        return;
+    }
+
+    mistakes =
+    mistakes.filter(
+        mistake =>
+        mistake.question !== question
+    );
+
+    localStorage.setItem(
+        "mistakeBook",
+        JSON.stringify(mistakes)
+    );
+
+    document.getElementById(
+        "mistakeCount"
+    ).textContent =
+    mistakes.length;
+
+    updateMistakeSummary();
+
+    loadFilters();
+
+    applyMistakeFilter();
+
+}
+
+
+/* ================================
+   START
+================================ */
+
+loadFilters();
+
+showMistakes();
+
+</script>
+
+</body>
+
+</html>

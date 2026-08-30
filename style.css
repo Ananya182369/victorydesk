@@ -1534,3 +1534,181 @@ height:auto;
     border-radius:10px;
     line-height:1.6;
 }
+
+/* =========================
+   Smart Mistake Book
+========================= */
+
+#mistakeContainer{
+    display:grid;
+    gap:20px;
+    margin-top:25px;
+}
+
+#mistakeContainer .card{
+    margin:0;
+}
+
+#mistakeContainer hr{
+    border:none;
+    border-top:1px solid #e5e7eb;
+    margin:18px 0;
+}
+
+#mistakeContainer .btn{
+    margin:6px 6px 0 0;
+}
+
+#mistakeContainer p{
+    line-height:1.6;
+}
+
+#mistakeContainer h3{
+    line-height:1.5;
+}
+
+#examFilter,
+#subjectFilter,
+#statusFilter{
+    cursor:pointer;
+    background:#ffffff;
+}
+
+#mistakeMessage{
+    margin-top:15px;
+    font-weight:600;
+}
+
+#reviewedCount{
+    color:#16a34a;
+}
+
+#remainingCount{
+    color:#dc2626;
+}
+
+@media (max-width:768px){
+
+    #mistakeContainer .btn{
+        width:100%;
+        margin:6px 0;
+    }
+
+}
+
+/* =========================
+   Concept Map
+========================= */
+
+.concept-map{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:20px;
+    margin-top:30px;
+    align-items:stretch;
+}
+
+.concept-map .card{
+    text-align:center;
+    min-height:180px;
+}
+
+.concept-map .card h3{
+    margin-bottom:18px;
+}
+
+#currentChapter{
+    font-size:20px;
+    font-weight:700;
+    color:#065f46;
+}
+
+#prerequisites,
+#nextChapters{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+#prerequisites .card,
+#nextChapters .card{
+    min-height:auto;
+    height:auto;
+    padding:14px;
+    margin:0;
+    box-shadow:0 5px 15px rgba(0,0,0,.06);
+}
+
+@media (max-width:768px){
+
+    .concept-map{
+        grid-template-columns:1fr;
+    }
+
+}
+
+/* =========================
+   Concept Map Clickable Items
+========================= */
+
+#prerequisites .card,
+#nextChapters .card{
+    cursor:pointer;
+    transition:transform .2s ease, box-shadow .2s ease;
+}
+
+#prerequisites .card:hover,
+#nextChapters .card:hover{
+    transform:translateY(-3px);
+    box-shadow:0 8px 20px rgba(16,185,129,.15);
+}
+
+/* =========================
+   Smart Revision
+========================= */
+
+.revision-summary{
+    max-width:500px;
+    margin:0 auto 30px;
+    padding:22px;
+    text-align:center;
+    background:#f8fbff;
+    border:1px solid #e5e7eb;
+    border-radius:16px;
+    box-shadow:0 8px 20px rgba(0,0,0,.06);
+}
+
+.revision-summary h3{
+    margin-bottom:10px;
+}
+
+.revision-summary p{
+    margin:0;
+    font-size:18px;
+    font-weight:600;
+}
+
+.revision-btn{
+    margin-top:auto;
+}
+
+/* Completed Revision Card */
+
+.revision-complete{
+    border:2px solid #22c55e;
+    background:#f0fdf4;
+}
+
+/* =========================
+   Smart Revision Status
+========================= */
+
+.notes-complete{
+    border:2px solid #2563eb;
+    background:#eff6ff;
+}
+
+.notes-complete p{
+    color:#2563eb;
+    font-weight:600;
+}

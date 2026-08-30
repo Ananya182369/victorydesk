@@ -1,45 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VictoryDesk | Study Planner</title>
+
+<title>VictoryDesk | Smart Study Planner</title>
+
 <link rel="stylesheet" href="../style.css">
+
 </head>
 
 <body>
 
 <div class="top-banner">
-📅 VictoryDesk Study Planner
+🧠 VictoryDesk Smart Study Planner
 </div>
 
 <header>
 
-<h1 id="plannerTitle">Study Planner</h1>
+<h1 id="plannerTitle">
+📅 Smart Study Planner
+</h1>
 
 <p class="hero-text" id="plannerSubtitle">
-Plan your daily study schedule.
+Plan your study day intelligently.
 </p>
 
-<a href="dashboard.html" class="btn">⬅ Dashboard</a>
+<a href="dashboard.html" class="btn">
+⬅ Dashboard
+</a>
 
 </header>
 
+
 <section class="container planner-page">
+
+
+<!-- SMART PLAN -->
 
 <div class="card">
 
-<h2>🎯 Today's Plan</h2>
+<h2>🧠 Today's Smart Plan</h2>
 
-<input 
+<p id="smartPlanMessage">
+Analyzing your study progress...
+</p>
+
+<div id="smartPlan"></div>
+
+</div>
+
+
+<!-- TODAY'S GOALS -->
+
+<div class="card">
+
+<h2>🎯 Today's Goals</h2>
+
+<input
 type="text"
 id="customTask"
 class="contact-input"
-placeholder="➕ Add your own task">
+placeholder="➕ Add your own task"
+>
 
 <button class="btn" onclick="addTask()">
 Add Task
 </button>
+
 
 <div class="custom-tasks-section">
 
@@ -49,11 +79,11 @@ Add Task
 
 </div>
 
+
 <label>
 <input type="checkbox" id="task1">
 📖 Study 1 Chapter
 </label>
-
 
 
 <label>
@@ -62,37 +92,42 @@ Add Task
 </label>
 
 
-
 <label>
 <input type="checkbox" id="task3">
 🧪 Attempt 1 Mock Test
 </label>
 
 
-
 <button class="btn" onclick="saveTasks()">
 💾 Save Progress
 </button>
+
 
 <div class="goal-summary">
 
 <h3>🎯 Goal Summary</h3>
 
 <p>
-Total Goals: <span id="totalGoals">3</span>
+Total Goals:
+<span id="totalGoals">3</span>
 </p>
 
 <p>
-Completed Goals: <span id="completedGoals">0</span>
+Completed Goals:
+<span id="completedGoals">0</span>
 </p>
 
 </div>
+
 
 <div class="planner-progress-section">
 
 <h3>📊 Today's Progress</h3>
 
-<div id="plannerProgress" class="planner-progress"></div>
+<div
+id="plannerProgress"
+class="planner-progress">
+</div>
 
 <p id="plannerText">
 0% Completed
@@ -100,24 +135,61 @@ Completed Goals: <span id="completedGoals">0</span>
 
 </div>
 
+</div>
+
+<!-- WHAT SHOULD I STUDY NOW -->
+
+<div class="card">
+
+<h2>⚡ What Should I Study Now?</h2>
+
+<p id="studyNowText">
+Analyzing your preparation...
+</p>
+
+<div id="studyNowAction"></div>
+
+</div>
+
+<!-- SMART RECOMMENDATION -->
+
+<div class="card">
+
+<h2>🎯 Smart Recommendation</h2>
+
+<p id="smartRecommendation">
+Complete today's goals to improve your preparation.
+</p>
+
+</div>
+
+
+<!-- REVISION -->
+
+<div class="card">
+
 <div class="revision-section">
 
 <h3>🔁 Revision Tracker</h3>
+
 
 <label>
 <input type="checkbox" id="revision1">
 📖 Revise Chapter Notes
 </label>
 
+
 <label>
 <input type="checkbox" id="revision2">
 ❓ Revise Important MCQs
 </label>
 
+
 <label>
 <input type="checkbox" id="revision3">
 📝 Revise Previous Mistakes
 </label>
+
 
 <p id="revisionProgress">
 0/3 Revision Completed
@@ -127,29 +199,125 @@ Completed Goals: <span id="completedGoals">0</span>
 
 </div>
 
+<!-- SPACED REVISION -->
+
+<div class="card">
+
+<h2>🧠 Spaced Revision Schedule</h2>
+
+<p id="spacedRevisionMessage">
+Your revision schedule will appear here.
+</p>
+
+<div id="spacedRevision"></div>
+
 </div>
+
+<!-- STUDY STATS -->
+
+<div class="card">
+
+<h2>📊 Smart Study Stats</h2>
+
+<p>
+🔥 Current Streak:
+<strong id="smartStreak">0 Days</strong>
+</p>
+
+<p>
+⭐ Total XP:
+<strong id="smartXP">0 XP</strong>
+</p>
+
+<p>
+🧪 Mock Tests:
+<strong id="smartMocks">0</strong>
+</p>
+
+<p>
+⏰ Focus Sessions:
+<strong id="smartFocus">0</strong>
+</p>
+
+</div>
+
 
 </section>
 
+
 <script>
 
-const params = new URLSearchParams(window.location.search);
 
-const exam = params.get("exam");
-const subject = params.get("subject");
+/* ================================
+   EXAM + SUBJECT
+================================ */
 
-if (exam && subject) {
+const params =
+new URLSearchParams(window.location.search);
 
-    document.getElementById("plannerTitle").innerHTML =
-        "📅 " + exam + " • " + subject;
+const exam =
+params.get("exam") ||
+localStorage.getItem("plannerExam");
 
-    document.getElementById("plannerSubtitle").innerHTML =
-        "Create your study plan for this subject.";
+const subject =
+params.get("subject") ||
+localStorage.getItem("plannerSubject");
 
-    localStorage.setItem("plannerExam", exam);
-    localStorage.setItem("plannerSubject", subject);
+
+if(exam && subject){
+
+document.getElementById("plannerTitle").innerHTML =
+"📅 " + exam + " • " + subject;
+
+document.getElementById("plannerSubtitle").innerHTML =
+"Your personalized smart study plan.";
+
+localStorage.setItem(
+"plannerExam",
+exam
+);
+
+localStorage.setItem(
+"plannerSubject",
+subject
+);
 
 }
+
+
+/* ================================
+   LOAD BASIC DATA
+================================ */
+
+let streak =
+Number(localStorage.getItem("studyStreak")) || 0;
+
+let xp =
+Number(localStorage.getItem("xp")) || 0;
+
+let mocks =
+Number(localStorage.getItem("totalMocks")) || 0;
+
+let focusSessions =
+Number(localStorage.getItem("focusSessions")) || 0;
+
+
+document.getElementById("smartStreak").textContent =
+streak + " Days";
+
+document.getElementById("smartXP").textContent =
+xp + " XP";
+
+document.getElementById("smartMocks").textContent =
+mocks;
+
+document.getElementById("smartFocus").textContent =
+focusSessions;
+
+
+/* ================================
+   LOAD TASKS
+================================ */
 
 document.getElementById("task1").checked =
 localStorage.getItem("task1") === "true";
@@ -160,6 +328,7 @@ localStorage.getItem("task2") === "true";
 document.getElementById("task3").checked =
 localStorage.getItem("task3") === "true";
 
+
 document.getElementById("revision1").checked =
 localStorage.getItem("revision1") === "true";
 
@@ -169,23 +338,429 @@ localStorage.getItem("revision2") === "true";
 document.getElementById("revision3").checked =
 localStorage.getItem("revision3") === "true";
 
-function saveTasks(){
 
-localStorage.setItem("task1",
-document.getElementById("task1").checked);
+/* ================================
+   SMART PLAN
+================================ */
 
-localStorage.setItem(
-"lastPlannerUpdate",
-new Date().toDateString()
+function generateSmartPlan(){
+
+let plan = [];
+
+let message =
+"Complete these tasks to maintain steady progress.";
+
+
+if(!exam || !subject){
+
+plan.push("📚 Choose an exam and subject first.");
+
+message =
+"Open a subject to generate a more personalized plan.";
+
+}
+else{
+
+plan.push(
+"📖 Study 1 important topic from " +
+subject
 );
 
-localStorage.setItem("task2",
-document.getElementById("task2").checked);
+plan.push(
+"❓ Solve 20 MCQs from " +
+subject
+);
 
-localStorage.setItem("task3",
-document.getElementById("task3").checked);
+if(mocks === 0){
 
-alert("✅ Study plan saved!");
+plan.push(
+"🧪 Attempt your first mock test"
+);
+
+}
+else{
+
+plan.push(
+"📊 Review your previous mock performance"
+);
+
+}
+
+if(streak < 3){
+
+plan.push(
+"🔥 Build your study streak today"
+);
+
+}
+
+if(xp < 100){
+
+plan.push(
+"⭐ Reach your first 100 XP milestone"
+);
+
+}
+
+}
+
+
+document.getElementById(
+"smartPlanMessage"
+).textContent = message;
+
+
+let html = "";
+
+plan.forEach((item,index)=>{
+
+html += `
+<div class="history-item">
+
+<h3>
+${index + 1}. ${item}
+</h3>
+
+</div>
+`;
+
+});
+
+
+document.getElementById(
+"smartPlan"
+).innerHTML = html;
+
+}
+
+/* ================================
+   WHAT SHOULD I STUDY NOW?
+================================ */
+
+function whatShouldIStudyNow(){
+
+    let recommendation = "";
+    let action = "";
+
+    if(!exam || !subject){
+
+        recommendation =
+        "📚 Choose an exam and subject first to get a personalized study recommendation.";
+
+        action = `
+        <a href="exam.html" class="btn">
+        📚 Choose Subject
+        </a>
+        `;
+
+    }
+
+    else{
+
+        const task1Done =
+        document.getElementById("task1").checked;
+
+        const task2Done =
+        document.getElementById("task2").checked;
+
+        const task3Done =
+        document.getElementById("task3").checked;
+
+        const customTasks =
+JSON.parse(
+localStorage.getItem("customTasks")
+) || [];
+
+const completedCustomTasks =
+JSON.parse(
+localStorage.getItem("completedCustomTasks")
+) || [];
+
+const allCustomTasksDone =
+customTasks.length === 0 ||
+completedCustomTasks.length >= customTasks.length;
+
+        const revision1Done =
+        document.getElementById("revision1").checked;
+
+        const revision2Done =
+        document.getElementById("revision2").checked;
+
+        const revision3Done =
+        document.getElementById("revision3").checked;
+
+
+        if(!task1Done){
+
+            recommendation =
+            "📖 Study 1 important chapter or topic from " +
+            subject +
+            " first.";
+
+            action = `
+            <a href="subject.html?exam=${encodeURIComponent(exam)}&subject=${encodeURIComponent(subject)}"
+            class="btn">
+            📖 Study ${subject}
+            </a>
+            `;
+
+        }
+
+        else if(!task2Done){
+
+            recommendation =
+            "❓ Your next priority is MCQ practice. Solve 20 MCQs from " +
+            subject +
+            ".";
+
+            action = `
+            <a href="mcqs.html?exam=${encodeURIComponent(exam)}&subject=${encodeURIComponent(subject)}"
+            class="btn">
+            ❓ Practice MCQs
+            </a>
+            `;
+
+        }
+
+        else if(!allCustomTasksDone){
+
+recommendation =
+"📌 Complete your remaining custom study task before moving to the next priority.";
+
+action = "";
+
+}
+
+        else if(!revision1Done){
+
+            recommendation =
+            "🔁 You have studied the chapter. Now revise its notes before moving ahead.";
+
+            action = `
+            <a href="notes.html?exam=${encodeURIComponent(exam)}&subject=${encodeURIComponent(subject)}"
+            class="btn">
+            📖 Revise Notes
+            </a>
+            `;
+
+        }
+
+        else if(!revision2Done){
+
+            recommendation =
+            "🧠 Strengthen your preparation by revising important MCQs.";
+
+            action = `
+            <a href="mcqs.html?exam=${encodeURIComponent(exam)}&subject=${encodeURIComponent(subject)}"
+            class="btn">
+            ❓ Revise MCQs
+            </a>
+            `;
+
+        }
+
+        else if(!task3Done && mocks === 0){
+
+            recommendation =
+            "🧪 You haven't attempted a mock test yet. Take your first " +
+            exam +
+            " mock test to check your preparation.";
+
+            action = `
+            <a href="mocktest.html?exam=${encodeURIComponent(exam)}&subject=${encodeURIComponent(subject)}"
+            class="btn">
+            🧪 Start Mock Test
+            </a>
+            `;
+
+        }
+
+        else if(!task3Done){
+
+            recommendation =
+            "🧪 Your next step is a mock test. Test your preparation and check your performance.";
+
+            action = `
+            <a href="mocktest.html?exam=${encodeURIComponent(exam)}&subject=${encodeURIComponent(subject)}"
+            class="btn">
+            🧪 Practice Test
+            </a>
+            `;
+
+        }
+
+        else if(!revision3Done){
+
+            recommendation =
+            "📝 Review your previous mistakes. This is one of the best ways to improve.";
+
+            action = `
+            <a href="mistakes.html"
+            class="btn">
+            📝 Review Mistakes
+            </a>
+            `;
+
+        }
+
+        else if(streak < 3){
+
+            recommendation =
+            "🔥 Keep your momentum going. Study " +
+            subject +
+            " today and build your streak.";
+
+            action = `
+            <a href="subject.html?exam=${encodeURIComponent(exam)}&subject=${encodeURIComponent(subject)}"
+            class="btn">
+            🚀 Continue Studying
+            </a>
+            `;
+
+        }
+
+        else if(xp < 100){
+
+            recommendation =
+            "⭐ You're working toward your first 100 XP. Complete another focused study session.";
+
+            action = `
+            <a href="subject.html?exam=${encodeURIComponent(exam)}&subject=${encodeURIComponent(subject)}"
+            class="btn">
+            ⭐ Earn XP
+            </a>
+            `;
+
+        }
+
+        else{
+
+            recommendation =
+            "🎯 Your basic plan is complete. Keep improving " +
+            subject +
+            " with revision and practice.";
+
+            action = `
+            <a href="subject.html?exam=${encodeURIComponent(exam)}&subject=${encodeURIComponent(subject)}"
+            class="btn">
+            📚 Continue Studying
+            </a>
+
+            <a href="mocktest.html?exam=${encodeURIComponent(exam)}&subject=${encodeURIComponent(subject)}"
+            class="btn">
+            🧪 Take Test
+            </a>
+            `;
+
+        }
+
+    }
+
+
+    document.getElementById("studyNowText").textContent =
+    recommendation;
+
+    document.getElementById("studyNowAction").innerHTML =
+    action;
+
+}
+
+
+whatShouldIStudyNow();
+
+generateSmartPlan();
+
+
+/* ================================
+   SMART RECOMMENDATION
+================================ */
+
+function updateRecommendation(){
+
+let completed = 0;
+
+let customTasks =
+JSON.parse(
+localStorage.getItem("customTasks")
+) || [];
+
+let completedCustomTasks =
+JSON.parse(
+localStorage.getItem("completedCustomTasks")
+) || [];
+
+completed += completedCustomTasks.filter(
+index => index < customTasks.length
+).length;
+
+if(document.getElementById("task1").checked)
+completed++;
+
+if(document.getElementById("task2").checked)
+completed++;
+
+if(document.getElementById("task3").checked)
+completed++;
+
+
+let recommendation;
+
+
+if(completed === 0){
+
+recommendation =
+"🚀 Start with one chapter. Small progress is better than waiting for the perfect study session.";
+
+}
+else if(completed === 1){
+
+recommendation =
+"🔥 Good start! Complete one more goal to strengthen today's study session.";
+
+}
+else if(completed === 2){
+
+recommendation =
+"💪 Almost there! Finish your final goal and complete today's plan.";
+
+}
+else{
+
+recommendation =
+"🎉 Today's plan is complete! Great job maintaining your study routine.";
+
+}
+
+
+document.getElementById(
+"smartRecommendation"
+).textContent =
+recommendation;
+
+}
+
+
+/* ================================
+   SAVE TASKS
+================================ */
+
+function saveTasks(){
+
+localStorage.setItem(
+"task1",
+document.getElementById("task1").checked
+);
+
+localStorage.setItem(
+"task2",
+document.getElementById("task2").checked
+);
+
+localStorage.setItem(
+"task3",
+document.getElementById("task3").checked
+);
+
 
 localStorage.setItem(
 "revision1",
@@ -202,75 +777,254 @@ localStorage.setItem(
 document.getElementById("revision3").checked
 );
 
+
+localStorage.setItem(
+"lastPlannerUpdate",
+new Date().toDateString()
+);
+
+
 updateProgress();
 
+alert("✅ Smart study plan saved!");
+
 }
+
+
+/* ================================
+   CUSTOM TASK
+================================ */
 
 function addTask(){
 
-let task =
-document.getElementById("customTask").value;
+    let task =
+    document.getElementById("customTask").value.trim();
 
-if(task === ""){
-alert("Enter a task");
-return;
+    if(task === ""){
+
+        alert("Enter a task");
+
+        return;
+
+    }
+
+    let tasks =
+    JSON.parse(
+        localStorage.getItem("customTasks")
+    ) || [];
+
+    if(tasks.includes(task)){
+
+        alert("⚠️ This task already exists.");
+
+        return;
+
+    }
+
+    tasks.push(task);
+
+    localStorage.setItem(
+        "customTasks",
+        JSON.stringify(tasks)
+    );
+
+    showTasks();
+    updateProgress();
+    whatShouldIStudyNow();
+
+    document.getElementById(
+        "customTask"
+    ).value = "";
+
 }
 
-let tasks =
-JSON.parse(localStorage.getItem("customTasks")) || [];
 
-tasks.push(task);
+/* ================================
+   DELETE CUSTOM TASK
+================================ */
 
-localStorage.setItem(
-"customTasks",
-JSON.stringify(tasks)
-);
+function deleteTask(index){
 
-showTasks();
+    if(!confirm("🗑️ Delete this task?")){
+        return;
+    }
 
-document.getElementById("customTask").value="";
+    let tasks =
+    JSON.parse(
+        localStorage.getItem("customTasks")
+    ) || [];
+
+    let completedTasks =
+    JSON.parse(
+        localStorage.getItem("completedCustomTasks")
+    ) || [];
+
+    tasks.splice(index, 1);
+
+    completedTasks =
+    completedTasks
+    .filter(item => item !== index)
+    .map(item =>
+        item > index ? item - 1 : item
+    );
+
+    localStorage.setItem(
+        "customTasks",
+        JSON.stringify(tasks)
+    );
+
+    localStorage.setItem(
+        "completedCustomTasks",
+        JSON.stringify(completedTasks)
+    );
+
+    showTasks();
+    updateProgress();
+    whatShouldIStudyNow();
 
 }
 
+
+/* ================================
+   SHOW CUSTOM TASKS
+================================ */
 
 function showTasks(){
 
-let tasks =
-JSON.parse(localStorage.getItem("customTasks")) || [];
+    let tasks =
+    JSON.parse(
+        localStorage.getItem("customTasks")
+    ) || [];
 
-let html="";
+    let completedTasks =
+    JSON.parse(
+        localStorage.getItem("completedCustomTasks")
+    ) || [];
 
-tasks.forEach(task=>{
+    let html = "";
 
-html += `
-<p>📌 ${task}</p>
-`;
+    tasks.forEach((task,index)=>{
 
-});
+        let isCompleted =
+        completedTasks.includes(index);
 
-document.getElementById("customTasks").innerHTML = html;
+        html += `
+        <div class="history-item">
+
+            <label
+            style="${isCompleted ? 'text-decoration:line-through; opacity:0.6;' : ''}"
+            >
+
+                <input
+                type="checkbox"
+                class="custom-task-checkbox"
+                data-index="${index}"
+                ${isCompleted ? "checked" : ""}
+                >
+
+                📌 ${task}
+
+            </label>
+
+            <button
+            class="btn"
+            onclick="deleteTask(${index})">
+
+                🗑️
+
+            </button>
+
+        </div>
+        `;
+
+    });
+
+
+    if(html === ""){
+
+        html =
+        "<p>📚 No custom tasks added yet.</p>";
+
+    }
+
+
+    document.getElementById(
+        "customTasks"
+    ).innerHTML = html;
+
+
+    document
+    .querySelectorAll(
+        ".custom-task-checkbox"
+    )
+    .forEach(box=>{
+
+        box.addEventListener(
+            "change",
+            function(){
+
+                let index =
+                Number(this.dataset.index);
+
+                let completedTasks =
+                JSON.parse(
+                    localStorage.getItem(
+                        "completedCustomTasks"
+                    )
+                ) || [];
+
+
+                if(this.checked){
+
+                    if(!completedTasks.includes(index)){
+
+                        completedTasks.push(index);
+
+                    }
+
+                }
+                else{
+
+                    completedTasks =
+                    completedTasks.filter(
+                        item => item !== index
+                    );
+
+                }
+
+
+                localStorage.setItem(
+                    "completedCustomTasks",
+                    JSON.stringify(completedTasks)
+                );
+
+
+                updateProgress();
+
+                showTasks();
+
+                whatShouldIStudyNow();
+
+            }
+        );
+
+    });
 
 }
 
+
+/* LOAD CUSTOM TASKS */
+
 showTasks();
+
+/* ================================
+   UPDATE PROGRESS
+================================ */
 
 function updateProgress(){
 
 let completed = 0;
-
 let revisionCompleted = 0;
-
-if(document.getElementById("revision1").checked)
-revisionCompleted++;
-
-if(document.getElementById("revision2").checked)
-revisionCompleted++;
-
-if(document.getElementById("revision3").checked)
-revisionCompleted++;
-
-document.getElementById("revisionProgress").innerHTML =
-revisionCompleted + "/3 Revision Completed";
 
 if(document.getElementById("task1").checked)
 completed++;
@@ -281,22 +1035,280 @@ completed++;
 if(document.getElementById("task3").checked)
 completed++;
 
-let percent = (completed / 3) * 100;
 
-document.getElementById("totalGoals").innerHTML = 3;
+/* CUSTOM TASKS */
 
-document.getElementById("completedGoals").innerHTML =
+let customTasks =
+JSON.parse(
+localStorage.getItem("customTasks")
+) || [];
+
+let completedCustomTasks =
+JSON.parse(
+localStorage.getItem("completedCustomTasks")
+) || [];
+
+completed += completedCustomTasks.filter(
+index => index < customTasks.length
+).length;
+
+
+/* REVISION */
+
+if(document.getElementById("revision1").checked)
+revisionCompleted++;
+
+if(document.getElementById("revision2").checked)
+revisionCompleted++;
+
+if(document.getElementById("revision3").checked)
+revisionCompleted++;
+
+
+/* PROGRESS */
+
+let totalGoalCount =
+3 + customTasks.length;
+
+let percent =
+totalGoalCount === 0
+? 0
+: Math.round(
+(completed / totalGoalCount) * 100
+);
+
+
+/* DISPLAY */
+
+document.getElementById(
+"totalGoals"
+).textContent =
+totalGoalCount;
+
+document.getElementById(
+"completedGoals"
+).textContent =
 completed;
 
-document.getElementById("plannerProgress").style.width =
+document.getElementById(
+"plannerProgress"
+).style.width =
 percent + "%";
 
-document.getElementById("plannerText").innerHTML =
+document.getElementById(
+"plannerText"
+).textContent =
 percent + "% Completed";
+
+document.getElementById(
+"revisionProgress"
+).textContent =
+revisionCompleted +
+"/3 Revision Completed";
+
+
+updateRecommendation();
+
+smartRevisionEngine();
 
 }
 
+
 updateProgress();
+
+
+/* ================================
+   AUTO SAVE ON CHECKBOX
+================================ */
+
+document
+.querySelectorAll(
+'input[type="checkbox"]'
+)
+.forEach(box=>{
+
+box.addEventListener(
+"change",
+function(){
+
+updateProgress();
+
+});
+
+});
+
+/* ================================
+   SMART REVISION ENGINE
+================================ */
+
+function smartRevisionEngine(){
+
+    const revisionProgress =
+    document.getElementById("revisionProgress");
+
+    if(!revisionProgress){
+        return;
+    }
+
+    const revision1 =
+    document.getElementById("revision1").checked;
+
+    const revision2 =
+    document.getElementById("revision2").checked;
+
+    const revision3 =
+    document.getElementById("revision3").checked;
+
+    let completed = 0;
+
+    if(revision1) completed++;
+    if(revision2) completed++;
+    if(revision3) completed++;
+
+    let revisionMessage = "";
+
+    if(completed === 0){
+
+        revisionMessage =
+        "🔄 Start revision with your chapter notes.";
+
+    }
+    else if(completed === 1){
+
+        revisionMessage =
+        "🧠 Good start! Revise your important MCQs next.";
+
+    }
+    else if(completed === 2){
+
+        revisionMessage =
+        "📝 Almost done! Review your previous mistakes.";
+
+    }
+    else{
+
+        revisionMessage =
+        "🎉 Today's revision is complete! Keep your concepts fresh.";
+
+    }
+
+    let existingMessage =
+    document.getElementById("smartRevisionMessage");
+
+    if(!existingMessage){
+
+        existingMessage =
+        document.createElement("p");
+
+        existingMessage.id =
+        "smartRevisionMessage";
+
+        revisionProgress.parentNode.appendChild(
+            existingMessage
+        );
+
+    }
+
+    existingMessage.textContent =
+    revisionMessage;
+
+}
+
+
+/* Run Smart Revision Engine */
+
+smartRevisionEngine();
+
+/* ================================
+   SPACED REVISION
+================================ */
+
+function generateSpacedRevision(){
+
+    const container =
+    document.getElementById("spacedRevision");
+
+    const message =
+    document.getElementById("spacedRevisionMessage");
+
+    if(!container || !message){
+        return;
+    }
+
+    const today = new Date();
+
+    const schedule = [
+        {
+            days: 0,
+            title: "📖 Today",
+            text: "Review today's important topic."
+        },
+        {
+            days: 1,
+            title: "🔄 Tomorrow",
+            text: "Quickly revise the topic again."
+        },
+        {
+            days: 3,
+            title: "🧠 After 3 Days",
+            text: "Test your memory with MCQs."
+        },
+        {
+            days: 7,
+            title: "🎯 After 7 Days",
+            text: "Do a final revision and check your mistakes."
+        }
+    ];
+
+    let html = "";
+
+    schedule.forEach(item => {
+
+        const date = new Date(today);
+
+        date.setDate(
+            date.getDate() + item.days
+        );
+
+        const formattedDate =
+        date.toLocaleDateString(
+            "en-IN",
+            {
+                day: "numeric",
+                month: "short"
+            }
+        );
+
+        html += `
+        <div class="history-item">
+
+            <h3>
+            ${item.title}
+            </h3>
+
+            <p>
+            📅 ${formattedDate}
+            </p>
+
+            <p>
+            ${item.text}
+            </p>
+
+        </div>
+        `;
+
+    });
+
+    message.textContent =
+    subject
+    ? "🧠 Revision schedule for " + subject + "."
+    : "🧠 Follow this revision cycle to retain what you study.";
+
+    container.innerHTML = html;
+
+}
+
+generateSpacedRevision();
 
 </script>
 
