@@ -9,9 +9,9 @@
 
 <link rel="stylesheet" href="../style.css">
 
-<script src="../data/neet.js"></script>
-<script src="../data/jee.js"></script>
-<script src="../data/cuet.js"></script>
+<script src="data/neet.js"></script>
+<script src="data/jee.js"></script>
+<script src="data/cuet.js"></script>
 
 </head>
 
@@ -33,7 +33,9 @@ Practice chapter-wise questions and improve your score.
 
 </header>
 
-<section class="container">
+<section class="container card">
+
+</section>
 
 <h2 class="section-title">
 Practice MCQs
@@ -80,6 +82,8 @@ let score = 0;
 
 let questions = [];
 
+document.getElementById("score").innerHTML = "🏆 Score: 0";
+
 let examData = null;
 
 if (exam === "NEET") {
@@ -94,11 +98,17 @@ else if (exam === "CUET") {
 
 if (examData) {
 
+    let selectedSubject = subject || "";
+
+    selectedSubject = selectedSubject
+        .replace(/^[^\p{L}\p{N}]+/u, "")
+        .trim();
+
     const subjectKey = Object.keys(examData).find(key =>
-        subject.includes(key)
+        key.toLowerCase() === selectedSubject.toLowerCase()
     );
 
-    if (subjectKey) {
+    if (subjectKey && examData[subjectKey].mcqs) {
         questions = examData[subjectKey].mcqs;
     }
 
@@ -176,6 +186,18 @@ mcqsSolved++;
 
 localStorage.setItem("mcqsSolved", mcqsSolved);
 
+let xp = Number(localStorage.getItem("xp")) || 0;
+
+let solvedMCQs =
+Number(localStorage.getItem("mcqsXP")) || 0;
+
+solvedMCQs++;
+
+xp += 10;
+
+localStorage.setItem("xp", xp);
+localStorage.setItem("mcqsXP", solvedMCQs);
+
 document.getElementById("score").innerHTML =
 "🏆 Score: " + score;
 
@@ -192,6 +214,8 @@ else{
 document.getElementById("result").innerHTML =
 "❌ Wrong! Correct Answer: " +
 questions[currentIndex].options[questions[currentIndex].answer];
+
+document.querySelector('button[onclick="checkAnswer()"]').disabled = true;
 
 document.getElementById("score").innerHTML =
 "🏆 Score: " + score;

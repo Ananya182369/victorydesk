@@ -109,6 +109,11 @@ Loading...
 </div>
 
 <div class="card">
+<h3>❓ MCQs Solved</h3>
+<p id="mcqsSolvedCount">0 Solved</p>
+</div>
+
+<div class="card">
 <h3>🏆 Achievement %</h3>
 <p id="achievementPercent">0%</p>
 </div>
@@ -547,7 +552,16 @@ document.getElementById("totalAchievements").textContent = completed;
 const totalMocks =
 Number(localStorage.getItem("totalMocks")) || 0;
 
-const score = (completed * 100) + (streak * 20);
+const mcqsSolved =
+Number(localStorage.getItem("mcqsSolved")) || 0;
+
+document.getElementById("mcqsSolvedCount").textContent =
+mcqsSolved + " Solved";
+
+const score =
+    (completed * 100) +
+    (streak * 20) +
+    (mcqsSolved * 10);
 
 const focusSessions =
 Number(localStorage.getItem("focusSessions")) || 0;
@@ -561,7 +575,9 @@ const savedXPBase =
 Number(localStorage.getItem("xpBase")) || 0;
 
 const calculatedXP =
-(completed * 100) + (focusSessions * 20);
+(completed * 100) +
+(focusSessions * 20) +
+(mcqsSolved * 10);
 
 let xpActivities =
 JSON.parse(localStorage.getItem("xpActivities")) || [];
@@ -593,6 +609,32 @@ if(completed > Number(localStorage.getItem("lastCompletedMocks"))){
 
 if(focusSessions >
 Number(localStorage.getItem("lastFocusSessions") || 0)){
+
+    if(mcqsSolved >
+Number(localStorage.getItem("lastMcqsSolved") || 0)){
+
+    const newMCQs =
+    mcqsSolved -
+    Number(localStorage.getItem("lastMcqsSolved") || 0);
+
+    xpActivities.push({
+
+        type: "❓ MCQ Practice",
+
+        description:
+        newMCQs + " MCQs Solved",
+
+        xp: newMCQs * 10,
+
+        date: today
+
+    });
+
+    localStorage.setItem(
+        "lastMcqsSolved",
+        mcqsSolved
+    );
+}
 
     const newFocusSessions =
     focusSessions -
@@ -638,6 +680,7 @@ if(calculatedXP !== savedXPBase){
 const todayXPRewardDate =
 localStorage.getItem("todayXPRewardDate");
 
+// Daily login XP reward
 if(todayXPRewardDate !== today){
 
     xp += 10;
@@ -831,7 +874,26 @@ document.getElementById("gameBadges").textContent =
 let subjectsStarted = 0;
 
 if(lastExam && lastSubject){
-    subjectsStarted = 1;
+
+    let subjectHistory =
+    JSON.parse(
+        localStorage.getItem("subjectHistory")
+    ) || [];
+
+    const subjectKey =
+    lastExam + " • " + lastSubject;
+
+    if(!subjectHistory.includes(subjectKey)){
+
+        subjectHistory.push(subjectKey);
+
+        localStorage.setItem(
+            "subjectHistory",
+            JSON.stringify(subjectHistory)
+        );
+    }
+
+    subjectsStarted = subjectHistory.length;
 }
 
 document.getElementById("analyticsStudy").textContent =
@@ -1150,6 +1212,7 @@ data:{
 labels:[
 "Subjects",
 "Mocks",
+"MCQs",
 "Streak"
 ],
 
@@ -1160,6 +1223,7 @@ label:"Your Progress",
 data:[
 subjectsStarted,
 totalMocks,
+mcqsSolved,
 streak
 ]
 

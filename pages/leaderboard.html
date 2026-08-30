@@ -181,7 +181,7 @@ else{
     leaderboard[yourRank - 2];
 
     const xpNeeded =
-    playerAbove.xp - xp + 1;
+    Math.max(1, playerAbove.xp - xp + 1);
 
     document.getElementById("xpToNext").textContent =
     "🎯 " + xpNeeded + " XP needed to reach #" +
@@ -197,6 +197,26 @@ document.getElementById("yourRank").title =
 let html = "";
 
 leaderboard.forEach((player,index) => {
+
+let progress = 0;
+
+if(player.level === "Master"){
+    progress = 100;
+}
+else if(player.level === "Expert"){
+    progress = ((player.xp - 1000) / 1000) * 100;
+}
+else if(player.level === "Intermediate"){
+    progress = ((player.xp - 500) / 500) * 100;
+}
+else if(player.level === "Starter"){
+    progress = ((player.xp - 100) / 400) * 100;
+}
+else{
+    progress = (player.xp / 100) * 100;
+}
+
+progress = Math.max(0, Math.min(progress, 100));
 
 let medal = "";
 
@@ -243,17 +263,7 @@ ${
 
 <div
 class="progress-fill"
-style="width:${
-    player.level === "Master"
-    ? 100
-    : player.level === "Expert"
-    ? ((player.xp - 1000) / 1000) * 100
-    : player.level === "Intermediate"
-    ? ((player.xp - 500) / 500) * 100
-    : player.level === "Starter"
-    ? ((player.xp - 100) / 400) * 100
-    : (player.xp / 100) * 100
-}%">
+style="width:${progress}%">
 </div>
 
 </div>
