@@ -55,6 +55,7 @@ const grid = document.querySelector(".exam-grid");
 
 if(exam){
     
+localStorage.setItem("lastExam", exam);
 
 title.innerHTML = "🎓 " + exam + " Dashboard";
 

@@ -161,19 +161,13 @@ Level: Beginner
 <p>Ask doubts instantly (Coming Soon)</p>
 </div>
 
-<div class="neet-tools">
+<div class="exam-tools">
 
-<a href="neetcalculator.html" class="btn">
-🧮 NEET Score Calculator
-</a>
+    <h3>🎯 Exam Tools</h3>
 
-<a href="neetrank.html" class="btn">
-🏆 NEET Rank Predictor
-</a>
-
-<a href="neetcollege.html" class="btn">
-🏫 NEET College Predictor
-</a>
+    <div id="examToolsContent">
+        Loading exam tools...
+    </div>
 
 </div>
 
@@ -392,8 +386,8 @@ Keep studying to reach your next milestone!
 🏆 Achievements
 </a>
 
-<a href="exam.html" class="btn">
-📚 Study Now
+<a href="#" class="btn" onclick="studyNow(); return false;">
+    📚 Study Now
 </a>
 
 <a href="mocktest.html" class="btn">
@@ -492,6 +486,88 @@ Loading history...
 
     const lastExam = localStorage.getItem("lastExam");
     const lastSubject = localStorage.getItem("lastSubject");
+
+    /* -------------------------
+   UNIVERSAL EXAM TOOLS
+------------------------- */
+
+const examToolsContent =
+    document.getElementById("examToolsContent");
+
+if (examToolsContent) {
+
+    const exam =
+        (lastExam || "NEET").toUpperCase();
+
+    let toolsHTML = "";
+
+    if (exam === "NEET") {
+
+        toolsHTML = `
+            <a href="neetcalculator.html" class="btn">
+                🧮 NEET Score Calculator
+            </a>
+
+            <a href="neetrank.html" class="btn">
+                🏆 NEET Rank Predictor
+            </a>
+
+            <a href="neetcollege.html" class="btn">
+                🏫 NEET College Predictor
+            </a>
+        `;
+
+    } else if (exam === "JEE") {
+
+        toolsHTML = `
+            <a href="exam.html?exam=JEE" class="btn">
+                📚 JEE Study Dashboard
+            </a>
+
+            <a href="mocktest.html?exam=JEE" class="btn">
+                🧪 JEE Mock Test
+            </a>
+
+            <a href="mcqs.html?exam=JEE" class="btn">
+                ❓ JEE MCQs
+            </a>
+        `;
+
+    } else if (exam === "CUET") {
+
+        toolsHTML = `
+            <a href="exam.html?exam=CUET" class="btn">
+                📚 CUET Study Dashboard
+            </a>
+
+            <a href="mocktest.html?exam=CUET" class="btn">
+                🧪 CUET Mock Test
+            </a>
+
+            <a href="mcqs.html?exam=CUET" class="btn">
+                ❓ CUET MCQs
+            </a>
+        `;
+
+    } else {
+
+        toolsHTML = `
+            <a href="exam.html" class="btn">
+                📚 Study Now
+            </a>
+
+            <a href="mocktest.html" class="btn">
+                🧪 Mock Test
+            </a>
+
+            <a href="mcqs.html" class="btn">
+                ❓ MCQs
+            </a>
+        `;
+    }
+
+    examToolsContent.innerHTML = toolsHTML;
+}
 
     /* -------------------------
        MOCK / MCQ / FOCUS DATA
@@ -1385,6 +1461,24 @@ document.getElementById(
     /* -------------------------
        CONTINUE STUDY
     ------------------------- */
+
+    window.studyNow = function () {
+
+
+    const exam = localStorage.getItem("lastExam");
+
+    if (exam) {
+
+        window.location.href =
+            "exam.html?exam=" +
+            encodeURIComponent(exam);
+
+    } else {
+
+        window.location.href =
+            "exam.html";
+    }
+};
 
     window.continueStudy = function () {
 
