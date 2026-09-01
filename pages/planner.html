@@ -783,8 +783,116 @@ localStorage.setItem(
 new Date().toDateString()
 );
 
+/* ================================
+   PLANNER XP
+================================ */
+
+let plannerXP = Number(
+    localStorage.getItem("plannerXP")
+) || 0;
+
+let plannerCompleted = 0;
+
+if(document.getElementById("task1").checked)
+    plannerCompleted++;
+
+if(document.getElementById("task2").checked)
+    plannerCompleted++;
+
+if(document.getElementById("task3").checked)
+    plannerCompleted++;
+
+let customTasks =
+    JSON.parse(
+        localStorage.getItem("customTasks")
+    ) || [];
+
+let completedCustomTasks =
+    JSON.parse(
+        localStorage.getItem("completedCustomTasks")
+    ) || [];
+
+plannerCompleted += completedCustomTasks.filter(
+    index => index < customTasks.length
+).length;
+
+let previousPlannerCompleted =
+    Number(
+        localStorage.getItem("previousPlannerCompleted")
+    ) || 0;
+
+let newCompleted =
+    plannerCompleted - previousPlannerCompleted;
+
+if(newCompleted > 0){
+
+    let earnedXP =
+        newCompleted * 10;
+
+    plannerXP += earnedXP;
+
+    localStorage.setItem(
+        "plannerXP",
+        plannerXP
+    );
+
+    localStorage.setItem(
+        "previousPlannerCompleted",
+        plannerCompleted
+    );
+
+}
 
 updateProgress();
+
+/* ================================
+   PLANNER XP REWARD
+================================ */
+
+let plannerXP =
+Number(localStorage.getItem("plannerXP")) || 0;
+
+let completedPlannerGoals = 0;
+
+if(document.getElementById("task1").checked)
+completedPlannerGoals++;
+
+if(document.getElementById("task2").checked)
+completedPlannerGoals++;
+
+if(document.getElementById("task3").checked)
+completedPlannerGoals++;
+
+let oldCompletedPlannerGoals =
+Number(localStorage.getItem("completedPlannerGoals")) || 0;
+
+if(completedPlannerGoals > oldCompletedPlannerGoals){
+
+    let newGoals =
+    completedPlannerGoals - oldCompletedPlannerGoals;
+
+    let gainedXP =
+    newGoals * 25;
+
+    let currentXP =
+    Number(localStorage.getItem("xp")) || 0;
+
+    currentXP += gainedXP;
+
+    localStorage.setItem("xp", currentXP);
+
+    localStorage.setItem(
+        "completedPlannerGoals",
+        completedPlannerGoals
+    );
+
+    alert(
+        "🎉 Planner Goal Complete! +" +
+        gainedXP +
+        " XP"
+    );
+
+}
 
 alert("✅ Smart study plan saved!");
 
